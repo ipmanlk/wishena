@@ -2,19 +2,20 @@ import type { Template } from "../types";
 
 export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
-  name: "Cyber Neon",
-  description: "A vibrant neon celebration with glowing text and particles",
+  name: "Midnight Glow",
+  description: "An electric neon birthday experience built for the night",
   thumbnail: "/thumbnails/neon.png",
   category: "birthday",
 
   blueprint: {
-    globalStyle: "bg-slate-950 font-sans text-white overflow-hidden",
+    globalStyle:
+      "bg-[#080B1A] font-sans text-white overflow-hidden justify-center",
 
     visuals: {
       engine: "tsparticles",
       preset: "glow-dust",
-      mobileDensity: 30,
-      desktopDensity: 80,
+      mobileDensity: 40,
+      desktopDensity: 100,
     },
 
     audio: {
@@ -34,43 +35,80 @@ export const neonBirthdayTemplate: Template = {
 
     modules: [
       {
-        id: "title",
-        type: "neon_text",
+        id: "for-label",
+        type: "standard_text",
         style:
-          "text-5xl md:text-7xl font-bold text-pink-500 drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] mt-20 text-center",
-        bindTo: "main_message",
+          "text-xs tracking-[0.4em] uppercase text-[#00F5D4] opacity-80 text-center pt-12 pb-1",
+        bindTo: "recipient_name",
+        prefix: "✦  For  ",
         animation: "fade_up",
       },
       {
-        id: "subtitle",
+        id: "hero",
+        type: "neon_text",
+        style:
+          "text-5xl md:text-7xl font-extrabold text-center leading-tight py-2",
+        bindTo: "birthday_line",
+        animation: "scale_in",
+        props: { color: "#FF2D7C" },
+      },
+      {
+        id: "message",
         type: "standard_text",
         style:
-          "text-xl text-cyan-400 mt-6 text-center tracking-widest uppercase",
+          "text-base md:text-lg text-white/70 text-center mt-4 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
+        bindTo: "personal_message",
+        animation: "fade_up",
+      },
+      {
+        id: "sender",
+        type: "neon_text",
+        style:
+          "text-sm md:text-base tracking-widest uppercase text-center mt-6 pb-10",
         bindTo: "sender_name",
-        prefix: "From ",
+        prefix: "— from  ",
+        animation: "fade_up",
+        props: { color: "#00F5D4" },
       },
       {
         id: "hearts",
         type: "floating_hearts",
-        style: "absolute inset-0 pointer-events-none",
+        style: "",
       },
     ],
 
     requiredInputs: [
       {
-        key: "main_message",
+        key: "recipient_name",
         type: "text",
-        label: "Your Birthday Message",
-        placeholder: "Happy 25th Birthday, Alex!",
-        maxLength: 50,
+        label: "Who is this for?",
+        placeholder: "Alex",
+        maxLength: 30,
+        required: true,
+      },
+      {
+        key: "birthday_line",
+        type: "text",
+        label: "The big line",
+        placeholder: "Happy 25th Birthday!",
+        maxLength: 40,
+        required: true,
+      },
+      {
+        key: "personal_message",
+        type: "textarea",
+        label: "Your personal message",
+        placeholder:
+          "Write something from the heart. It doesn't have to be perfect.",
+        maxLength: 250,
         required: true,
       },
       {
         key: "sender_name",
         type: "text",
-        label: "Your Name",
-        placeholder: "Your name",
-        maxLength: 20,
+        label: "Your name",
+        placeholder: "Jamie",
+        maxLength: 25,
         required: true,
       },
     ],

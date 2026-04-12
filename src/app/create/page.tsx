@@ -8,6 +8,7 @@ import { useState } from "react";
 import { wishRepository } from "@/lib/storage/wish-repository";
 import { templates } from "@/lib/templates";
 import type { Template } from "@/lib/types";
+import WishRenderer from "@/components/wish/WishRenderer";
 
 export default function CreatePage() {
   const router = useRouter();
@@ -87,25 +88,50 @@ export default function CreatePage() {
                     className="group text-left bg-off-white rounded-2xl border border-warm-gray/20 p-6 shadow-sm hover:shadow-md transition-all"
                   >
                     <div
-                      className="h-32 rounded-xl mb-4 overflow-hidden"
+                      className="h-32 rounded-xl mb-4 overflow-hidden relative"
                       style={{
                         background:
                           template.id === "neon-birthday"
-                            ? "linear-gradient(135deg, #1e1b4b 0%, #312e81 100%)"
-                            : "linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)",
+                            ? "linear-gradient(135deg, #080B1A 0%, #1a0533 100%)"
+                            : "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)",
                       }}
                     >
                       {template.id === "neon-birthday" && (
-                        <div className="h-full flex items-center justify-center">
-                          <span className="text-pink-400 text-2xl font-bold drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]">
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-extrabold"
+                            style={{
+                              color: "#FF2D7C",
+                              textShadow:
+                                "0 0 7px #FF2D7C, 0 0 18px #FF2D7C, 0 0 36px #FF2D7C80",
+                            }}
+                          >
                             Happy Birthday!
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{
+                              color: "#00F5D4",
+                              textShadow: "0 0 8px #00F5D4",
+                            }}
+                          >
+                            midnight glow
                           </span>
                         </div>
                       )}
                       {template.id === "gentle-celebration" && (
-                        <div className="h-full flex items-center justify-center">
-                          <span className="text-amber-700 text-xl font-serif italic">
-                            With love
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-semibold italic"
+                            style={{ color: "#C9983A", fontFamily: "Georgia, serif" }}
+                          >
+                            Sophia
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#9C5A5A" }}
+                          >
+                            golden hour
                           </span>
                         </div>
                       )}
@@ -206,32 +232,9 @@ export default function CreatePage() {
                   <div className="sticky top-8">
                     <p className="text-sm text-warm-gray-text mb-3">Preview</p>
                     <div
-                      className="aspect-[9/16] rounded-2xl shadow-xl overflow-hidden"
-                      style={{
-                        background:
-                          selectedTemplate.id === "neon-birthday"
-                            ? "linear-gradient(180deg, #1e1b4b 0%, #0f0d2b 100%)"
-                            : "linear-gradient(180deg, #fffbeb 0%, #fef3c7 100%)",
-                      }}
+                      className="aspect-9/16 rounded-2xl shadow-xl overflow-hidden relative"
                     >
-                      <div className="h-full flex flex-col items-center justify-center p-6 text-center">
-                        {selectedTemplate.id === "neon-birthday" ? (
-                          <>
-                            <p className="text-pink-400 text-2xl font-bold drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] mb-4">
-                              {formData.main_message || "Your message here"}
-                            </p>
-                            <p className="text-cyan-300 text-sm">
-                              {formData.sender_name
-                                ? `From ${formData.sender_name}`
-                                : "Your name"}
-                            </p>
-                          </>
-                        ) : (
-                          <p className="text-amber-800 font-serif italic text-lg">
-                            {formData.main_message || "Your message here"}
-                          </p>
-                        )}
-                      </div>
+                      <WishRenderer template={selectedTemplate} payload={formData} isPreview />
                     </div>
                   </div>
                 </div>

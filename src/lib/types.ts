@@ -28,7 +28,7 @@ export interface Module {
   bindTo?: string;
   prefix?: string;
   animation?: "fade_up" | "scale_in" | "typewriter";
-  props?: Record<string, any>;
+  props?: Record<string, unknown>;
 }
 
 export interface Template {

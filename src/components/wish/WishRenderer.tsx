@@ -11,17 +11,20 @@ import type { Template } from "@/lib/types";
 interface WishRendererProps {
   template: Template;
   payload: Record<string, string>;
+  isPreview?: boolean;
 }
 
-export function WishRenderer({ template, payload }: WishRendererProps) {
-  const [isRevealed, setIsRevealed] = useState(false);
+export function WishRenderer({ template, payload, isPreview = false }: WishRendererProps) {
+  const [isRevealedState, setIsRevealed] = useState(false);
+  const isRevealed = isPreview || isRevealedState;
   const { blueprint } = template;
 
   return (
     <main
-      className={`min-h-[100dvh] w-full flex flex-col items-center relative ${blueprint.globalStyle}`}
+      className={`${isPreview ? "h-full overflow-y-auto" : "min-h-[100dvh]"} w-full flex flex-col items-center relative ${blueprint.globalStyle}`}
     >
-      {blueprint.visuals && (
+      {/* Particles only on the real page — tsparticles canvas uses fixed positioning and can't be contained */}
+      {blueprint.visuals && !isPreview && (
         <ParticleBackground
           preset={blueprint.visuals.preset}
           mobileDensity={blueprint.visuals.mobileDensity}
@@ -29,7 +32,7 @@ export function WishRenderer({ template, payload }: WishRendererProps) {
         />
       )}
 
-      {blueprint.audio && (
+      {blueprint.audio && !isPreview && (
         <AudioPlayer
           synth={blueprint.audio.synth as "FMSynth" | "AMSynth" | "Synth"}
           tempo={blueprint.audio.tempo}
@@ -38,11 +41,13 @@ export function WishRenderer({ template, payload }: WishRendererProps) {
         />
       )}
 
-      <TapToReveal
-        isRevealed={isRevealed}
-        onReveal={() => setIsRevealed(true)}
-        previewText={payload[blueprint.requiredInputs[0]?.key]}
-      />
+      {!isPreview && (
+        <TapToReveal
+          isRevealed={isRevealed}
+          onReveal={() => setIsRevealed(true)}
+          previewText={payload[blueprint.requiredInputs[0]?.key]}
+        />
+      )}
 
       <div className="z-10 flex flex-col items-center w-full max-w-md px-4">
         {blueprint.modules.map((module, index) => {
@@ -53,6 +58,9 @@ export function WishRenderer({ template, payload }: WishRendererProps) {
           const animation = module.animation
             ? animationVariants[module.animation]
             : null;
+
+          // Pass isPreview as 'contained' to modules that support it (e.g. FloatingHearts)
+          const extraProps = isPreview ? { contained: true } : {};
 
           return (
             <motion.div
@@ -74,6 +82,7 @@ export function WishRenderer({ template, payload }: WishRendererProps) {
                 text={text}
                 prefix={module.prefix}
                 {...module.props}
+                {...extraProps}
               />
             </motion.div>
           );
