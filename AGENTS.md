@@ -33,3 +33,31 @@ This version has breaking changes — APIs, conventions, and file structure may 
 4. Never commit code with `any` types
 
 **Linting:** The project uses strict TypeScript checks. Any `any` usage will fail CI/CD.
+
+## No `React.FC` - Use Regular Functions
+
+**CRITICAL:** Never use `React.FC` or `React.FunctionComponent`. It is deprecated and unnecessary in modern React.
+
+- ❌ **Forbidden:** `const Component: React.FC<Props> = () => {}`
+- ❌ **Forbidden:** `React.FC<Record<string, unknown>>`
+- ❌ **Forbidden:** `Record<string, React.FC<any>>`
+- ✅ **Required:** Use regular functions with explicit props interfaces:
+  ```typescript
+  interface Props { ... }
+  export function Component({ prop1, prop2 }: Props) { ... }
+  ```
+- ✅ **Allowed:** Arrow function style with explicit type annotation:
+  ```typescript
+  interface Props { ... }
+  const Component = (props: Props) => { ... }
+  ```
+- ✅ **Required:** For dynamic component maps, use:
+  ```typescript
+  type ComponentType = (props: Props) => React.ReactNode;
+  ```
+
+**Why:**
+- `React.FC` is deprecated and has no benefits in modern React
+- It implicitly adds `children` prop which may not be desired
+- Regular functions and properly typed arrow functions are cleaner and more explicit
+- Better inference and less confusion
