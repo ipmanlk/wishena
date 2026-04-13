@@ -20,6 +20,7 @@ export const supabaseInviteRepository = {
       payload: row.payload,
       rsvpEnabled: row.rsvp_enabled,
       guestLimit: row.guest_limit,
+      guestFieldDefinitions: row.guest_field_definitions || [],
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     }));
@@ -44,6 +45,7 @@ export const supabaseInviteRepository = {
       payload: data.payload,
       rsvpEnabled: data.rsvp_enabled,
       guestLimit: data.guest_limit,
+      guestFieldDefinitions: data.guest_field_definitions || [],
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -61,6 +63,7 @@ export const supabaseInviteRepository = {
       payload: project.payload,
       rsvp_enabled: project.rsvpEnabled,
       guest_limit: project.guestLimit,
+      guest_field_definitions: project.guestFieldDefinitions,
       created_at: project.createdAt,
       updated_at: project.updatedAt,
     });
@@ -86,6 +89,8 @@ export const supabaseInviteRepository = {
       dbUpdates.rsvp_enabled = updates.rsvpEnabled;
     if (updates.guestLimit !== undefined)
       dbUpdates.guest_limit = updates.guestLimit;
+    if (updates.guestFieldDefinitions !== undefined)
+      dbUpdates.guest_field_definitions = updates.guestFieldDefinitions;
 
     const { error } = await supabase
       .from("invite_projects")

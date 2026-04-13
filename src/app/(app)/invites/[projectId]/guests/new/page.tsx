@@ -38,7 +38,7 @@ export default async function AddGuestPage({ params }: PageProps) {
         <h1 className="text-2xl font-bold text-zinc-900 mb-2">Add Guest</h1>
         <p className="text-zinc-500 mb-8">{project.title}</p>
         <div className="bg-white p-6 rounded-2xl border shadow-sm">
-          <AddGuestForm projectId={projectId} template={template} />
+          <AddGuestForm project={project} />
         </div>
       </div>
     </div>

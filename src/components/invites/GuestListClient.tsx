@@ -237,13 +237,19 @@ export function GuestListClient({
               const inviteUrl = `/i/${guest.id}`;
 
               return (
-                <tr key={guest.id} className="hover:bg-off-white/50">
-                  <td className="px-6 py-4 font-medium text-ink">
-                    {guest.name}
-                    {guest.note && (
+                <tr key={guest.id} className="hover:bg-off-white/50 group">
+                  <td className="px-6 py-4 font-medium text-ink relative">
+                    {guest.displayName}
+                    {guest.personalNote && (
                       <p className="text-xs text-muted font-normal mt-1 truncate max-w-xs">
-                        {guest.note}
+                        {guest.personalNote}
                       </p>
+                    )}
+                    {guest.internalNote && (
+                      <div className="absolute left-6 bottom-1 invisible group-hover:visible z-10 w-max max-w-[200px] p-2 bg-zinc-800 text-white text-[10px] rounded shadow-lg whitespace-normal leading-tight">
+                        <span className="font-semibold block mb-0.5">Internal Note:</span>
+                        {guest.internalNote}
+                      </div>
                     )}
                   </td>
                   <td className="px-6 py-4 text-warm-gray-text text-sm">
@@ -272,15 +278,20 @@ export function GuestListClient({
                     </td>
                   )}
                   <td className="px-6 py-4 text-warm-gray-text">
-                    {Object.keys(guest.extraData).length > 0 ? (
-                      <div className="flex flex-wrap gap-1">
-                        {Object.entries(guest.extraData).map(([k, v]) => (
-                          <span
-                            key={k}
-                            className="px-1.5 py-0.5 rounded bg-warm-gray/30 text-[10px] text-warm-gray-text border border-warm-gray/30"
-                          >
-                            {k}: {v}
-                          </span>
+                    {guest.customFields && Object.keys(guest.customFields).length > 0 ? (
+                      <div className="flex flex-col gap-1.5 min-w-[120px]">
+                        {Object.entries(guest.customFields).map(([k, field]) => (
+                          <div key={k} className="flex flex-col gap-0.5">
+                            <span className="text-[10px] uppercase font-medium text-warm-gray-text/70">{k}</span>
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-xs text-ink truncate max-w-[150px]">{field.value}</span>
+                              {field.isPublic ? (
+                                <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-blue-50 text-blue-600 rounded">👁 Public</span>
+                              ) : (
+                                <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-zinc-100 text-zinc-600 rounded">🔒 Private</span>
+                              )}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     ) : (

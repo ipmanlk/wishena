@@ -90,6 +90,7 @@ create table public.invite_projects (
   payload      jsonb       not null default '{}', -- All project-level input fields
   rsvp_enabled boolean     not null default false,
   guest_limit  int,                               -- null = unlimited; future premium gating
+  guest_field_definitions jsonb not null default '[]',
   created_at   timestamptz not null default now(),
   updated_at   timestamptz not null default now()
 );
@@ -106,23 +107,32 @@ create policy "Users can manage their own invite projects"
 create table public.invite_guests (
   id             text        primary key,
   project_id     text        not null references public.invite_projects(id) on delete cascade,
-  name           text        not null,
-  note           text,
-  email          text,
-  contact_number text,
-  extra_data     jsonb       not null default '{}', -- Template-specific guest fields (tableNumber, section, etc.)
+  
+  -- Core guest info (always collected)
+  display_name   text        not null,  -- What's shown on invite: "Priya & Vikram" or "John Smith"
+  
+  -- Public fields (shown on invite card)
+  personal_note  text,                   -- Personal message shown to guest on their invite
+  
+  -- Private fields (internal use only, never exposed to public)
+  internal_note  text,                   -- Internal reference for host
+  email          text,                   -- For host contact
+  contact_number text,                   -- For host contact
+  
+  -- Dynamic custom fields (JSONB for flexibility)
+  -- Each field has: value (string), isPublic (boolean)
+  custom_fields  jsonb       not null default '{}',
+  
   created_at     timestamptz not null default now()
 );
 
 alter table public.invite_guests enable row level security;
 
--- Guest cards are publicly readable — invite links work for anyone
 create policy "Invite guests are publicly readable"
   on public.invite_guests
   for select
   using (true);
 
--- Only the project owner can write guest records
 create policy "Project owner can manage guests"
   on public.invite_guests
   for all
@@ -150,14 +160,12 @@ create table public.invite_rsvps (
 
 alter table public.invite_rsvps enable row level security;
 
--- Anyone can submit/update an RSVP (guest identified by their unique guestId)
 create policy "Anyone can upsert their RSVP"
   on public.invite_rsvps
   for all
   using (true)
   with check (true);
 
--- Creator can read all RSVPs for their projects
 create policy "Project owner can read RSVPs"
   on public.invite_rsvps
   for select

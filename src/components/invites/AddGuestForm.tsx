@@ -4,52 +4,52 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { addGuestAction } from "@/app/(app)/invites/actions";
-import type { InviteTemplate } from "@/lib/types";
+import type { InviteProject } from "@/lib/types";
 
 interface AddGuestFormProps {
-  projectId: string;
-  template: InviteTemplate;
+  project: InviteProject;
   onSuccess?: () => void;
 }
 
-export function AddGuestForm({
-  projectId,
-  template,
-  onSuccess,
-}: AddGuestFormProps) {
+export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
-  const [name, setName] = useState("");
-  const [note, setNote] = useState("");
+  const [displayName, setDisplayName] = useState("");
+  const [personalNote, setPersonalNote] = useState("");
+  const [internalNote, setInternalNote] = useState("");
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
-  const [extraData, setExtraData] = useState<Record<string, string>>({});
+  const [customFields, setCustomFields] = useState<Record<string, { value: string; isPublic: boolean }>>({});
 
-  const handleExtraDataChange = (key: string, value: string) => {
-    setExtraData((prev) => ({ ...prev, [key]: value }));
+  const handleCustomFieldChange = (key: string, value: string, isPublic: boolean) => {
+    setCustomFields((prev) => ({
+      ...prev,
+      [key]: { value, isPublic },
+    }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (loading || !name.trim()) return;
+    if (loading || !displayName.trim()) return;
 
     setLoading(true);
     try {
       const result = await addGuestAction(
-        projectId,
-        name.trim(),
-        note.trim() || undefined,
+        project.id,
+        displayName.trim(),
+        personalNote.trim() || undefined,
+        internalNote.trim() || undefined,
         email.trim() || undefined,
         contactNumber.trim() || undefined,
-        extraData,
+        customFields,
       );
 
       if (result.success) {
         if (onSuccess) {
           onSuccess();
         } else {
-          router.push(`/invites/${projectId}`);
+          router.push(`/invites/${project.id}`);
           router.refresh();
         }
       } else {
@@ -64,128 +64,135 @@ export function AddGuestForm({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-6">
-      <div>
-        <label
-          htmlFor="guest-name"
-          className="block text-sm font-medium text-zinc-700 mb-1"
-        >
-          Guest Name <span className="text-rose-500">*</span>
-        </label>
-        <input
-          id="guest-name"
-          type="text"
-          required
-          placeholder="e.g. John Smith"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
-        />
+    <form onSubmit={handleSubmit} className="space-y-8">
+      <div className="space-y-4">
+        <div>
+          <label htmlFor="guest-displayName" className="block text-sm font-medium text-zinc-900 mb-1">
+            Guest Name(s) <span className="text-rose-500">*</span>
+          </label>
+          <input
+            id="guest-displayName"
+            type="text"
+            required
+            placeholder="e.g., Priya & Vikram or John Smith"
+            value={displayName}
+            onChange={(e) => setDisplayName(e.target.value)}
+            className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
+          />
+          <p className="text-xs text-zinc-500 mt-1">
+            How the guest's name appears on their invitation
+          </p>
+        </div>
+
+        <div>
+          <label htmlFor="guest-personalNote" className="block text-sm font-medium text-zinc-900 mb-1">
+            Personal Note <span className="text-zinc-500 font-normal">(Optional)</span>
+          </label>
+          <textarea
+            id="guest-personalNote"
+            placeholder="e.g., We can't wait to celebrate with you!"
+            value={personalNote}
+            onChange={(e) => setPersonalNote(e.target.value)}
+            rows={2}
+            className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 resize-none"
+          />
+          <p className="text-xs text-zinc-500 mt-1">
+            A personal message shown on this guest's invitation card
+          </p>
+        </div>
       </div>
 
-      <div>
-        <label
-          htmlFor="guest-note"
-          className="block text-sm font-medium text-zinc-700 mb-1"
-        >
-          Personal Note
-        </label>
+      <div className="pt-6 border-t border-zinc-200 space-y-4">
+        <h3 className="text-sm font-semibold text-zinc-900 flex items-center justify-between">
+          Contact Information <span className="text-xs font-normal px-2 py-1 bg-zinc-100 text-zinc-600 rounded">🔒 Private</span>
+        </h3>
+        <p className="text-xs text-zinc-500 -mt-2 mb-4">
+          For your reference only. Not shown on the invite.
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label htmlFor="guest-email" className="block text-sm font-medium text-zinc-700 mb-1">Email</label>
+            <input
+              id="guest-email"
+              type="email"
+              placeholder="priya@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
+            />
+          </div>
+          <div>
+            <label htmlFor="guest-contact" className="block text-sm font-medium text-zinc-700 mb-1">Contact Number</label>
+            <input
+              id="guest-contact"
+              type="tel"
+              placeholder="+1 234 567 8900"
+              value={contactNumber}
+              onChange={(e) => setContactNumber(e.target.value)}
+              className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
+            />
+          </div>
+        </div>
+      </div>
+
+      <div className="pt-6 border-t border-zinc-200 space-y-4">
+        <h3 className="text-sm font-semibold text-zinc-900 flex items-center justify-between">
+          Internal Note <span className="text-xs font-normal px-2 py-1 bg-zinc-100 text-zinc-600 rounded">🔒 Private</span>
+        </h3>
+        <p className="text-xs text-zinc-500 -mt-2 mb-4">
+          Internal notes for your reference. Never shown to guests.
+        </p>
+        
         <textarea
-          id="guest-note"
-          placeholder="e.g. We can't wait to celebrate with you!"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
+          id="guest-internalNote"
+          placeholder="e.g., Dietary requirements, plus one details, etc."
+          value={internalNote}
+          onChange={(e) => setInternalNote(e.target.value)}
           rows={2}
           className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 resize-none"
         />
-        <p className="text-xs text-zinc-500 mt-1">
-          This note will appear on the guest's invitation card. Keep it short
-          and sweet.
-        </p>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label
-            htmlFor="guest-email"
-            className="block text-sm font-medium text-zinc-700 mb-1"
-          >
-            Email
-          </label>
-          <input
-            id="guest-email"
-            type="email"
-            placeholder="john@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
-          />
-        </div>
-
-        <div>
-          <label
-            htmlFor="guest-contact"
-            className="block text-sm font-medium text-zinc-700 mb-1"
-          >
-            Contact Number
-          </label>
-          <input
-            id="guest-contact"
-            type="tel"
-            placeholder="+1 234 567 8900"
-            value={contactNumber}
-            onChange={(e) => setContactNumber(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
-          />
-        </div>
-      </div>
-
-      {template.blueprint.guestInputs.length > 0 && (
-        <div className="border-t border-zinc-200 pt-6">
-          <h3 className="text-sm font-medium text-zinc-900 mb-4">
+      {project.guestFieldDefinitions && project.guestFieldDefinitions.length > 0 && (
+        <div className="pt-6 border-t border-zinc-200 space-y-4">
+          <h3 className="text-sm font-semibold text-zinc-900 mb-4">
             Additional Information
           </h3>
           <div className="space-y-4">
-            {template.blueprint.guestInputs.map((input) => (
-              <div key={input.key}>
-                <label
-                  htmlFor={`guest-extra-${input.key}`}
-                  className="block text-sm font-medium text-zinc-700 mb-1"
-                >
-                  {input.label}{" "}
-                  {input.required && <span className="text-rose-500">*</span>}
-                </label>
-                {input.type === "textarea" ? (
+            {project.guestFieldDefinitions.map((field) => (
+              <div key={field.key}>
+                <div className="flex justify-between items-center mb-1">
+                  <label htmlFor={`custom-${field.key}`} className="block text-sm font-medium text-zinc-700">
+                    {field.label} {field.required && <span className="text-rose-500">*</span>}
+                  </label>
+                  {field.isPublic ? (
+                    <span className="text-xs font-medium px-2 py-0.5 bg-blue-50 text-blue-600 border border-blue-100 rounded">👁 Public</span>
+                  ) : (
+                    <span className="text-xs font-medium px-2 py-0.5 bg-zinc-100 text-zinc-600 border border-zinc-200 rounded">🔒 Private</span>
+                  )}
+                </div>
+                
+                {field.type === "textarea" ? (
                   <textarea
-                    id={`guest-extra-${input.key}`}
-                    required={input.required}
-                    placeholder={input.placeholder}
-                    maxLength={input.maxLength}
-                    value={extraData[input.key] || ""}
-                    onChange={(e) =>
-                      handleExtraDataChange(input.key, e.target.value)
-                    }
+                    id={`custom-${field.key}`}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    value={customFields[field.key]?.value || ""}
+                    onChange={(e) => handleCustomFieldChange(field.key, e.target.value, field.isPublic)}
                     rows={3}
                     className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 resize-none"
                   />
                 ) : (
                   <input
-                    id={`guest-extra-${input.key}`}
-                    type={input.type}
-                    required={input.required}
-                    placeholder={input.placeholder}
-                    maxLength={input.maxLength}
-                    value={extraData[input.key] || ""}
-                    onChange={(e) =>
-                      handleExtraDataChange(input.key, e.target.value)
-                    }
+                    id={`custom-${field.key}`}
+                    type={field.type}
+                    required={field.required}
+                    placeholder={field.placeholder}
+                    value={customFields[field.key]?.value || ""}
+                    onChange={(e) => handleCustomFieldChange(field.key, e.target.value, field.isPublic)}
                     className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
                   />
-                )}
-                {input.description && (
-                  <p className="text-xs text-zinc-500 mt-1">
-                    {input.description}
-                  </p>
                 )}
               </div>
             ))}
@@ -193,7 +200,7 @@ export function AddGuestForm({
         </div>
       )}
 
-      <div className="flex justify-end gap-3 pt-4">
+      <div className="pt-6 border-t border-zinc-200 flex justify-end gap-3">
         <button
           type="button"
           onClick={() => router.back()}
@@ -203,7 +210,7 @@ export function AddGuestForm({
         </button>
         <button
           type="submit"
-          disabled={loading || !name.trim()}
+          disabled={loading || !displayName.trim()}
           className="bg-zinc-900 text-white px-8 py-2 rounded-xl font-medium hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[120px] disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {loading ? <Loader2 className="w-5 h-5 animate-spin" /> : "Add Guest"}

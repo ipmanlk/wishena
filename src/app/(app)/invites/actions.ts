@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { createClient } from "@/lib/supabase/server";
+import type { GuestCustomField, GuestFieldDefinition } from "@/lib/types";
 
 export async function createInviteProjectAction(
   templateId: string,
@@ -12,6 +13,7 @@ export async function createInviteProjectAction(
   payload: Record<string, string>,
   title: string,
   rsvpEnabled: boolean,
+  guestFieldDefinitions: GuestFieldDefinition[],
 ) {
   const supabase = await createClient();
   const {
@@ -28,6 +30,7 @@ export async function createInviteProjectAction(
     title,
     payload,
     rsvpEnabled,
+    guestFieldDefinitions,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   });
@@ -44,6 +47,7 @@ export async function updateInviteProjectAction(
   payload: Record<string, string>,
   title: string,
   rsvpEnabled: boolean,
+  guestFieldDefinitions: GuestFieldDefinition[],
 ) {
   const supabase = await createClient();
   const {
@@ -61,6 +65,7 @@ export async function updateInviteProjectAction(
     payload,
     title,
     rsvpEnabled,
+    guestFieldDefinitions,
   });
 
   if (success) {
@@ -94,11 +99,12 @@ export async function deleteInviteProjectAction(projectId: string) {
 
 export async function addGuestAction(
   projectId: string,
-  name: string,
-  note: string | undefined,
+  displayName: string,
+  personalNote: string | undefined,
+  internalNote: string | undefined,
   email: string | undefined,
   contactNumber: string | undefined,
-  extraData: Record<string, string>,
+  customFields: Record<string, GuestCustomField>,
 ) {
   const supabase = await createClient();
   const {
@@ -115,11 +121,12 @@ export async function addGuestAction(
   const success = await supabaseInviteGuestRepository.save({
     id,
     projectId,
-    name,
-    note,
+    displayName,
+    personalNote,
+    internalNote,
     email,
     contactNumber,
-    extraData,
+    customFields,
     createdAt: new Date().toISOString(),
   });
 
@@ -133,11 +140,12 @@ export async function addGuestAction(
 export async function updateGuestAction(
   guestId: string,
   projectId: string,
-  name: string,
-  note: string | undefined,
+  displayName: string,
+  personalNote: string | undefined,
+  internalNote: string | undefined,
   email: string | undefined,
   contactNumber: string | undefined,
-  extraData: Record<string, string>,
+  customFields: Record<string, GuestCustomField>,
 ) {
   const supabase = await createClient();
   const {
@@ -151,11 +159,12 @@ export async function updateGuestAction(
   }
 
   const success = await supabaseInviteGuestRepository.update(guestId, {
-    name,
-    note,
+    displayName,
+    personalNote,
+    internalNote,
     email,
     contactNumber,
-    extraData,
+    customFields,
   });
 
   if (success) {

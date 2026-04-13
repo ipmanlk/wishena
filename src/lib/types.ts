@@ -210,7 +210,6 @@ export interface InviteTemplate {
 
     modules: InviteModule[];
     projectInputs: InviteInputField[];
-    guestInputs: InviteInputField[];
   };
 }
 
@@ -223,19 +222,43 @@ export interface InviteProject {
   payload: Record<string, string>;
   rsvpEnabled: boolean;
   guestLimit?: number;
+  guestFieldDefinitions: GuestFieldDefinition[];
   createdAt: string;
   updatedAt: string;
+}
+
+export interface GuestFieldDefinition {
+  key: string;
+  label: string;
+  type: "text" | "textarea";
+  required: boolean;
+  isPublic: boolean;
+  placeholder?: string;
+}
+
+export interface GuestCustomField {
+  value: string;
+  isPublic: boolean;
 }
 
 export interface InviteGuest {
   id: string;
   projectId: string;
-  name: string;
-  note?: string;
+  displayName: string;
+  personalNote?: string;
+  internalNote?: string;
   email?: string;
   contactNumber?: string;
-  extraData: Record<string, string>;
+  customFields: Record<string, GuestCustomField>;
   createdAt: string;
+}
+
+export interface PublicGuest {
+  id: string;
+  projectId: string;
+  displayName: string;
+  personalNote?: string;
+  customFields: Record<string, string>;
 }
 
 export type RsvpResponse = "yes" | "no";

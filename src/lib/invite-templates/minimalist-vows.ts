@@ -66,7 +66,7 @@ export const minimalistVowsTemplate: InviteTemplate = {
         id: "m_address",
         type: "guest_address",
         bindSource: "guest",
-        bindTo: "name",
+        bindTo: "displayName",
         prefix: "for ",
         animation: "fade_up",
         props: {
@@ -78,7 +78,7 @@ export const minimalistVowsTemplate: InviteTemplate = {
         id: "m_note",
         type: "custom_note",
         bindSource: "guest",
-        bindTo: "note",
+        bindTo: "personalNote",
         animation: "fade_up",
         props: {
           className: "text-center text-zinc-500 mb-8 text-sm",
@@ -142,35 +142,6 @@ export const minimalistVowsTemplate: InviteTemplate = {
         scope: "project",
         description:
           "The last date guests can respond — displayed on their invite card.",
-      },
-    ],
-    guestInputs: [
-      {
-        key: "name",
-        label: "Guest Name(s)",
-        type: "text",
-        required: true,
-        scope: "guest",
-        placeholder: "Oliver & Mia",
-        maxLength: 60,
-      },
-      {
-        key: "note",
-        label: "Personal Note (Optional)",
-        type: "textarea",
-        required: false,
-        scope: "guest",
-        placeholder: "Can't wait.",
-        maxLength: 200,
-      },
-      {
-        key: "tableNumber",
-        label: "Table Number (Optional)",
-        type: "text",
-        required: false,
-        scope: "guest",
-        placeholder: "8",
-        maxLength: 20,
       },
     ],
   },

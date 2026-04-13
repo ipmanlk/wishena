@@ -61,6 +61,7 @@ export default async function EditProjectPage({ params }: PageProps) {
               title: project.title,
               payload: project.payload,
               rsvpEnabled: project.rsvpEnabled,
+              guestFieldDefinitions: project.guestFieldDefinitions || [],
             }}
           />
         </div>

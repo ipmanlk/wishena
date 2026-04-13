@@ -20,7 +20,7 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
   const handleDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete "${guest.name}"? This action cannot be undone.`,
+        `Are you sure you want to delete "${guest.displayName}"? This action cannot be undone.`,
       )
     ) {
       return;

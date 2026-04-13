@@ -36,13 +36,20 @@ export function InviteCardRenderer({
   }, []);
 
   // Sanitize guest data for public display — only expose fields that
-  // templates are allowed to bind to. Never leak email, contactNumber, etc.
+  // templates are allowed to bind to. Never leak internal notes or private custom fields.
+  const publicCustomFields = Object.entries(guest.customFields || {})
+    .filter(([_, field]) => field.isPublic)
+    .reduce((acc, [key, field]) => {
+      acc[key] = field;
+      return acc;
+    }, {} as NonNullable<InviteGuest["customFields"]>);
+
   const publicGuest = {
     id: guest.id,
     projectId: guest.projectId,
-    name: guest.name,
-    note: guest.note,
-    extraData: guest.extraData,
+    displayName: guest.displayName,
+    personalNote: guest.personalNote,
+    customFields: publicCustomFields,
     createdAt: guest.createdAt,
   };
 
@@ -81,11 +88,11 @@ export function InviteCardRenderer({
                   publicGuest as unknown as Record<string, unknown>
                 )[module.bindTo];
               } else if (
-                publicGuest.extraData &&
-                module.bindTo in publicGuest.extraData
+                publicGuest.customFields &&
+                module.bindTo in publicGuest.customFields
               ) {
-                // Fallback to extraData
-                boundValue = publicGuest.extraData[module.bindTo];
+                // Fallback to customFields
+                boundValue = publicGuest.customFields[module.bindTo]?.value;
               }
             }
 

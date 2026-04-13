@@ -15,11 +15,12 @@ export const supabaseInviteGuestRepository = {
     return data.map((row) => ({
       id: row.id,
       projectId: row.project_id,
-      name: row.name,
-      note: row.note,
+      displayName: row.display_name,
+      personalNote: row.personal_note,
+      internalNote: row.internal_note,
       email: row.email,
       contactNumber: row.contact_number,
-      extraData: row.extra_data,
+      customFields: row.custom_fields,
       createdAt: row.created_at,
     }));
   },
@@ -71,7 +72,7 @@ export const supabaseInviteGuestRepository = {
         if (search?.trim()) {
           const term = `%${search.trim()}%`;
           query = query.or(
-            `name.ilike.${term},email.ilike.${term},note.ilike.${term}`,
+            `display_name.ilike.${term},email.ilike.${term},personal_note.ilike.${term},internal_note.ilike.${term}`,
           );
         }
 
@@ -91,11 +92,12 @@ export const supabaseInviteGuestRepository = {
           guests: data.map((row) => ({
             id: row.id,
             projectId: row.project_id,
-            name: row.name,
-            note: row.note,
+            displayName: row.display_name,
+            personalNote: row.personal_note,
+            internalNote: row.internal_note,
             email: row.email,
             contactNumber: row.contact_number,
-            extraData: row.extra_data,
+            customFields: row.custom_fields,
             createdAt: row.created_at,
           })),
           total: count ?? 0,
@@ -136,7 +138,7 @@ export const supabaseInviteGuestRepository = {
     if (search?.trim()) {
       const term = `%${search.trim()}%`;
       query = query.or(
-        `name.ilike.${term},email.ilike.${term},note.ilike.${term}`,
+        `display_name.ilike.${term},email.ilike.${term},personal_note.ilike.${term},internal_note.ilike.${term}`,
       );
     }
 
@@ -156,11 +158,12 @@ export const supabaseInviteGuestRepository = {
       guests: data.map((row) => ({
         id: row.id,
         projectId: row.project_id,
-        name: row.name,
-        note: row.note,
+        displayName: row.display_name,
+        personalNote: row.personal_note,
+        internalNote: row.internal_note,
         email: row.email,
         contactNumber: row.contact_number,
-        extraData: row.extra_data,
+        customFields: row.custom_fields,
         createdAt: row.created_at,
       })),
       total: count ?? 0,
@@ -180,11 +183,12 @@ export const supabaseInviteGuestRepository = {
     return {
       id: data.id,
       projectId: data.project_id,
-      name: data.name,
-      note: data.note,
+      displayName: data.display_name,
+      personalNote: data.personal_note,
+      internalNote: data.internal_note,
       email: data.email,
       contactNumber: data.contact_number,
-      extraData: data.extra_data,
+      customFields: data.custom_fields,
       createdAt: data.created_at,
     };
   },
@@ -195,11 +199,12 @@ export const supabaseInviteGuestRepository = {
     const { error } = await supabase.from("invite_guests").insert({
       id: guest.id,
       project_id: guest.projectId,
-      name: guest.name,
-      note: guest.note,
+      display_name: guest.displayName,
+      personal_note: guest.personalNote,
+      internal_note: guest.internalNote,
       email: guest.email,
       contact_number: guest.contactNumber,
-      extra_data: guest.extraData,
+      custom_fields: guest.customFields,
       created_at: guest.createdAt,
     });
 
@@ -214,13 +219,14 @@ export const supabaseInviteGuestRepository = {
     const supabase = await createClient();
 
     const dbUpdates: Record<string, unknown> = {};
-    if (updates.name !== undefined) dbUpdates.name = updates.name;
-    if (updates.note !== undefined) dbUpdates.note = updates.note;
+    if (updates.displayName !== undefined) dbUpdates.display_name = updates.displayName;
+    if (updates.personalNote !== undefined) dbUpdates.personal_note = updates.personalNote;
+    if (updates.internalNote !== undefined) dbUpdates.internal_note = updates.internalNote;
     if (updates.email !== undefined) dbUpdates.email = updates.email;
     if (updates.contactNumber !== undefined)
       dbUpdates.contact_number = updates.contactNumber;
-    if (updates.extraData !== undefined)
-      dbUpdates.extra_data = updates.extraData;
+    if (updates.customFields !== undefined)
+      dbUpdates.custom_fields = updates.customFields;
 
     const { error } = await supabase
       .from("invite_guests")
@@ -254,11 +260,12 @@ export const supabaseInviteGuestRepository = {
     const dbGuests = guests.map((guest) => ({
       id: guest.id,
       project_id: guest.projectId,
-      name: guest.name,
-      note: guest.note,
+      display_name: guest.displayName,
+      personal_note: guest.personalNote,
+      internal_note: guest.internalNote,
       email: guest.email,
       contact_number: guest.contactNumber,
-      extra_data: guest.extraData,
+      custom_fields: guest.customFields,
       created_at: guest.createdAt,
     }));
 

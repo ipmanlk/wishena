@@ -44,11 +44,7 @@ export default async function EditGuestModalPage({ params }: PageProps) {
     <Modal>
       <div className="p-6 sm:p-8">
         <h2 className="text-xl font-bold text-zinc-900 mb-6">Edit Guest</h2>
-        <EditGuestForm
-          projectId={projectId}
-          guest={guest}
-          template={template}
-        />
+        <EditGuestForm project={project} guest={guest} />
       </div>
     </Modal>
   );

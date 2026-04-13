@@ -37,7 +37,7 @@ export default async function AddGuestModalPage({ params }: PageProps) {
     <Modal>
       <div className="p-6 sm:p-8">
         <h2 className="text-xl font-bold text-zinc-900 mb-6">Add Guest</h2>
-        <AddGuestForm projectId={projectId} template={template} />
+        <AddGuestForm project={project} />
       </div>
     </Modal>
   );

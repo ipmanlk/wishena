@@ -46,9 +46,8 @@ export default async function EditGuestPage({ params }: PageProps) {
         <p className="text-zinc-500 mb-8">{project.title}</p>
         <div className="bg-white p-6 rounded-2xl border shadow-sm">
           <EditGuestForm
-            projectId={projectId}
+            project={project}
             guest={guest}
-            template={template}
           />
         </div>
       </div>
