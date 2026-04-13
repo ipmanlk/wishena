@@ -39,7 +39,7 @@ export async function createClient() {
 export function createAdminClient() {
   return createServerClient(
     getEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    getEnv("SUPABASE_SERVICE_ROLE_KEY"),
+    getEnv("SUPABASE_SECRET_KEY"),
     {
       cookies: {
         getAll() {
