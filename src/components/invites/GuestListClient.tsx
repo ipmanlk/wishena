@@ -379,7 +379,7 @@ export function GuestListClient({
                         <span className="text-xs text-zinc-500">
                           {formatDistanceToNow(
                             new Date(
-                              rsvpMap.get(selectedGuest.id)?.respondedAt,
+                              rsvpMap.get(selectedGuest.id)!.respondedAt,
                             ),
                             {
                               addSuffix: true,

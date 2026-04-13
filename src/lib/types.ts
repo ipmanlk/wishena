@@ -238,6 +238,7 @@ export interface GuestFieldDefinition {
 }
 
 export interface GuestCustomField {
+  label?: string;
   value: string;
   isPublic: boolean;
 }
@@ -246,12 +247,11 @@ export interface InviteGuest {
   id: string;
   projectId: string;
   displayName: string;
+  email?: string;
+  contactNumber?: string;
   personalNote?: string;
   internalNote?: string;
-  customFields?: Record<
-    string,
-    { label: string; value: string; isPublic: boolean }
-  >;
+  customFields?: Record<string, GuestCustomField>;
   createdAt: string;
 }
 

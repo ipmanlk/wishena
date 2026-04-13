@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { addGuestAction } from "@/app/(app)/invites/actions";
-import type { InviteProject } from "@/lib/types";
+import type { GuestCustomField, InviteProject } from "@/lib/types";
 
 interface AddGuestFormProps {
   project: InviteProject;
@@ -21,7 +21,7 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [customFields, setCustomFields] = useState<
-    Record<string, { label: string; value: string; isPublic: boolean }>
+    Record<string, GuestCustomField>
   >({});
 
   const handleCustomFieldChange = (

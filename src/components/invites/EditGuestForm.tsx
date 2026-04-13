@@ -4,7 +4,7 @@ import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { updateGuestAction } from "@/app/(app)/invites/actions";
-import type { InviteGuest, InviteProject } from "@/lib/types";
+import type { GuestCustomField, InviteGuest, InviteProject } from "@/lib/types";
 
 interface EditGuestFormProps {
   project: InviteProject;
@@ -26,7 +26,7 @@ export function EditGuestForm({
   const [email, setEmail] = useState(guest.email || "");
   const [contactNumber, setContactNumber] = useState(guest.contactNumber || "");
   const [customFields, setCustomFields] = useState<
-    Record<string, { label: string; value: string; isPublic: boolean }>
+    Record<string, GuestCustomField>
   >(guest.customFields || {});
 
   const handleCustomFieldChange = (

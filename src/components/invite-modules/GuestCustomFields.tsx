@@ -1,13 +1,10 @@
 import { motion } from "framer-motion";
-import type { InviteModule } from "@/lib/types";
+import type { GuestCustomField, InviteModule } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
 interface GuestCustomFieldsProps extends InviteModule {
   guest?: {
-    customFields?: Record<
-      string,
-      { label: string; value: string; isPublic: boolean }
-    >;
+    customFields?: Record<string, GuestCustomField>;
   };
 }
 
