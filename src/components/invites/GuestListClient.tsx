@@ -87,20 +87,20 @@ export function GuestListClient({
   const getStatusBadge = (statusValue: "yes" | "no" | "pending") => {
     if (statusValue === "yes") {
       return (
-        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-emerald-100 text-emerald-800">
+        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-sage/20 text-sage">
           Attending
         </span>
       );
     }
     if (statusValue === "no") {
       return (
-        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-rose-100 text-rose-800">
+        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-terracotta/15 text-terracotta">
           Declined
         </span>
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-amber-100 text-amber-800">
+      <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-mustard/20 text-mustard">
         Pending
       </span>
     );
@@ -137,27 +137,29 @@ export function GuestListClient({
       {/* Stats Cards */}
       {rsvpEnabled && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-xl border flex flex-col items-center justify-center">
-            <span className="text-2xl font-semibold">{totalGuests}</span>
-            <span className="text-xs text-zinc-500 uppercase tracking-wider mt-1">
+          <div className="bg-white p-4 rounded-xl border border-warm-gray/20 flex flex-col items-center justify-center">
+            <span className="text-2xl font-semibold text-ink">
+              {totalGuests}
+            </span>
+            <span className="text-xs text-warm-gray-text uppercase tracking-wider mt-1">
               Total Guests
             </span>
           </div>
-          <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-100 flex flex-col items-center justify-center text-emerald-800">
+          <div className="bg-sage/10 p-4 rounded-xl border border-sage/20 flex flex-col items-center justify-center text-sage">
             <span className="text-2xl font-semibold">{rsvpCounts.yes}</span>
-            <span className="text-xs text-emerald-600/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-sage/80 uppercase tracking-wider mt-1">
               Attending
             </span>
           </div>
-          <div className="bg-rose-50 p-4 rounded-xl border border-rose-100 flex flex-col items-center justify-center text-rose-800">
+          <div className="bg-terracotta/10 p-4 rounded-xl border border-terracotta/20 flex flex-col items-center justify-center text-terracotta">
             <span className="text-2xl font-semibold">{rsvpCounts.no}</span>
-            <span className="text-xs text-rose-600/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-terracotta/80 uppercase tracking-wider mt-1">
               Declined
             </span>
           </div>
-          <div className="bg-amber-50 p-4 rounded-xl border border-amber-100 flex flex-col items-center justify-center text-amber-800">
+          <div className="bg-mustard/10 p-4 rounded-xl border border-mustard/20 flex flex-col items-center justify-center text-mustard">
             <span className="text-2xl font-semibold">{pendingCount}</span>
-            <span className="text-xs text-amber-600/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-mustard/80 uppercase tracking-wider mt-1">
               Pending
             </span>
           </div>
@@ -175,8 +177,8 @@ export function GuestListClient({
               disabled={isPending}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${
                 status === tab.key
-                  ? "bg-zinc-900 text-white"
-                  : "bg-white border border-zinc-200 text-zinc-600 hover:bg-zinc-50"
+                  ? "bg-terracotta text-white"
+                  : "bg-white border border-warm-gray/30 text-ink hover:bg-off-white"
               }`}
             >
               {tab.label}
@@ -192,37 +194,36 @@ export function GuestListClient({
             value={search}
             onChange={(e) => handleSearchChange(e.target.value)}
             disabled={isPending}
-            className="w-full sm:w-64 px-4 py-2 bg-white border border-zinc-200 rounded-lg text-sm outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 disabled:opacity-50"
+            className="w-full sm:w-64 px-4 py-2 bg-white border border-warm-gray/30 rounded-lg text-sm outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink disabled:opacity-50"
           />
         </div>
       </div>
 
       {/* Results count */}
-      <div className="text-sm text-zinc-500">
+      <div className="text-sm text-warm-gray-text">
         {totalGuests === 0 ? (
           "No guests"
         ) : totalGuests === 1 ? (
           "1 guest"
         ) : totalPages === 1 ? (
           <>
-            <span className="font-medium text-zinc-900">{totalGuests}</span>{" "}
-            guests
+            <span className="font-medium text-ink">{totalGuests}</span> guests
           </>
         ) : (
           <>
-            <span className="font-medium text-zinc-900">
+            <span className="font-medium text-ink">
               {from}-{to}
             </span>{" "}
-            of <span className="font-medium text-zinc-900">{totalGuests}</span>{" "}
+            of <span className="font-medium text-ink">{totalGuests}</span>{" "}
             guests
           </>
         )}
       </div>
 
       {/* Guest Table */}
-      <div className="bg-white rounded-xl border overflow-hidden">
+      <div className="bg-white rounded-xl border border-warm-gray/20 overflow-hidden">
         <table className="w-full text-sm text-left">
-          <thead className="bg-zinc-50 text-zinc-500 border-b">
+          <thead className="bg-off-white text-warm-gray-text border-b border-warm-gray/20">
             <tr>
               <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px]">
                 Guest Name
@@ -243,23 +244,23 @@ export function GuestListClient({
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-zinc-100">
+          <tbody className="divide-y divide-warm-gray/20">
             {guests.map((guest) => {
               const rsvp = rsvpMap.get(guest.id);
               const statusValue = rsvp ? rsvp.response : "pending";
               const inviteUrl = `/i/${guest.id}`;
 
               return (
-                <tr key={guest.id} className="hover:bg-zinc-50/50">
-                  <td className="px-6 py-4 font-medium text-zinc-900">
+                <tr key={guest.id} className="hover:bg-off-white/50">
+                  <td className="px-6 py-4 font-medium text-ink">
                     {guest.name}
                     {guest.note && (
-                      <p className="text-xs text-zinc-400 font-normal mt-1 truncate max-w-xs">
+                      <p className="text-xs text-muted font-normal mt-1 truncate max-w-xs">
                         {guest.note}
                       </p>
                     )}
                   </td>
-                  <td className="px-6 py-4 text-zinc-500 text-sm">
+                  <td className="px-6 py-4 text-warm-gray-text text-sm">
                     {guest.email && (
                       <div className="truncate max-w-[200px]">
                         {guest.email}
@@ -267,7 +268,7 @@ export function GuestListClient({
                     )}
                     {guest.contactNumber && <div>{guest.contactNumber}</div>}
                     {!guest.email && !guest.contactNumber && (
-                      <span className="text-zinc-300">-</span>
+                      <span className="text-warm-gray">-</span>
                     )}
                   </td>
                   {rsvpEnabled && (
@@ -275,7 +276,7 @@ export function GuestListClient({
                       <div className="flex flex-col gap-1">
                         {getStatusBadge(statusValue)}
                         {rsvp && (
-                          <span className="text-[10px] text-zinc-400">
+                          <span className="text-[10px] text-muted">
                             {formatDistanceToNow(new Date(rsvp.respondedAt), {
                               addSuffix: true,
                             })}
@@ -284,20 +285,20 @@ export function GuestListClient({
                       </div>
                     </td>
                   )}
-                  <td className="px-6 py-4 text-zinc-500">
+                  <td className="px-6 py-4 text-warm-gray-text">
                     {Object.keys(guest.extraData).length > 0 ? (
                       <div className="flex flex-wrap gap-1">
                         {Object.entries(guest.extraData).map(([k, v]) => (
                           <span
                             key={k}
-                            className="px-1.5 py-0.5 rounded bg-zinc-100 text-[10px] text-zinc-600 border border-zinc-200"
+                            className="px-1.5 py-0.5 rounded bg-warm-gray/30 text-[10px] text-warm-gray-text border border-warm-gray/30"
                           >
                             {k}: {v}
                           </span>
                         ))}
                       </div>
                     ) : (
-                      <span className="text-zinc-300">-</span>
+                      <span className="text-warm-gray">-</span>
                     )}
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -313,7 +314,7 @@ export function GuestListClient({
               <tr>
                 <td
                   colSpan={rsvpEnabled ? 5 : 4}
-                  className="px-6 py-12 text-center text-zinc-500"
+                  className="px-6 py-12 text-center text-warm-gray-text"
                 >
                   No guests found. Try adjusting your filters or add a new
                   guest.
@@ -331,7 +332,7 @@ export function GuestListClient({
             type="button"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage <= 1 || isPending}
-            className="px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-white border border-warm-gray/30 text-ink rounded-lg text-sm font-medium hover:bg-off-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -345,8 +346,8 @@ export function GuestListClient({
                 disabled={isPending}
                 className={`w-10 h-10 rounded-lg text-sm font-medium transition-colors disabled:opacity-50 ${
                   page === currentPage
-                    ? "bg-zinc-900 text-white"
-                    : "bg-white border border-zinc-200 text-zinc-700 hover:bg-zinc-50"
+                    ? "bg-terracotta text-white"
+                    : "bg-white border border-warm-gray/30 text-ink hover:bg-off-white"
                 }`}
               >
                 {page}
@@ -358,7 +359,7 @@ export function GuestListClient({
             type="button"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage >= totalPages || isPending}
-            className="px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-lg text-sm font-medium hover:bg-zinc-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="px-4 py-2 bg-white border border-warm-gray/30 text-ink rounded-lg text-sm font-medium hover:bg-off-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             Next
           </button>

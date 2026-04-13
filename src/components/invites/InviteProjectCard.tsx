@@ -26,48 +26,46 @@ export function InviteProjectCard({
   templateName,
 }: InviteProjectCardProps) {
   return (
-    <div className="bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col h-full">
+    <div className="bg-white border border-warm-gray/20 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-all flex flex-col h-full">
       <div className="p-6 flex-grow flex flex-col">
         <div className="flex justify-between items-start mb-4">
           <div className="flex flex-col">
-            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-100 text-zinc-600 text-[10px] font-medium uppercase tracking-wider mb-3 w-fit">
+            <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-warm-gray/30 text-warm-gray-text text-[10px] font-medium uppercase tracking-wider mb-3 w-fit">
               <CalendarHeart className="w-3 h-3" />
               {project.inviteKind}
             </span>
-            <h3 className="font-semibold text-lg text-zinc-900 leading-tight">
+            <h3 className="font-serif font-medium text-xl text-ink leading-tight">
               {project.title}
             </h3>
-            <p className="text-zinc-500 text-sm mt-1">
-              Template: {templateName}
-            </p>
+            <p className="text-warm-gray-text text-sm mt-1">{templateName}</p>
           </div>
         </div>
 
-        <div className="mt-4 pt-4 border-t border-zinc-100 grid gap-3 flex-grow">
-          <div className="flex items-center gap-2 text-sm text-zinc-600">
-            <Users className="w-4 h-4 text-zinc-400" />
+        <div className="mt-4 pt-4 border-t border-warm-gray/20 grid gap-3 flex-grow">
+          <div className="flex items-center gap-2 text-sm text-ink">
+            <Users className="w-4 h-4 text-warm-gray-text" />
             <span>
               {guestCount} {guestCount === 1 ? "Guest" : "Guests"}
             </span>
             {project.guestLimit && (
-              <span className="text-zinc-400 text-xs">
+              <span className="text-muted text-xs">
                 / {project.guestLimit} limit
               </span>
             )}
           </div>
 
           {project.rsvpEnabled && (
-            <div className="flex items-center gap-2 text-sm text-zinc-600">
-              <CheckCircle2 className="w-4 h-4 text-zinc-400" />
-              <div className="flex items-center gap-2">
-                <span className="text-emerald-600 font-medium">
-                  {rsvpYes} Yes
+            <div className="flex items-start gap-2 text-sm text-ink">
+              <CheckCircle2 className="w-4 h-4 text-warm-gray-text shrink-0 mt-0.5" />
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
+                <span className="text-sage font-medium">
+                  {rsvpYes} attending
                 </span>
-                <span className="text-zinc-300">•</span>
-                <span className="text-rose-600 font-medium">{rsvpNo} No</span>
-                <span className="text-zinc-300">•</span>
-                <span className="text-amber-600 font-medium">
-                  {rsvpPending} Pend
+                <span className="text-terracotta font-medium">
+                  {rsvpNo} declined
+                </span>
+                <span className="text-mustard font-medium">
+                  {rsvpPending} pending
                 </span>
               </div>
             </div>
@@ -75,16 +73,16 @@ export function InviteProjectCard({
         </div>
       </div>
 
-      <div className="bg-zinc-50 px-6 py-4 flex gap-3 border-t">
+      <div className="bg-off-white px-6 py-4 flex gap-3 border-t border-warm-gray/20">
         <Link
           href={`/invites/${project.id}/edit`}
-          className="px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-xl text-sm font-medium hover:bg-zinc-50 transition-colors flex items-center justify-center"
+          className="px-4 py-2 bg-white border border-warm-gray/30 text-ink rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
         >
           <Edit3 className="w-4 h-4" />
         </Link>
         <Link
           href={`/invites/${project.id}`}
-          className="flex-grow px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-medium hover:bg-zinc-800 transition-colors flex items-center justify-center gap-1.5"
+          className="flex-grow px-4 py-2 bg-terracotta text-white rounded-xl text-sm font-medium hover:bg-terracotta/90 transition-colors flex items-center justify-center gap-1.5"
         >
           Manage Guests
           <ChevronRight className="w-4 h-4" />

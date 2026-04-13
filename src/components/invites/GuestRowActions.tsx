@@ -59,11 +59,11 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
       <button
         type="button"
         onClick={handleCopyLink}
-        className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
+        className="p-1.5 text-warm-gray-text hover:text-ink hover:bg-warm-gray/20 rounded-md transition-colors"
         title={copied ? "Copied!" : "Copy Invite Link"}
       >
         {copied ? (
-          <Check className="w-4 h-4 text-emerald-600" />
+          <Check className="w-4 h-4 text-sage" />
         ) : (
           <Copy className="w-4 h-4" />
         )}
@@ -71,14 +71,14 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
       <Link
         href={inviteUrl}
         target="_blank"
-        className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
+        className="p-1.5 text-warm-gray-text hover:text-ink hover:bg-warm-gray/20 rounded-md transition-colors"
         title="Open Invite Link"
       >
         <ExternalLink className="w-4 h-4" />
       </Link>
       <Link
         href={`/invites/${guest.projectId}/guests/${guest.id}/edit`}
-        className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
+        className="p-1.5 text-warm-gray-text hover:text-ink hover:bg-warm-gray/20 rounded-md transition-colors"
         title="Edit Guest"
       >
         <Pencil className="w-4 h-4" />
@@ -87,7 +87,7 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
         type="button"
         onClick={handleDelete}
         disabled={isDeleting}
-        className="p-1.5 text-zinc-500 hover:text-rose-600 hover:bg-rose-50 rounded-md transition-colors disabled:opacity-50"
+        className="p-1.5 text-warm-gray-text hover:text-terracotta hover:bg-terracotta/10 rounded-md transition-colors disabled:opacity-50"
         title="Delete Guest"
       >
         <Trash2 className="w-4 h-4" />

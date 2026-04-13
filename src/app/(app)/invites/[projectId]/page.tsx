@@ -55,7 +55,6 @@ export default async function InviteProjectDashboard({
     notFound();
   }
 
-  // Get paginated guests with server-side filtering
   const { guests, total } =
     await supabaseInviteGuestRepository.getByProjectIdPaginated(project.id, {
       page,
@@ -64,12 +63,10 @@ export default async function InviteProjectDashboard({
       status,
     });
 
-  // Get RSVP counts for stats cards
   let rsvpCounts = { yes: 0, no: 0, total: 0 };
   let rsvps: InviteRsvp[] = [];
   if (project.rsvpEnabled) {
     rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(project.id);
-    // Only fetch RSVPs for the current page's guests
     if (guests.length > 0) {
       const guestIds = guests.map((g) => g.id);
       const allRsvps = await supabaseRsvpRepository.getByProjectId(project.id);
@@ -80,69 +77,73 @@ export default async function InviteProjectDashboard({
   const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
-    <div className="max-w-6xl mx-auto px-6 py-12">
-      <Link
-        href="/invites"
-        className="inline-flex items-center text-sm text-zinc-500 hover:text-zinc-900 mb-8 transition-colors"
-      >
-        <ChevronLeft className="w-4 h-4 mr-1" />
-        Back to My Invites
-      </Link>
+    <div className="min-h-screen bg-cream py-12 px-6">
+      <div className="max-w-6xl mx-auto">
+        <Link
+          href="/invites"
+          className="inline-flex items-center text-sm text-warm-gray-text hover:text-ink mb-8 transition-colors"
+        >
+          <ChevronLeft className="w-4 h-4 mr-1" />
+          Back to My Invites
+        </Link>
 
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
-        <div>
-          <div className="flex items-center gap-3 mb-2">
-            <span className="px-2.5 py-1 rounded-full bg-zinc-100 text-zinc-600 text-[10px] font-medium uppercase tracking-wider">
-              {project.inviteKind}
-            </span>
-            {project.rsvpEnabled && (
-              <span className="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-medium uppercase tracking-wider">
-                RSVP Enabled
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+          <div>
+            <div className="flex items-center gap-3 mb-2">
+              <span className="px-2.5 py-1 rounded-full bg-warm-gray/30 text-warm-gray-text text-[10px] font-medium uppercase tracking-wider">
+                {project.inviteKind}
               </span>
-            )}
+              {project.rsvpEnabled && (
+                <span className="px-2.5 py-1 rounded-full bg-sage/20 text-sage text-[10px] font-medium uppercase tracking-wider">
+                  RSVP Enabled
+                </span>
+              )}
+            </div>
+            <h1 className="text-3xl font-serif font-medium tracking-tight text-ink">
+              {project.title}
+            </h1>
+            <p className="text-warm-gray-text mt-1">{template.name}</p>
           </div>
-          <h1 className="text-3xl font-bold tracking-tight text-zinc-900">
-            {project.title}
-          </h1>
-          <p className="text-zinc-500 mt-1">Template: {template.name}</p>
+
+          <div className="flex items-center gap-3">
+            <Link
+              href={`/invites/${project.id}/edit`}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-warm-gray/30 text-ink rounded-xl text-sm font-medium hover:bg-off-white transition-colors"
+            >
+              <Settings className="w-4 h-4" />
+              Edit Settings
+            </Link>
+            <Link
+              href={`/invites/${project.id}/guests/new`}
+              className="flex items-center gap-2 px-4 py-2 bg-terracotta text-white rounded-xl text-sm font-medium hover:bg-terracotta/90 transition-colors"
+            >
+              <Plus className="w-4 h-4" />
+              Add Guest
+            </Link>
+          </div>
         </div>
 
-        <div className="flex items-center gap-3">
-          <Link
-            href={`/invites/${project.id}/edit`}
-            className="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 text-zinc-700 rounded-xl text-sm font-medium hover:bg-zinc-50 transition-colors"
-          >
-            <Settings className="w-4 h-4" />
-            Edit Settings
-          </Link>
-          <Link
-            href={`/invites/${project.id}/guests/new`}
-            className="flex items-center gap-2 px-4 py-2 bg-zinc-900 text-white rounded-xl text-sm font-medium hover:bg-zinc-800 transition-colors"
-          >
-            <Plus className="w-4 h-4" />
-            Add Guest
-          </Link>
-        </div>
+        <section>
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-serif font-medium text-ink">
+              Guest List
+            </h2>
+          </div>
+
+          <GuestListClient
+            guests={guests}
+            rsvps={rsvps}
+            rsvpEnabled={project.rsvpEnabled}
+            totalGuests={total}
+            rsvpCounts={rsvpCounts}
+            currentPage={page}
+            totalPages={totalPages}
+            pageSize={PAGE_SIZE}
+            initialSearch={search}
+            initialStatus={status}
+          />
+        </section>
       </div>
-
-      <section>
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-semibold text-zinc-900">Guest List</h2>
-        </div>
-
-        <GuestListClient
-          guests={guests}
-          rsvps={rsvps}
-          rsvpEnabled={project.rsvpEnabled}
-          totalGuests={total}
-          rsvpCounts={rsvpCounts}
-          currentPage={page}
-          totalPages={totalPages}
-          pageSize={PAGE_SIZE}
-          initialSearch={search}
-          initialStatus={status}
-        />
-      </section>
     </div>
   );
 }
