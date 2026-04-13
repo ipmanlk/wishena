@@ -91,6 +91,8 @@ export interface Template {
   id: string;
   name: string;
   description?: string;
+  /** Mark template as premium/VIP for future gating. UI may show a badge. Still usable for now. */
+  isPremium?: boolean;
   categories: string[];
   preview: TemplatePreview;
   defaultValues: Record<string, string>;

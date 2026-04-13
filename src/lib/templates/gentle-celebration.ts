@@ -5,6 +5,7 @@ import type { Template } from "../types";
 export const gentleCelebrationTemplate: Template = {
   id: "gentle-celebration",
   name: "Golden Hour",
+  isPremium: true,
   description: "Warm, timeless and elegant — for moments that matter",
   categories: ["celebration"],
   preview: {

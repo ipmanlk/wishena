@@ -5,6 +5,7 @@ import type { Template } from "../types";
 export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
   name: "Midnight Glow",
+  isPremium: true,
   description: "An electric neon birthday experience built for the night",
   categories: ["birthday"],
   preview: {
