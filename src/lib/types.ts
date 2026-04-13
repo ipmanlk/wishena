@@ -263,7 +263,7 @@ export interface PublicGuest {
   customFields: Record<string, string>;
 }
 
-export type RsvpResponse = "yes" | "no";
+export type RsvpResponse = "yes" | "no" | "unsure";
 
 export interface InviteRsvp {
   id: string;

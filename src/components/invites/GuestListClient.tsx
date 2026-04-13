@@ -7,14 +7,14 @@ import { Modal } from "@/components/ui/Modal";
 import type { InviteGuest, InviteRsvp } from "@/lib/types";
 import { GuestRowActions } from "./GuestRowActions";
 
-type FilterStatus = "all" | "yes" | "no" | "pending";
+type FilterStatus = "all" | "yes" | "no" | "unsure" | "pending";
 
 interface GuestListClientProps {
   guests: InviteGuest[];
   rsvps: InviteRsvp[];
   rsvpEnabled: boolean;
   totalGuests: number;
-  rsvpCounts: { yes: number; no: number; total: number };
+  rsvpCounts: { yes: number; no: number; unsure: number; total: number };
   currentPage: number;
   totalPages: number;
   pageSize: number;
@@ -44,7 +44,7 @@ export function GuestListClient({
   const [selectedGuest, setSelectedGuest] = useState<InviteGuest | null>(null);
 
   const rsvpMap = new Map(rsvps.map((r) => [r.guestId, r]));
-  const pendingCount = totalGuests - rsvpCounts.yes - rsvpCounts.no;
+  const pendingCount = totalGuests - rsvpCounts.yes - rsvpCounts.no - rsvpCounts.unsure;
 
   const createQueryString = useCallback(
     (params: Record<string, string | number | undefined>) => {
@@ -86,7 +86,7 @@ export function GuestListClient({
     });
   };
 
-  const getStatusBadge = (statusValue: "yes" | "no" | "pending") => {
+  const getStatusBadge = (statusValue: "yes" | "no" | "unsure" | "pending") => {
     if (statusValue === "yes") {
       return (
         <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-sage/20 text-sage">
@@ -98,6 +98,13 @@ export function GuestListClient({
       return (
         <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-terracotta/15 text-terracotta">
           Declined
+        </span>
+      );
+    }
+    if (statusValue === "unsure") {
+      return (
+        <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-blue-100 text-blue-700">
+          Unsure
         </span>
       );
     }
@@ -114,6 +121,7 @@ export function GuestListClient({
       ? ([
           { key: "yes", label: "Attending", count: rsvpCounts.yes },
           { key: "no", label: "Declined", count: rsvpCounts.no },
+          { key: "unsure", label: "Unsure", count: rsvpCounts.unsure },
           { key: "pending", label: "Pending", count: pendingCount },
         ] satisfies { key: FilterStatus; label: string; count: number }[])
       : []),
@@ -126,7 +134,7 @@ export function GuestListClient({
     <div className="space-y-6">
       {/* Stats Cards */}
       {rsvpEnabled && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
           <div className="bg-white p-4 rounded-xl border border-ink/20 flex flex-col items-center justify-center text-ink">
             <span className="text-2xl font-semibold">{totalGuests}</span>
             <span className="text-xs text-warm-gray-text uppercase tracking-wider mt-1">
@@ -143,6 +151,12 @@ export function GuestListClient({
             <span className="text-2xl font-semibold">{rsvpCounts.no}</span>
             <span className="text-xs text-terracotta uppercase tracking-wider mt-1">
               Declined
+            </span>
+          </div>
+          <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 flex flex-col items-center justify-center text-blue-700">
+            <span className="text-2xl font-semibold">{rsvpCounts.unsure}</span>
+            <span className="text-xs text-blue-700 uppercase tracking-wider mt-1">
+              Unsure
             </span>
           </div>
           <div className="bg-mustard/20 p-4 rounded-xl border border-mustard/35 flex flex-col items-center justify-center text-mustard">

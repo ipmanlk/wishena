@@ -63,7 +63,7 @@ export default async function InviteProjectDashboard({
       status,
     });
 
-  let rsvpCounts = { yes: 0, no: 0, total: 0 };
+  let rsvpCounts = { yes: 0, no: 0, unsure: 0, total: 0 };
   let rsvps: InviteRsvp[] = [];
   if (project.rsvpEnabled) {
     rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(project.id);

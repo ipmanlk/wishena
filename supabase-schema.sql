@@ -154,7 +154,7 @@ create table public.invite_rsvps (
   id           text        primary key,
   guest_id     text        not null references public.invite_guests(id) on delete cascade,
   project_id   text        not null references public.invite_projects(id) on delete cascade,
-  response     text        not null check (response in ('yes', 'no')),
+  response     text        not null check (response in ('yes', 'no', 'unsure')),
   responded_at timestamptz not null default now()
 );
 

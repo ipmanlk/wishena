@@ -24,7 +24,7 @@ export const supabaseRsvpRepository = {
 
   async getCountsByProjectId(
     projectId: string,
-  ): Promise<{ yes: number; no: number; total: number }> {
+  ): Promise<{ yes: number; no: number; unsure: number; total: number }> {
     const supabase = createAdminClient();
 
     const { data, error } = await supabase
@@ -37,13 +37,14 @@ export const supabaseRsvpRepository = {
         "supabaseRsvpRepository.getCountsByProjectId error:",
         error,
       );
-      return { yes: 0, no: 0, total: 0 };
+      return { yes: 0, no: 0, unsure: 0, total: 0 };
     }
 
     const yes = data.filter((r) => r.response === "yes").length;
     const no = data.filter((r) => r.response === "no").length;
+    const unsure = data.filter((r) => r.response === "unsure").length;
 
-    return { yes, no, total: data.length };
+    return { yes, no, unsure, total: data.length };
   },
 
   async getByGuestId(guestId: string): Promise<InviteRsvp | null> {

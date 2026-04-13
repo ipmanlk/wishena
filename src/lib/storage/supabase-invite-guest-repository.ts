@@ -31,7 +31,7 @@ export const supabaseInviteGuestRepository = {
       page: number;
       pageSize: number;
       search?: string;
-      status?: "all" | "yes" | "no" | "pending";
+      status?: "all" | "yes" | "no" | "unsure" | "pending";
     },
   ): Promise<{ guests: InviteGuest[]; total: number }> {
     const supabase = createAdminClient();
