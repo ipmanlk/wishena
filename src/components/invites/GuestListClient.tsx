@@ -109,23 +109,11 @@ export function GuestListClient({
   const filterTabs: { key: FilterStatus; label: string; count: number }[] = [
     { key: "all", label: "All", count: totalGuests },
     ...(rsvpEnabled
-      ? [
-          {
-            key: "yes" as FilterStatus,
-            label: "Attending",
-            count: rsvpCounts.yes,
-          },
-          {
-            key: "no" as FilterStatus,
-            label: "Declined",
-            count: rsvpCounts.no,
-          },
-          {
-            key: "pending" as FilterStatus,
-            label: "Pending",
-            count: pendingCount,
-          },
-        ]
+      ? ([
+          { key: "yes", label: "Attending", count: rsvpCounts.yes },
+          { key: "no", label: "Declined", count: rsvpCounts.no },
+          { key: "pending", label: "Pending", count: pendingCount },
+        ] satisfies { key: FilterStatus; label: string; count: number }[])
       : []),
   ];
 
