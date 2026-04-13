@@ -1,5 +1,10 @@
 import * as Tone from "tone";
-import type { EffectType, SynthType } from "../types";
+import {
+  type EffectType,
+  effectTypes,
+  type SynthType,
+  synthTypes,
+} from "../types";
 
 export interface EffectChain {
   input: Tone.ToneAudioNode;
@@ -203,7 +208,7 @@ export const instrumentPresets = {
    * Perfect for: gentle-celebration, thank you, anniversary
    */
   gentleBells: {
-    type: "AMSynth" as SynthType,
+    type: synthTypes.AMSynth,
     settings: {
       harmonicity: 2.5,
       oscillator: {
@@ -225,7 +230,7 @@ export const instrumentPresets = {
         release: 1,
       },
     },
-    effects: ["reverb", "chorus"] as EffectType[],
+    effects: [effectTypes.reverb, effectTypes.chorus],
   },
 
   /**
@@ -233,7 +238,7 @@ export const instrumentPresets = {
    * Perfect for: neon-birthday, party, celebration
    */
   brightFM: {
-    type: "FMSynth" as SynthType,
+    type: synthTypes.FMSynth,
     settings: {
       harmonicity: 3,
       modulationIndex: 8,
@@ -257,7 +262,7 @@ export const instrumentPresets = {
         release: 0.4,
       },
     },
-    effects: ["delay", "filter"] as EffectType[],
+    effects: [effectTypes.delay, effectTypes.filter],
   },
 
   /**
@@ -265,7 +270,7 @@ export const instrumentPresets = {
    * Perfect for: love, romantic, wedding
    */
   softPad: {
-    type: "DuoSynth" as SynthType,
+    type: synthTypes.DuoSynth,
     settings: {
       vibratoAmount: 0.3,
       vibratoRate: 4,
@@ -309,7 +314,7 @@ export const instrumentPresets = {
         },
       },
     },
-    effects: ["reverb"] as EffectType[],
+    effects: [effectTypes.reverb],
   },
 
   /**
@@ -317,7 +322,7 @@ export const instrumentPresets = {
    * Perfect for: modern, simple, professional
    */
   simplePluck: {
-    type: "Synth" as SynthType,
+    type: synthTypes.Synth,
     settings: {
       oscillator: {
         type: "triangle",
@@ -329,6 +334,88 @@ export const instrumentPresets = {
         release: 0.6,
       },
     },
-    effects: ["reverb"] as EffectType[],
+    effects: [effectTypes.reverb],
+  },
+
+  /**
+   * Warm nylon guitar-like pluck for cozy, friendly templates
+   * Perfect for: morning coffee, casual appreciation, friendship
+   */
+  warmPluck: {
+    type: synthTypes.Synth,
+    settings: {
+      oscillator: {
+        type: "triangle",
+      },
+      envelope: {
+        attack: 0.015,
+        decay: 0.4,
+        sustain: 0.15,
+        release: 0.9,
+      },
+    },
+    effects: [effectTypes.reverb, effectTypes.chorus],
+  },
+
+  /**
+   * Soft glass marimba for serene, mindful templates
+   * Perfect for: lavender fields, wellness, get-well wishes
+   */
+  glassMarimba: {
+    type: synthTypes.AMSynth,
+    settings: {
+      harmonicity: 3,
+      oscillator: {
+        type: "sine",
+      },
+      envelope: {
+        attack: 0.01,
+        decay: 0.5,
+        sustain: 0.05,
+        release: 1.2,
+      },
+      modulation: {
+        type: "sine",
+      },
+      modulationEnvelope: {
+        attack: 0.2,
+        decay: 0.1,
+        sustain: 0.5,
+        release: 0.8,
+      },
+    },
+    effects: [effectTypes.reverb],
+  },
+
+  /**
+   * Mellow electric piano for sophisticated, jazzy templates
+   * Perfect for: city lights, congratulations, promotions
+   */
+  mellowEP: {
+    type: synthTypes.FMSynth,
+    settings: {
+      harmonicity: 1.5,
+      modulationIndex: 4,
+      detune: 0,
+      oscillator: {
+        type: "sine",
+      },
+      envelope: {
+        attack: 0.02,
+        decay: 0.3,
+        sustain: 0.4,
+        release: 1.2,
+      },
+      modulation: {
+        type: "triangle",
+      },
+      modulationEnvelope: {
+        attack: 0.1,
+        decay: 0.2,
+        sustain: 0.3,
+        release: 0.6,
+      },
+    },
+    effects: [effectTypes.reverb, effectTypes.delay],
   },
 };

@@ -514,6 +514,241 @@ export const starlightHarmony: Note[] = [
 ];
 
 /**
+ * Morning Coffee Melody
+ * Key: C Major
+ * Tempo: 82 BPM
+ * Feel: Cozy, friendly, uplifting
+ * Visual match: Warm amber, cream, soft morning light
+ *
+ * Musical concept:
+ * - Gentle major pentatonic phrases
+ * - Rhythmic, conversational patterns
+ * - Comfortable mid-register like acoustic guitar
+ */
+export const morningCoffeeMelody: Note[] = [
+  // First phrase - warm greeting
+  { time: "0:0", note: "C4", duration: "8n", velocity: 0.6 },
+  { time: "0:0:2", note: "E4", duration: "8n", velocity: 0.65 },
+  { time: "0:1", note: "G4", duration: "4n", velocity: 0.7 },
+  { time: "0:2", note: "A4", duration: "8n", velocity: 0.65 },
+  { time: "0:2:2", note: "G4", duration: "8n", velocity: 0.6 },
+  { time: "0:3", note: "E4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - easygoing chat
+  { time: "1:0", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "1:0:2", note: "C5", duration: "8n", velocity: 0.7 },
+  { time: "1:1", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "1:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "1:2:2", note: "D4", duration: "8n", velocity: 0.55 },
+  { time: "1:3", note: "C4", duration: "4n", velocity: 0.6 },
+
+  // Third phrase - little smile
+  { time: "2:0", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "2:0:2", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "2:1", note: "A4", duration: "4n", velocity: 0.7 },
+  { time: "2:2", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "2:2:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "2:3", note: "D4", duration: "4n", velocity: 0.55 },
+
+  // Fourth phrase - content resolve
+  { time: "3:0", note: "C4", duration: "4n", velocity: 0.6 },
+  { time: "3:1", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "3:1:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "3:2", note: "C4", duration: "2n", velocity: 0.65 },
+];
+
+export const morningCoffeeHarmony: Note[] = [
+  // Bar 1: C major
+  { time: "0:0", note: "C3", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "G3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: F major
+  { time: "1:0", note: "F2", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "C3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: G major
+  { time: "2:0", note: "G2", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: C major
+  { time: "3:0", note: "C3", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "E3", duration: "1n", velocity: 0.3 },
+];
+
+/**
+ * Lavender Fields Melody
+ * Key: F Major
+ * Tempo: 64 BPM
+ * Feel: Serene, mindful, floating
+ * Visual match: Soft purples, gentle haze, relaxation
+ *
+ * Musical concept:
+ * - Slow, spacious phrases
+ * - High register for lightness
+ * - Minimal movement for calm
+ */
+export const lavenderFieldsMelody: Note[] = [
+  // First phrase - gentle breath
+  { time: "0:0", note: "A4", duration: "4n", velocity: 0.55 },
+  { time: "0:1", note: "C5", duration: "4n", velocity: 0.6 },
+  { time: "0:2", note: "A4", duration: "2n", velocity: 0.55 },
+
+  // Second phrase - soft drift
+  { time: "1:0", note: "G4", duration: "4n", velocity: 0.55 },
+  { time: "1:1", note: "A4", duration: "4n", velocity: 0.6 },
+  { time: "1:2", note: "F4", duration: "2n", velocity: 0.55 },
+
+  // Third phrase - rising calm
+  { time: "2:0", note: "C5", duration: "4n", velocity: 0.6 },
+  { time: "2:1", note: "A4", duration: "4n", velocity: 0.55 },
+  { time: "2:2", note: "G4", duration: "4n", velocity: 0.5 },
+  { time: "2:3", note: "F4", duration: "4n", velocity: 0.55 },
+
+  // Fourth phrase - peaceful release
+  { time: "3:0", note: "A4", duration: "2n", velocity: 0.6 },
+  { time: "3:2", note: "F4", duration: "2n", velocity: 0.55 },
+];
+
+export const lavenderFieldsHarmony: Note[] = [
+  // Bar 1: F major
+  { time: "0:0", note: "F2", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "C3", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: D minor
+  { time: "1:0", note: "D3", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "A3", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: Bb major
+  { time: "2:0", note: "Bb2", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "F3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: F major
+  { time: "3:0", note: "F2", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "A2", duration: "1n", velocity: 0.27 },
+];
+
+/**
+ * Harvest Moon Melody
+ * Key: G Major
+ * Tempo: 70 BPM
+ * Feel: Warm, grateful, rustic
+ * Visual match: Deep oranges, browns, autumn leaves
+ *
+ * Musical concept:
+ * - Folk-inspired pentatonic melody
+ * - Gentle rises and falls like rolling hills
+ * - Earthy mid-register
+ */
+export const harvestMoonMelody: Note[] = [
+  // First phrase - gathering warmth
+  { time: "0:0", note: "G4", duration: "4n", velocity: 0.6 },
+  { time: "0:1", note: "B4", duration: "8n", velocity: 0.65 },
+  { time: "0:1:2", note: "D5", duration: "8n", velocity: 0.7 },
+  { time: "0:2", note: "B4", duration: "4n", velocity: 0.65 },
+  { time: "0:3", note: "G4", duration: "4n", velocity: 0.6 },
+
+  // Second phrase - shared stories
+  { time: "1:0", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "1:0:2", note: "B4", duration: "8n", velocity: 0.6 },
+  { time: "1:1", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "1:2", note: "A4", duration: "4n", velocity: 0.6 },
+  { time: "1:3", note: "B4", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - golden light
+  { time: "2:0", note: "D5", duration: "4n", velocity: 0.7 },
+  { time: "2:1", note: "E5", duration: "8n", velocity: 0.65 },
+  { time: "2:1:2", note: "D5", duration: "8n", velocity: 0.6 },
+  { time: "2:2", note: "B4", duration: "4n", velocity: 0.65 },
+  { time: "2:3", note: "G4", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - thankful home
+  { time: "3:0", note: "A4", duration: "8n", velocity: 0.6 },
+  { time: "3:0:2", note: "B4", duration: "8n", velocity: 0.65 },
+  { time: "3:1", note: "G4", duration: "4n", velocity: 0.6 },
+  { time: "3:2", note: "D4", duration: "2n", velocity: 0.65 },
+];
+
+export const harvestMoonHarmony: Note[] = [
+  // Bar 1: G major
+  { time: "0:0", note: "G2", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "D3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: C major
+  { time: "1:0", note: "C3", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "G3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: D major
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "A3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: G major
+  { time: "3:0", note: "G2", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "B2", duration: "1n", velocity: 0.3 },
+];
+
+/**
+ * City Lights Melody
+ * Key: D Major
+ * Tempo: 88 BPM
+ * Feel: Sophisticated, smooth, confident
+ * Visual match: Deep navy, gold, urban elegance
+ *
+ * Musical concept:
+ * - Smooth jazz-inspired phrasing
+ * - Slight swing feel
+ * - Cool, confident intervals
+ */
+export const cityLightsMelody: Note[] = [
+  // First phrase - evening arrival
+  { time: "0:0", note: "F#4", duration: "8n", velocity: 0.6 },
+  { time: "0:0:2", note: "A4", duration: "8n", velocity: 0.65 },
+  { time: "0:1", note: "D5", duration: "4n", velocity: 0.7 },
+  { time: "0:2", note: "F#5", duration: "8n", velocity: 0.65 },
+  { time: "0:2:2", note: "D5", duration: "8n", velocity: 0.6 },
+  { time: "0:3", note: "A4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - skyline stroll
+  { time: "1:0", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "1:0:2", note: "E5", duration: "8n", velocity: 0.6 },
+  { time: "1:1", note: "F#5", duration: "4n", velocity: 0.7 },
+  { time: "1:2", note: "A5", duration: "8n", velocity: 0.65 },
+  { time: "1:2:2", note: "F#5", duration: "8n", velocity: 0.6 },
+  { time: "1:3", note: "D5", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - golden reflection
+  { time: "2:0", note: "A4", duration: "8n", velocity: 0.6 },
+  { time: "2:0:2", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "2:1", note: "F#5", duration: "4n", velocity: 0.7 },
+  { time: "2:2", note: "E5", duration: "8n", velocity: 0.6 },
+  { time: "2:2:2", note: "D5", duration: "8n", velocity: 0.55 },
+  { time: "2:3", note: "A4", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - smooth close
+  { time: "3:0", note: "F#4", duration: "4n", velocity: 0.65 },
+  { time: "3:1", note: "A4", duration: "8n", velocity: 0.6 },
+  { time: "3:1:2", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "3:2", note: "F#4", duration: "2n", velocity: 0.7 },
+];
+
+export const cityLightsHarmony: Note[] = [
+  // Bar 1: D major
+  { time: "0:0", note: "D3", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "A3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: B minor
+  { time: "1:0", note: "B2", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "F#3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: G major
+  { time: "2:0", note: "G2", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: D major
+  { time: "3:0", note: "D3", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "F#3", duration: "1n", velocity: 0.3 },
+];
+
+/**
  * Melody collections by template ID for easy lookup
  */
 export const melodiesByTemplate: Record<
@@ -551,5 +786,21 @@ export const melodiesByTemplate: Record<
   starlight: {
     melody: starlightMelody,
     harmony: starlightHarmony,
+  },
+  "morning-coffee": {
+    melody: morningCoffeeMelody,
+    harmony: morningCoffeeHarmony,
+  },
+  "lavender-fields": {
+    melody: lavenderFieldsMelody,
+    harmony: lavenderFieldsHarmony,
+  },
+  "harvest-moon": {
+    melody: harvestMoonMelody,
+    harmony: harvestMoonHarmony,
+  },
+  "city-lights": {
+    melody: cityLightsMelody,
+    harmony: cityLightsHarmony,
   },
 };

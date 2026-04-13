@@ -29,6 +29,20 @@ export interface InstrumentConfig {
   effects?: EffectType[];
 }
 
+export const synthTypes = {
+  FMSynth: "FMSynth" as const satisfies SynthType,
+  AMSynth: "AMSynth" as const satisfies SynthType,
+  Synth: "Synth" as const satisfies SynthType,
+  DuoSynth: "DuoSynth" as const satisfies SynthType,
+};
+
+export const effectTypes = {
+  reverb: "reverb" as const satisfies EffectType,
+  delay: "delay" as const satisfies EffectType,
+  chorus: "chorus" as const satisfies EffectType,
+  filter: "filter" as const satisfies EffectType,
+};
+
 export interface EffectConfig {
   reverb: ReverbOptions;
   delay: FeedbackDelayOptions;

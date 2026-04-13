@@ -1,7 +1,11 @@
 import type { Template, TemplateListItem } from "../types";
 import { cherryBlossomTemplate } from "./cherry-blossom";
+import { cityLightsTemplate } from "./city-lights";
 import { forestCalmTemplate } from "./forest-calm";
 import { gentleCelebrationTemplate } from "./gentle-celebration";
+import { harvestMoonTemplate } from "./harvest-moon";
+import { lavenderFieldsTemplate } from "./lavender-fields";
+import { morningCoffeeTemplate } from "./morning-coffee";
 import { neonBirthdayTemplate } from "./neon-birthday";
 import { oceanBreezeTemplate } from "./ocean-breeze";
 import { snowyWinterTemplate } from "./snowy-winter";
@@ -17,6 +21,10 @@ export const templates: Template[] = [
   forestCalmTemplate,
   cherryBlossomTemplate,
   starlightTemplate,
+  morningCoffeeTemplate,
+  lavenderFieldsTemplate,
+  harvestMoonTemplate,
+  cityLightsTemplate,
 ];
 
 export function getTemplateById(id: string): Template | null {
