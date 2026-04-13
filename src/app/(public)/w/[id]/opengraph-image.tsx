@@ -1,17 +1,13 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+export const alt = "Someone sent you a wish!";
+export const size = {
+  width: 1200,
+  height: 630,
+};
+export const contentType = "image/png";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const text = searchParams.get("text") || "A special wish for you!";
-  const template = searchParams.get("template") || "neon-birthday";
-
-  const backgrounds: Record<string, string> = {
-    "neon-birthday": "radial-gradient(circle, #ec4899 0%, #020617 70%)",
-    "gentle-celebration": "linear-gradient(135deg, #fce7f3 0%, #ddd6fe 100%)",
-  };
-
+export default async function Image() {
   return new ImageResponse(
     <div
       style={{
@@ -20,7 +16,7 @@ export async function GET(request: Request) {
         width: "100%",
         alignItems: "center",
         justifyContent: "center",
-        background: backgrounds[template] || backgrounds["neon-birthday"],
+        background: "radial-gradient(circle, #ec4899 0%, #020617 70%)",
         padding: "40px",
       }}
     >
@@ -41,7 +37,7 @@ export async function GET(request: Request) {
             lineHeight: 1.2,
           }}
         >
-          {text.length > 60 ? `${text.slice(0, 60)}...` : text}
+          Someone sent you a wish!
         </div>
         <div
           style={{
@@ -55,8 +51,7 @@ export async function GET(request: Request) {
       </div>
     </div>,
     {
-      width: 1200,
-      height: 630,
+      ...size,
     },
   );
 }

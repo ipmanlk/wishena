@@ -1,8 +1,8 @@
 "use client";
 
-import { Heart, Sparkles, Zap, Gift, ArrowRight } from "lucide-react";
-import Link from "next/link";
 import { motion } from "framer-motion";
+import { ArrowRight, Gift, Heart, Sparkles, Zap } from "lucide-react";
+import Link from "next/link";
 import { templates } from "@/lib/templates";
 import type { TemplateListItem } from "@/lib/types";
 
