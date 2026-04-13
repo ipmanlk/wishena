@@ -4,9 +4,10 @@ import { Heart, Sparkles, Zap, Gift, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { templates } from "@/lib/templates";
+import type { TemplateListItem } from "@/lib/types";
 
 export default function HomePage() {
-  const featuredTemplates = templates.slice(0, 3);
+  const featuredTemplates: TemplateListItem[] = templates.slice(0, 3);
 
   return (
     <div className="min-h-screen bg-cream">

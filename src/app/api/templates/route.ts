@@ -1,7 +1,7 @@
 import { templates } from "@/lib/templates";
-import type { Template } from "@/lib/types";
+import type { Template, TemplateListItem } from "@/lib/types";
 
-function matchesQuery(template: Template, q: string | null): boolean {
+function matchesQuery(template: TemplateListItem, q: string | null): boolean {
   if (!q) return true;
   const ql = q.toLowerCase();
   if (template.name.toLowerCase().includes(ql)) return true;
@@ -13,7 +13,7 @@ function matchesQuery(template: Template, q: string | null): boolean {
 }
 
 function matchesCategories(
-  template: Template,
+  template: TemplateListItem,
   categories: string[] | null,
 ): boolean {
   if (!categories || categories.length === 0) return true;
@@ -28,6 +28,17 @@ function getAllCategories(): string[] {
     }
   }
   return Array.from(set).sort();
+}
+
+function toListItem(template: Template): TemplateListItem {
+  return {
+    id: template.id,
+    name: template.name,
+    description: template.description,
+    isPremium: template.isPremium,
+    categories: template.categories,
+    preview: template.preview,
+  };
 }
 
 export async function GET(request: Request) {
@@ -51,7 +62,7 @@ export async function GET(request: Request) {
   const start = (page - 1) * limit;
   const end = start + limit;
 
-  const pageItems = filtered.slice(start, end);
+  const pageItems = filtered.slice(start, end).map(toListItem);
 
   return new Response(
     JSON.stringify({

@@ -87,7 +87,7 @@ export interface TemplatePreview {
   lines: PreviewLine[];
 }
 
-export interface Template {
+export interface TemplateListItem {
   id: string;
   name: string;
   description?: string;
@@ -95,6 +95,9 @@ export interface Template {
   isPremium?: boolean;
   categories: string[];
   preview: TemplatePreview;
+}
+
+export interface Template extends TemplateListItem {
   defaultValues: Record<string, string>;
 
   blueprint: {

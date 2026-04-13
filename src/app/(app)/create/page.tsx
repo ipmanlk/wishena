@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
-import type { Template } from "@/lib/types";
+import type { TemplateListItem } from "@/lib/types";
 
 const ALL_CATEGORY = "All";
 
@@ -13,7 +13,7 @@ function formatCategoryLabel(category: string): string {
 }
 
 interface TemplatesResponse {
-  items: Template[];
+  items: TemplateListItem[];
   page: number;
   limit: number;
   total: number;
@@ -48,7 +48,7 @@ export default function CreatePage() {
   const [search, setSearch] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
 
-  const [templates, setTemplates] = useState<Template[]>([]);
+  const [templates, setTemplates] = useState<TemplateListItem[]>([]);
   const [page, setPage] = useState(1);
   const [limit] = useState(40);
   const [total, setTotal] = useState(0);
@@ -125,7 +125,7 @@ export default function CreatePage() {
     });
   };
 
-  const handleSelect = (template: Template) => {
+  const handleSelect = (template: TemplateListItem) => {
     router.push(`/create/${template.id}`);
   };
 
