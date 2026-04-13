@@ -42,6 +42,39 @@ export default function HomePage() {
               Beautiful, personalized digital wishes and campaign-ready dynamic
               invitations.
             </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 mb-10">
+              {user ? (
+                <>
+                  <Link
+                    href="/my-wishes"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-terracotta text-white text-sm font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
+                  >
+                    My Wishes
+                  </Link>
+                  <Link
+                    href="/invites"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-warm-gray/30 text-sm font-medium text-ink hover:border-warm-gray/50 transition-colors"
+                  >
+                    My Invites
+                  </Link>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/auth/login"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-warm-gray/30 text-sm font-medium text-ink hover:border-warm-gray/50 transition-colors"
+                  >
+                    Log in
+                  </Link>
+                  <Link
+                    href="/auth/signup"
+                    className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-terracotta text-white text-sm font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
+                  >
+                    Create account
+                  </Link>
+                </>
+              )}
+            </div>
             <div className="flex flex-col sm:flex-row gap-6 mx-auto">
               <div className="flex-1 bg-white p-8 rounded-2xl border border-warm-gray/20 text-left shadow-sm hover:shadow-md transition-shadow group">
                 <h3 className="text-xl font-medium text-ink mb-2">
