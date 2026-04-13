@@ -1,7 +1,4 @@
-import type { NextRequest } from "next/server";
 import { templates } from "@/lib/templates";
-
-export const runtime = "edge";
 
 function matchesQuery(t: any, q: string | null) {
   if (!q) return true;
