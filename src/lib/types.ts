@@ -1,4 +1,14 @@
 import type { Unit } from "tone";
+import type {
+  FMSynthOptions,
+  AMSynthOptions,
+  DuoSynthOptions,
+  SynthOptions,
+  ReverbOptions,
+  FeedbackDelayOptions,
+  ChorusOptions,
+  FilterOptions,
+} from "tone";
 
 export type VisualsPreset = "glow-dust" | "confetti" | "snow";
 
@@ -21,6 +31,13 @@ export interface InstrumentConfig {
   type: SynthType;
   settings?: Record<string, unknown>;
   effects?: EffectType[];
+}
+
+export interface EffectConfig {
+  reverb: ReverbOptions;
+  delay: FeedbackDelayOptions;
+  chorus: ChorusOptions;
+  filter: FilterOptions;
 }
 
 export interface AudioConfig {
