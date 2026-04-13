@@ -69,7 +69,14 @@ export type NoteTone =
   | "A#5"
   | "Bb5"
   | "B5"
-  | "C6";
+  | "C6"
+  | "C#6"
+  | "Db6"
+  | "D6"
+  | "D#6"
+  | "Eb6"
+  | "E6"
+  | "F6";
 
 export type Duration =
   | "1n"
