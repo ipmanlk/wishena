@@ -1,4 +1,6 @@
 import type { Template } from "../types";
+import { instrumentPresets } from "../audio";
+import { midnightGlowMelody, midnightGlowHarmony } from "../audio/melodies";
 
 export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
@@ -20,17 +22,15 @@ export const neonBirthdayTemplate: Template = {
 
     audio: {
       engine: "tonejs",
-      synth: "FMSynth",
-      tempo: 120,
-      melody: [
-        { time: "0:0", note: "C4", duration: "8n" },
-        { time: "0:0:2", note: "E4", duration: "8n" },
-        { time: "0:1", note: "G4", duration: "8n" },
-        { time: "0:1:2", note: "C5", duration: "4n" },
-        { time: "0:2", note: "G4", duration: "8n" },
-        { time: "0:2:2", note: "E4", duration: "8n" },
-        { time: "0:3", note: "C4", duration: "2n" },
-      ],
+      key: "A",
+      mode: "minor",
+      tempo: 105,
+      instrument: instrumentPresets.brightFM,
+      melody: midnightGlowMelody,
+      harmony: midnightGlowHarmony,
+      loop: true,
+      fadeIn: 0.5,
+      volume: -10,
     },
 
     modules: [

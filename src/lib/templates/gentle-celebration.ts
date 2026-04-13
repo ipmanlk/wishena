@@ -1,4 +1,6 @@
 import type { Template } from "../types";
+import { instrumentPresets } from "../audio";
+import { goldenHourMelody, goldenHourHarmony } from "../audio/melodies";
 
 export const gentleCelebrationTemplate: Template = {
   id: "gentle-celebration",
@@ -16,6 +18,19 @@ export const gentleCelebrationTemplate: Template = {
       preset: "confetti",
       mobileDensity: 8,
       desktopDensity: 20,
+    },
+
+    audio: {
+      engine: "tonejs",
+      key: "G",
+      mode: "major",
+      tempo: 74,
+      instrument: instrumentPresets.gentleBells,
+      melody: goldenHourMelody,
+      harmony: goldenHourHarmony,
+      loop: true,
+      fadeIn: 2,
+      volume: -12,
     },
 
     modules: [

@@ -33,12 +33,7 @@ export function WishRenderer({ template, payload, isPreview = false }: WishRende
       )}
 
       {blueprint.audio && !isPreview && (
-        <AudioPlayer
-          synth={blueprint.audio.synth as "FMSynth" | "AMSynth" | "Synth"}
-          tempo={blueprint.audio.tempo}
-          melody={blueprint.audio.melody}
-          isPlaying={isRevealed}
-        />
+        <AudioPlayer audio={blueprint.audio} isPlaying={isRevealed} />
       )}
 
       {!isPreview && (
