@@ -219,9 +219,12 @@ export const supabaseInviteGuestRepository = {
     const supabase = await createClient();
 
     const dbUpdates: Record<string, unknown> = {};
-    if (updates.displayName !== undefined) dbUpdates.display_name = updates.displayName;
-    if (updates.personalNote !== undefined) dbUpdates.personal_note = updates.personalNote;
-    if (updates.internalNote !== undefined) dbUpdates.internal_note = updates.internalNote;
+    if (updates.displayName !== undefined)
+      dbUpdates.display_name = updates.displayName;
+    if (updates.personalNote !== undefined)
+      dbUpdates.personal_note = updates.personalNote;
+    if (updates.internalNote !== undefined)
+      dbUpdates.internal_note = updates.internalNote;
     if (updates.email !== undefined) dbUpdates.email = updates.email;
     if (updates.contactNumber !== undefined)
       dbUpdates.contact_number = updates.contactNumber;

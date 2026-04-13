@@ -39,10 +39,13 @@ export function InviteCardRenderer({
   // templates are allowed to bind to. Never leak internal notes or private custom fields.
   const publicCustomFields = Object.entries(guest.customFields || {})
     .filter(([_, field]) => field.isPublic)
-    .reduce((acc, [key, field]) => {
-      acc[key] = field;
-      return acc;
-    }, {} as NonNullable<InviteGuest["customFields"]>);
+    .reduce(
+      (acc, [key, field]) => {
+        acc[key] = field;
+        return acc;
+      },
+      {} as NonNullable<InviteGuest["customFields"]>,
+    );
 
   const publicGuest = {
     id: guest.id,

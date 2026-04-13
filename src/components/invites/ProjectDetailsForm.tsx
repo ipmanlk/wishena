@@ -1,14 +1,14 @@
 "use client";
 
-import { Loader2, Plus, Trash2, GripVertical, Settings2 } from "lucide-react";
+import { Loader2, Plus, Settings2, Trash2 } from "lucide-react";
+import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import {
   createInviteProjectAction,
   updateInviteProjectAction,
 } from "@/app/(app)/invites/actions";
-import type { InviteTemplate, GuestFieldDefinition } from "@/lib/types";
-import { nanoid } from "nanoid";
+import type { GuestFieldDefinition, InviteTemplate } from "@/lib/types";
 
 interface ProjectDetailsFormProps {
   template: InviteTemplate;
@@ -36,9 +36,9 @@ export function ProjectDetailsForm({
   const [payload, setPayload] = useState<Record<string, string>>(
     initialData?.payload || {},
   );
-  
+
   const [guestFields, setGuestFields] = useState<GuestFieldDefinition[]>(
-    initialData?.guestFieldDefinitions || []
+    initialData?.guestFieldDefinitions || [],
   );
 
   const handleChange = (key: string, value: string) => {
@@ -58,7 +58,10 @@ export function ProjectDetailsForm({
     ]);
   };
 
-  const handleUpdateField = (index: number, updates: Partial<GuestFieldDefinition>) => {
+  const handleUpdateField = (
+    index: number,
+    updates: Partial<GuestFieldDefinition>,
+  ) => {
     setGuestFields((prev) => {
       const nw = [...prev];
       nw[index] = { ...nw[index], ...updates };
@@ -77,9 +80,9 @@ export function ProjectDetailsForm({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (loading) return;
-    
+
     // validate guest field labels are not empty
-    if (guestFields.some(f => !f.label.trim())) {
+    if (guestFields.some((f) => !f.label.trim())) {
       alert("All custom guest fields must have a label.");
       return;
     }
@@ -89,7 +92,7 @@ export function ProjectDetailsForm({
     try {
       if (isEditing) {
         const res = await updateInviteProjectAction(
-          initialData!.id,
+          initialData?.id,
           payload,
           title,
           rsvpEnabled,
@@ -174,19 +177,25 @@ export function ProjectDetailsForm({
           <Settings2 className="w-5 h-5 text-zinc-400" />
           Configure Guest Information
         </h2>
-        
+
         <p className="text-sm text-zinc-600 mb-4">
-          Define what information you want to collect for each guest. You can choose whether
-          this information is shown publicly on their invite card or kept private.
-          For example: Dietary Requirements, Plus One Names, Song Requests, etc.
+          Define what information you want to collect for each guest. You can
+          choose whether this information is shown publicly on their invite card
+          or kept private. For example: Dietary Requirements, Plus One Names,
+          Song Requests, etc.
         </p>
 
         <div className="space-y-4">
           {guestFields.map((field, index) => (
-            <div key={field.key} className="flex flex-col gap-3 p-4 border border-zinc-200 rounded-xl bg-zinc-50/50">
+            <div
+              key={field.key}
+              className="flex flex-col gap-3 p-4 border border-zinc-200 rounded-xl bg-zinc-50/50"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-zinc-800">Field {index + 1}</span>
+                  <span className="text-sm font-medium text-zinc-800">
+                    Field {index + 1}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -196,24 +205,42 @@ export function ProjectDetailsForm({
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>
-              
+
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-medium text-zinc-500 mb-1">Label</label>
+                  <label
+                    htmlFor={`field-${field.key}-label`}
+                    className="block text-xs font-medium text-zinc-500 mb-1"
+                  >
+                    Label
+                  </label>
                   <input
+                    id={`field-${field.key}-label`}
                     type="text"
                     required
                     value={field.label}
-                    onChange={(e) => handleUpdateField(index, { label: e.target.value })}
+                    onChange={(e) =>
+                      handleUpdateField(index, { label: e.target.value })
+                    }
                     placeholder="e.g. Dietary Requirements"
                     className="w-full px-3 py-1.5 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:border-zinc-400 text-zinc-900"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-zinc-500 mb-1">Type</label>
+                  <label
+                    htmlFor={`field-${field.key}-type`}
+                    className="block text-xs font-medium text-zinc-500 mb-1"
+                  >
+                    Type
+                  </label>
                   <select
+                    id={`field-${field.key}-type`}
                     value={field.type}
-                    onChange={(e) => handleUpdateField(index, { type: e.target.value as "text" | "textarea" })}
+                    onChange={(e) =>
+                      handleUpdateField(index, {
+                        type: e.target.value as "text" | "textarea",
+                      })
+                    }
                     className="w-full px-3 py-1.5 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:border-zinc-400 text-zinc-900"
                   >
                     <option value="text">Short Text</option>
@@ -225,17 +252,21 @@ export function ProjectDetailsForm({
                     <input
                       type="checkbox"
                       checked={field.required}
-                      onChange={(e) => handleUpdateField(index, { required: e.target.checked })}
+                      onChange={(e) =>
+                        handleUpdateField(index, { required: e.target.checked })
+                      }
                       className="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                     />
                     <span className="text-sm text-zinc-700">Required</span>
                   </label>
-                  
+
                   <label className="flex items-center gap-2 cursor-pointer bg-white px-3 py-1.5 rounded-lg border border-zinc-200 shadow-sm">
                     <input
                       type="checkbox"
                       checked={field.isPublic}
-                      onChange={(e) => handleUpdateField(index, { isPublic: e.target.checked })}
+                      onChange={(e) =>
+                        handleUpdateField(index, { isPublic: e.target.checked })
+                      }
                       className="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
                     />
                     <span className="text-sm font-medium text-zinc-800">

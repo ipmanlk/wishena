@@ -247,7 +247,9 @@ export function GuestListClient({
                     )}
                     {guest.internalNote && (
                       <div className="absolute left-6 bottom-1 invisible group-hover:visible z-10 w-max max-w-[200px] p-2 bg-zinc-800 text-white text-[10px] rounded shadow-lg whitespace-normal leading-tight">
-                        <span className="font-semibold block mb-0.5">Internal Note:</span>
+                        <span className="font-semibold block mb-0.5">
+                          Internal Note:
+                        </span>
                         {guest.internalNote}
                       </div>
                     )}
@@ -278,21 +280,32 @@ export function GuestListClient({
                     </td>
                   )}
                   <td className="px-6 py-4 text-warm-gray-text">
-                    {guest.customFields && Object.keys(guest.customFields).length > 0 ? (
+                    {guest.customFields &&
+                    Object.keys(guest.customFields).length > 0 ? (
                       <div className="flex flex-col gap-1.5 min-w-[120px]">
-                        {Object.entries(guest.customFields).map(([k, field]) => (
-                          <div key={k} className="flex flex-col gap-0.5">
-                            <span className="text-[10px] uppercase font-medium text-warm-gray-text/70">{k}</span>
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-xs text-ink truncate max-w-[150px]">{field.value}</span>
-                              {field.isPublic ? (
-                                <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-blue-50 text-blue-600 rounded">👁 Public</span>
-                              ) : (
-                                <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-zinc-100 text-zinc-600 rounded">🔒 Private</span>
-                              )}
+                        {Object.entries(guest.customFields).map(
+                          ([k, field]) => (
+                            <div key={k} className="flex flex-col gap-0.5">
+                              <span className="text-[10px] uppercase font-medium text-warm-gray-text/70">
+                                {k}
+                              </span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="text-xs text-ink truncate max-w-[150px]">
+                                  {field.value}
+                                </span>
+                                {field.isPublic ? (
+                                  <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-blue-50 text-blue-600 rounded">
+                                    👁 Public
+                                  </span>
+                                ) : (
+                                  <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-zinc-100 text-zinc-600 rounded">
+                                    🔒 Private
+                                  </span>
+                                )}
+                              </div>
                             </div>
-                          </div>
-                        ))}
+                          ),
+                        )}
                       </div>
                     ) : (
                       <span className="text-warm-gray">-</span>
