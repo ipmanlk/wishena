@@ -1,6 +1,6 @@
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { ProjectDetailsForm } from "@/components/invites/ProjectDetailsForm";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
@@ -20,12 +20,8 @@ export default async function EditProjectPage({ params }: PageProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth");
-  }
-
   const project = await supabaseInviteRepository.getById(projectId);
-  if (!project || project.userId !== user.id) {
+  if (!project || project.userId !== user!.id) {
     notFound();
   }
 

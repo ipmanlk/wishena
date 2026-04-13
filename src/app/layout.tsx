@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Caveat, Playfair_Display, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
+import { UserProvider } from "@/components/auth/UserProvider";
+import { createClient } from "@/lib/supabase/server";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -25,21 +27,28 @@ export const metadata: Metadata = {
   description: "Create and share beautiful wishes",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   modal,
 }: Readonly<{
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html
       lang="en"
       className={`${playfair.variable} ${source.variable} ${caveat.variable}`}
     >
       <body className="min-h-screen antialiased">
-        {children}
-        {modal}
+        <UserProvider serverUser={user}>
+          {children}
+          {modal}
+        </UserProvider>
       </body>
     </html>
   );

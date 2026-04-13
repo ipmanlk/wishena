@@ -1,6 +1,5 @@
 import { Plus, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { InviteProjectCard } from "@/components/invites/InviteProjectCard";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
@@ -14,12 +13,8 @@ export default async function InvitesPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth");
-  }
-
   const projects = await supabaseInviteRepository.getAll();
-  const userProjects = projects.filter((p) => p.userId === user.id);
+  const userProjects = projects.filter((p) => p.userId === user!.id);
 
   return (
     <div className="min-h-screen bg-cream py-12 px-6">

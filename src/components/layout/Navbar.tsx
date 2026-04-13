@@ -7,7 +7,7 @@ import { logout } from "@/lib/auth/actions";
 import { useUser } from "@/lib/auth/hooks";
 
 export function Navbar() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -36,7 +36,7 @@ export function Navbar() {
           </Link>
 
           <div className="flex items-center gap-4">
-            {!loading && !user && (
+            {!user && (
               <Link
                 href="/auth/login"
                 className="text-sm font-medium text-ink hover:text-terracotta transition-colors px-4 py-2 border border-transparent hover:border-warm-gray/20 rounded-xl"
@@ -45,7 +45,7 @@ export function Navbar() {
               </Link>
             )}
 
-            {!loading && user && (
+            {user && (
               <div className="flex items-center gap-6">
                 <Link
                   href="/invites"

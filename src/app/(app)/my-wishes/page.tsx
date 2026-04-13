@@ -1,6 +1,5 @@
 import { AlertCircle, Plus, Sparkles } from "lucide-react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
 import { createClient } from "@/lib/supabase/server";
 import { getTemplateById } from "@/lib/templates";
@@ -15,12 +14,8 @@ export default async function MyWishesPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth/login");
-  }
-
   const wishes = await supabaseWishRepository.getAll();
-  const isUnverified = !user.email_confirmed_at;
+  const isUnverified = !user!.email_confirmed_at;
 
   return (
     <div className="min-h-screen bg-cream py-12 px-6">

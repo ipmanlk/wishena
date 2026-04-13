@@ -1,6 +1,6 @@
 import { ChevronLeft, Plus, Settings } from "lucide-react";
 import Link from "next/link";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { GuestListClient } from "@/components/invites/GuestListClient";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
@@ -41,12 +41,8 @@ export default async function InviteProjectDashboard({
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth");
-  }
-
   const project = await supabaseInviteRepository.getById(projectId);
-  if (!project || project.userId !== user.id) {
+  if (!project || project.userId !== user!.id) {
     notFound();
   }
 

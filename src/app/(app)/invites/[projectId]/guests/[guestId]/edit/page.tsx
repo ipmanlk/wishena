@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { EditGuestForm } from "@/components/invites/EditGuestForm";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
@@ -20,12 +20,8 @@ export default async function EditGuestPage({ params }: PageProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth");
-  }
-
   const project = await supabaseInviteRepository.getById(projectId);
-  if (!project || project.userId !== user.id) {
+  if (!project || project.userId !== user!.id) {
     notFound();
   }
 

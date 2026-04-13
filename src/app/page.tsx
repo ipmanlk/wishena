@@ -19,7 +19,7 @@ export default function HomePage() {
       return order.indexOf(a.id) - order.indexOf(b.id);
     });
 
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
   return (
     <div className="min-h-screen bg-cream">
@@ -216,7 +216,7 @@ export default function HomePage() {
             href="/create"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-terracotta text-white rounded-xl font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
           >
-            {!loading && user ? "Create another wish" : "Start creating"}
+            {user ? "Create another wish" : "Start creating"}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>

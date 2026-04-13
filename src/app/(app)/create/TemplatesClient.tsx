@@ -148,8 +148,7 @@ export function TemplatesClient({
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {(!loading || page > 1) &&
-              allCategories.map((category) => {
+            {allCategories.map((category) => {
                 const isSelected = selectedCategories.includes(category);
                 return (
                   <button

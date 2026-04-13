@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 interface RsvpButtonsProps {
   guestId: string;
   projectId: string;
-  currentRsvp?: "yes" | "no";
+  currentRsvp?: "yes" | "no" | "unsure";
   theme?: "rose" | "gold" | "minimal";
 }
 
@@ -18,8 +18,8 @@ export function RsvpButtons({
   currentRsvp,
   theme = "minimal",
 }: RsvpButtonsProps) {
-  const [loading, setLoading] = useState<"yes" | "no" | null>(null);
-  const [response, setResponse] = useState<"yes" | "no" | undefined>(
+  const [loading, setLoading] = useState<"yes" | "no" | "unsure" | null>(null);
+  const [response, setResponse] = useState<"yes" | "no" | "unsure" | undefined>(
     currentRsvp,
   );
 

@@ -1,4 +1,4 @@
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { AddGuestForm } from "@/components/invites/AddGuestForm";
 import { Modal } from "@/components/ui/Modal";
 import { getInviteTemplateById } from "@/lib/invite-templates";
@@ -19,12 +19,8 @@ export default async function AddGuestModalPage({ params }: PageProps) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  if (!user) {
-    redirect("/auth");
-  }
-
   const project = await supabaseInviteRepository.getById(projectId);
-  if (!project || project.userId !== user.id) {
+  if (!project || project.userId !== user!.id) {
     notFound();
   }
 
