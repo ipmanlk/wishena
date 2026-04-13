@@ -65,6 +65,10 @@ export const supabaseInviteRepository = {
       updated_at: project.updatedAt,
     });
 
+    if (error) {
+      console.error("supabaseInviteRepository.save error:", error);
+    }
+
     return !error;
   },
 
@@ -88,6 +92,10 @@ export const supabaseInviteRepository = {
       .update(dbUpdates)
       .eq("id", id);
 
+    if (error) {
+      console.error("supabaseInviteRepository.update error:", error);
+    }
+
     return !error;
   },
 
@@ -97,6 +105,10 @@ export const supabaseInviteRepository = {
       .from("invite_projects")
       .delete()
       .eq("id", id);
+
+    if (error) {
+      console.error("supabaseInviteRepository.delete error:", error);
+    }
 
     return !error;
   },

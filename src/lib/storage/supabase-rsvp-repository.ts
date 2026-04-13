@@ -22,6 +22,30 @@ export const supabaseRsvpRepository = {
     }));
   },
 
+  async getCountsByProjectId(
+    projectId: string,
+  ): Promise<{ yes: number; no: number; total: number }> {
+    const supabase = createAdminClient();
+
+    const { data, error } = await supabase
+      .from("invite_rsvps")
+      .select("response")
+      .eq("project_id", projectId);
+
+    if (error || !data) {
+      console.error(
+        "supabaseRsvpRepository.getCountsByProjectId error:",
+        error,
+      );
+      return { yes: 0, no: 0, total: 0 };
+    }
+
+    const yes = data.filter((r) => r.response === "yes").length;
+    const no = data.filter((r) => r.response === "no").length;
+
+    return { yes, no, total: data.length };
+  },
+
   async getByGuestId(guestId: string): Promise<InviteRsvp | null> {
     const supabase = createAdminClient();
     const { data, error } = await supabase
@@ -49,8 +73,21 @@ export const supabaseRsvpRepository = {
     // This action is public, use admin client to bypass project ownership
     const supabase = createAdminClient();
 
-    // Check if RSVP exists
-    const existing = await this.getByGuestId(guestId);
+    // Check if RSVP exists using direct query instead of this.getByGuestId
+    // to avoid potential this binding issues
+    const { data: existing, error: fetchError } = await supabase
+      .from("invite_rsvps")
+      .select("*")
+      .eq("guest_id", guestId)
+      .maybeSingle();
+
+    if (fetchError) {
+      console.error(
+        "supabaseRsvpRepository.upsertRsvp fetch error:",
+        fetchError,
+      );
+      return false;
+    }
 
     const now = new Date().toISOString();
 
@@ -64,6 +101,10 @@ export const supabaseRsvpRepository = {
         })
         .eq("id", existing.id);
 
+      if (error) {
+        console.error("supabaseRsvpRepository.upsertRsvp update error:", error);
+      }
+
       return !error;
     } else {
       // Insert
@@ -74,6 +115,10 @@ export const supabaseRsvpRepository = {
         response,
         responded_at: now,
       });
+
+      if (error) {
+        console.error("supabaseRsvpRepository.upsertRsvp insert error:", error);
+      }
 
       return !error;
     }

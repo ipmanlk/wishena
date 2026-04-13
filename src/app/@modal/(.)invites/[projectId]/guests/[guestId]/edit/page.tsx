@@ -1,0 +1,55 @@
+import { notFound, redirect } from "next/navigation";
+import { EditGuestForm } from "@/components/invites/EditGuestForm";
+import { Modal } from "@/components/ui/Modal";
+import { getInviteTemplateById } from "@/lib/invite-templates";
+import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
+import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
+import { createClient } from "@/lib/supabase/server";
+
+interface PageProps {
+  params: Promise<{
+    projectId: string;
+    guestId: string;
+  }>;
+}
+
+export default async function EditGuestModalPage({ params }: PageProps) {
+  const { projectId, guestId } = await params;
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    redirect("/auth");
+  }
+
+  const project = await supabaseInviteRepository.getById(projectId);
+  if (!project || project.userId !== user.id) {
+    notFound();
+  }
+
+  const guest = await supabaseInviteGuestRepository.getById(guestId);
+  if (!guest || guest.projectId !== projectId) {
+    notFound();
+  }
+
+  const template = getInviteTemplateById(project.templateId);
+  if (!template) {
+    notFound();
+  }
+
+  return (
+    <Modal>
+      <div className="p-6 sm:p-8">
+        <h2 className="text-xl font-bold text-zinc-900 mb-6">Edit Guest</h2>
+        <EditGuestForm
+          projectId={projectId}
+          guest={guest}
+          template={template}
+        />
+      </div>
+    </Modal>
+  );
+}

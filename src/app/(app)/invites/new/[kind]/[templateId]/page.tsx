@@ -39,7 +39,7 @@ export default async function NewInviteProjectPage(props: {
 
         <div className="col-span-1 border-l pl-8 hidden lg:block">
           <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400 mb-4">
-            Preview Configuration
+            What happens next
           </h3>
           <p className="text-sm text-zinc-500">
             Once created, you can add individual guests. Each guest will receive

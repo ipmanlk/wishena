@@ -24,6 +24,149 @@ export const supabaseInviteGuestRepository = {
     }));
   },
 
+  async getByProjectIdPaginated(
+    projectId: string,
+    options: {
+      page: number;
+      pageSize: number;
+      search?: string;
+      status?: "all" | "yes" | "no" | "pending";
+    },
+  ): Promise<{ guests: InviteGuest[]; total: number }> {
+    const supabase = createAdminClient();
+    const { page, pageSize, search, status } = options;
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+
+    let guestIds: string[] | undefined;
+
+    // If status filter is applied, first get matching guest IDs from RSVPs
+    if (status && status !== "all") {
+      if (status === "pending") {
+        const { data: rsvpData, error: rsvpError } = await supabase
+          .from("invite_rsvps")
+          .select("guest_id")
+          .eq("project_id", projectId);
+
+        if (rsvpError) {
+          console.error(
+            "supabaseInviteGuestRepository.getByProjectIdPaginated rsvp error:",
+            rsvpError,
+          );
+          return { guests: [], total: 0 };
+        }
+
+        const respondedGuestIds = rsvpData?.map((r) => r.guest_id) ?? [];
+
+        // Build base query for count and data
+        let query = supabase
+          .from("invite_guests")
+          .select("*", { count: "exact" })
+          .eq("project_id", projectId);
+
+        if (respondedGuestIds.length > 0) {
+          query = query.not("id", "in", `(${respondedGuestIds.join(",")})`);
+        }
+
+        if (search?.trim()) {
+          const term = `%${search.trim()}%`;
+          query = query.or(
+            `name.ilike.${term},email.ilike.${term},note.ilike.${term}`,
+          );
+        }
+
+        const { data, error, count } = await query
+          .order("created_at", { ascending: false })
+          .range(from, to);
+
+        if (error || !data) {
+          console.error(
+            "supabaseInviteGuestRepository.getByProjectIdPaginated error:",
+            error,
+          );
+          return { guests: [], total: count ?? 0 };
+        }
+
+        return {
+          guests: data.map((row) => ({
+            id: row.id,
+            projectId: row.project_id,
+            name: row.name,
+            note: row.note,
+            email: row.email,
+            contactNumber: row.contact_number,
+            extraData: row.extra_data,
+            createdAt: row.created_at,
+          })),
+          total: count ?? 0,
+        };
+      } else {
+        // yes or no
+        const { data: rsvpData, error: rsvpError } = await supabase
+          .from("invite_rsvps")
+          .select("guest_id")
+          .eq("project_id", projectId)
+          .eq("response", status);
+
+        if (rsvpError) {
+          console.error(
+            "supabaseInviteGuestRepository.getByProjectIdPaginated rsvp error:",
+            rsvpError,
+          );
+          return { guests: [], total: 0 };
+        }
+
+        guestIds = rsvpData?.map((r) => r.guest_id) ?? [];
+
+        if (guestIds.length === 0) {
+          return { guests: [], total: 0 };
+        }
+      }
+    }
+
+    let query = supabase
+      .from("invite_guests")
+      .select("*", { count: "exact" })
+      .eq("project_id", projectId);
+
+    if (guestIds && guestIds.length > 0) {
+      query = query.in("id", guestIds);
+    }
+
+    if (search?.trim()) {
+      const term = `%${search.trim()}%`;
+      query = query.or(
+        `name.ilike.${term},email.ilike.${term},note.ilike.${term}`,
+      );
+    }
+
+    const { data, error, count } = await query
+      .order("created_at", { ascending: false })
+      .range(from, to);
+
+    if (error || !data) {
+      console.error(
+        "supabaseInviteGuestRepository.getByProjectIdPaginated error:",
+        error,
+      );
+      return { guests: [], total: count ?? 0 };
+    }
+
+    return {
+      guests: data.map((row) => ({
+        id: row.id,
+        projectId: row.project_id,
+        name: row.name,
+        note: row.note,
+        email: row.email,
+        contactNumber: row.contact_number,
+        extraData: row.extra_data,
+        createdAt: row.created_at,
+      })),
+      total: count ?? 0,
+    };
+  },
+
   async getById(id: string): Promise<InviteGuest | null> {
     const supabase = createAdminClient();
     const { data, error } = await supabase
@@ -60,6 +203,10 @@ export const supabaseInviteGuestRepository = {
       created_at: guest.createdAt,
     });
 
+    if (error) {
+      console.error("supabaseInviteGuestRepository.save error:", error);
+    }
+
     return !error;
   },
 
@@ -80,6 +227,10 @@ export const supabaseInviteGuestRepository = {
       .update(dbUpdates)
       .eq("id", id);
 
+    if (error) {
+      console.error("supabaseInviteGuestRepository.update error:", error);
+    }
+
     return !error;
   },
 
@@ -89,6 +240,10 @@ export const supabaseInviteGuestRepository = {
       .from("invite_guests")
       .delete()
       .eq("id", id);
+
+    if (error) {
+      console.error("supabaseInviteGuestRepository.delete error:", error);
+    }
 
     return !error;
   },
@@ -108,6 +263,10 @@ export const supabaseInviteGuestRepository = {
     }));
 
     const { error } = await supabase.from("invite_guests").insert(dbGuests);
+
+    if (error) {
+      console.error("supabaseInviteGuestRepository.bulkSave error:", error);
+    }
 
     return !error;
   },

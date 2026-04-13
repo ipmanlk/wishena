@@ -1,7 +1,7 @@
-import { ChevronLeft, ExternalLink, Plus, Settings } from "lucide-react";
+import { ChevronLeft, Plus, Settings } from "lucide-react";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
-import { RsvpDashboard } from "@/components/invites/RsvpDashboard";
+import { GuestListClient } from "@/components/invites/GuestListClient";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
@@ -9,10 +9,33 @@ import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
 import { createClient } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
-export default async function InviteProjectDashboard(props: {
+const PAGE_SIZE = 20;
+
+interface PageProps {
   params: Promise<{ projectId: string }>;
-}) {
-  const params = await props.params;
+  searchParams: Promise<{
+    page?: string;
+    search?: string;
+    status?: string;
+  }>;
+}
+
+export default async function InviteProjectDashboard({
+  params,
+  searchParams,
+}: PageProps) {
+  const { projectId } = await params;
+  const query = await searchParams;
+
+  const page = Math.max(1, parseInt(query.page || "1", 10));
+  const search = query.search || "";
+  const status =
+    query.status === "yes" ||
+    query.status === "no" ||
+    query.status === "pending"
+      ? query.status
+      : "all";
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -22,7 +45,7 @@ export default async function InviteProjectDashboard(props: {
     redirect("/auth");
   }
 
-  const project = await supabaseInviteRepository.getById(params.projectId);
+  const project = await supabaseInviteRepository.getById(projectId);
   if (!project || project.userId !== user.id) {
     notFound();
   }
@@ -32,12 +55,29 @@ export default async function InviteProjectDashboard(props: {
     notFound();
   }
 
-  const guests = await supabaseInviteGuestRepository.getByProjectId(project.id);
+  // Get paginated guests with server-side filtering
+  const { guests, total } =
+    await supabaseInviteGuestRepository.getByProjectIdPaginated(project.id, {
+      page,
+      pageSize: PAGE_SIZE,
+      search: search || undefined,
+      status,
+    });
 
+  // Get RSVP counts for stats cards
+  let rsvpCounts = { yes: 0, no: 0, total: 0 };
   let rsvps: InviteRsvp[] = [];
   if (project.rsvpEnabled) {
-    rsvps = await supabaseRsvpRepository.getByProjectId(project.id);
+    rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(project.id);
+    // Only fetch RSVPs for the current page's guests
+    if (guests.length > 0) {
+      const guestIds = guests.map((g) => g.id);
+      const allRsvps = await supabaseRsvpRepository.getByProjectId(project.id);
+      rsvps = allRsvps.filter((r) => guestIds.includes(r.guestId));
+    }
   }
+
+  const totalPages = Math.ceil(total / PAGE_SIZE);
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
@@ -85,117 +125,24 @@ export default async function InviteProjectDashboard(props: {
         </div>
       </div>
 
-      <div className="border border-zinc-200 rounded-2xl overflow-hidden bg-white shadow-sm mb-12">
-        <div className="grid grid-cols-3 divide-x divide-zinc-200">
-          <div className="p-6">
-            <span className="block text-sm font-medium text-zinc-500 mb-1">
-              Guests
-            </span>
-            <span className="text-2xl font-bold">{guests.length}</span>
-          </div>
-          <div className="p-6">
-            <span className="block text-sm font-medium text-zinc-500 mb-1">
-              Link Clicks
-            </span>
-            <span className="text-2xl font-bold">0</span> {/* Analytics STUB */}
-          </div>
-          <div className="p-6">
-            <span className="block text-sm font-medium text-zinc-500 mb-1">
-              Status
-            </span>
-            <span className="text-emerald-600 font-medium">Active</span>
-          </div>
+      <section>
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-xl font-semibold text-zinc-900">Guest List</h2>
         </div>
-      </div>
 
-      <div className="space-y-12">
-        {/* RSVP Dashboard conditionally rendered */}
-        {project.rsvpEnabled && (
-          <section>
-            <h2 className="text-xl font-semibold text-zinc-900 mb-4">
-              RSVP Responses
-            </h2>
-            <RsvpDashboard guests={guests} rsvps={rsvps} />
-          </section>
-        )}
-
-        <section>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-semibold text-zinc-900">Guest Links</h2>
-          </div>
-
-          <div className="bg-white rounded-xl border overflow-hidden">
-            <table className="w-full text-sm text-left">
-              <thead className="bg-zinc-50 text-zinc-500 border-b">
-                <tr>
-                  <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px]">
-                    Guest Name
-                  </th>
-                  <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px]">
-                    Extra Data
-                  </th>
-                  <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px] text-right">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-zinc-100">
-                {guests.map((guest) => {
-                  const inviteUrl = `/i/${guest.id}`;
-                  return (
-                    <tr key={guest.id} className="hover:bg-zinc-50/50 group">
-                      <td className="px-6 py-4 font-medium text-zinc-900">
-                        {guest.name}
-                        {guest.note && (
-                          <p className="text-xs text-zinc-400 font-normal mt-1 truncate max-w-xs">
-                            {guest.note}
-                          </p>
-                        )}
-                      </td>
-                      <td className="px-6 py-4 text-zinc-500">
-                        <div className="flex flex-wrap gap-1 mt-1">
-                          {Object.entries(guest.extraData).map(([k, v]) => (
-                            <span
-                              key={k}
-                              className="px-1.5 py-0.5 rounded bg-zinc-100 text-[10px] text-zinc-600 border border-zinc-200"
-                            >
-                              {k}: {v}
-                            </span>
-                          ))}
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 text-right">
-                        <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <Link
-                            href={inviteUrl}
-                            target="_blank"
-                            className="p-1.5 text-zinc-500 hover:text-zinc-900 hover:bg-zinc-100 rounded-md transition-colors"
-                            title="Open Invite Link"
-                          >
-                            <ExternalLink className="w-4 h-4" />
-                          </Link>
-                        </div>
-                      </td>
-                    </tr>
-                  );
-                })}
-
-                {guests.length === 0 && (
-                  <tr>
-                    <td
-                      colSpan={3}
-                      className="px-6 py-12 text-center text-zinc-500"
-                    >
-                      No guests added yet. Click 'Add Guest' to generate an
-                      invite link.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section>
-      </div>
+        <GuestListClient
+          guests={guests}
+          rsvps={rsvps}
+          rsvpEnabled={project.rsvpEnabled}
+          totalGuests={total}
+          rsvpCounts={rsvpCounts}
+          currentPage={page}
+          totalPages={totalPages}
+          pageSize={PAGE_SIZE}
+          initialSearch={search}
+          initialStatus={status}
+        />
+      </section>
     </div>
   );
 }
