@@ -35,6 +35,17 @@ export function InviteCardRenderer({
     return () => clearTimeout(timer);
   }, []);
 
+  // Sanitize guest data for public display — only expose fields that
+  // templates are allowed to bind to. Never leak email, contactNumber, etc.
+  const publicGuest = {
+    id: guest.id,
+    projectId: guest.projectId,
+    name: guest.name,
+    note: guest.note,
+    extraData: guest.extraData,
+    createdAt: guest.createdAt,
+  };
+
   return (
     <main
       className={`${isPreview ? "h-full overflow-y-auto" : "min-h-[100dvh]"} w-full flex flex-col items-center relative overflow-hidden py-16 ${blueprint.globalStyle}`}
@@ -65,13 +76,16 @@ export function InviteCardRenderer({
               boundValue = project.payload[module.bindTo];
             } else if (module.bindSource === "guest" && module.bindTo) {
               // Check top-level guest properties first
-              if (module.bindTo in guest) {
-                boundValue = (guest as unknown as Record<string, unknown>)[
-                  module.bindTo
-                ];
-              } else if (guest.extraData && module.bindTo in guest.extraData) {
+              if (module.bindTo in publicGuest) {
+                boundValue = (
+                  publicGuest as unknown as Record<string, unknown>
+                )[module.bindTo];
+              } else if (
+                publicGuest.extraData &&
+                module.bindTo in publicGuest.extraData
+              ) {
                 // Fallback to extraData
-                boundValue = guest.extraData[module.bindTo];
+                boundValue = publicGuest.extraData[module.bindTo];
               }
             }
 
@@ -95,7 +109,7 @@ export function InviteCardRenderer({
                 prefix={module.prefix}
                 animation={module.animation}
                 projectPayload={project.payload}
-                guest={guest}
+                guest={publicGuest}
                 {...rsvpProps}
               />
             );

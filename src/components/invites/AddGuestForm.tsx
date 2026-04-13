@@ -88,18 +88,19 @@ export function AddGuestForm({
           htmlFor="guest-note"
           className="block text-sm font-medium text-zinc-700 mb-1"
         >
-          Note
+          Personal Note
         </label>
         <textarea
           id="guest-note"
-          placeholder="e.g. Plus one, dietary requirements, etc."
+          placeholder="e.g. We can't wait to celebrate with you!"
           value={note}
           onChange={(e) => setNote(e.target.value)}
           rows={2}
           className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 resize-none"
         />
         <p className="text-xs text-zinc-500 mt-1">
-          Internal note for your reference. Guests will not see this.
+          This note will appear on the guest's invitation card. Keep it short
+          and sweet.
         </p>
       </div>
 
