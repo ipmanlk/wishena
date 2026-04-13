@@ -3,10 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { nanoid } from "nanoid";
-import { useRouter } from "next/navigation";
-import { useMemo, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import { wishRepository } from "@/lib/storage/wish-repository";
 import { templates } from "@/lib/templates";
+import { getTemplateById } from "@/lib/templates";
 import type { Template } from "@/lib/types";
 import WishRenderer from "@/components/wish/WishRenderer";
 
@@ -22,8 +23,11 @@ function formatCategoryLabel(category: string): string {
   return category.charAt(0).toUpperCase() + category.slice(1);
 }
 
-export default function CreatePage() {
+function CreatePageContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const templateId = searchParams.get("template");
+
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(
     null,
   );
@@ -32,6 +36,20 @@ export default function CreatePage() {
   const [selectedCategories, setSelectedCategories] = useState<string[]>([
     ALL_CATEGORY,
   ]);
+
+  // Sync template from URL
+  useEffect(() => {
+    if (templateId) {
+      const template = getTemplateById(templateId);
+      if (template) {
+        setSelectedTemplate(template);
+        setFormData({});
+      }
+    } else {
+      setSelectedTemplate(null);
+      setFormData({});
+    }
+  }, [templateId]);
 
   const allCategories = useMemo(() => getAllCategories(), []);
 
@@ -63,13 +81,11 @@ export default function CreatePage() {
   };
 
   const handleSelect = (template: Template) => {
-    setSelectedTemplate(template);
-    setFormData({});
+    router.push(`/create?template=${template.id}`);
   };
 
   const handleBack = () => {
-    setSelectedTemplate(null);
-    setFormData({});
+    router.push("/create");
   };
 
   const handleCreate = () => {
@@ -274,5 +290,13 @@ export default function CreatePage() {
         </AnimatePresence>
       </div>
     </div>
+  );
+}
+
+export default function CreatePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-cream" />}>
+      <CreatePageContent />
+    </Suspense>
   );
 }
