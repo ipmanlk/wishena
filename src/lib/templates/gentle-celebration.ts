@@ -6,7 +6,28 @@ export const gentleCelebrationTemplate: Template = {
   id: "gentle-celebration",
   name: "Golden Hour",
   description: "Warm, timeless and elegant — for moments that matter",
-  category: "celebration",
+  categories: ["celebration"],
+  preview: {
+    background: "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)",
+    lines: [
+      {
+        text: "Sophia",
+        className: "text-xl font-semibold italic",
+        style: { color: "#C9983A", fontFamily: "Georgia, serif" },
+      },
+      {
+        text: "golden hour",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#9C5A5A" },
+      },
+    ],
+  },
+  defaultValues: {
+    occasion_line: "On your birthday",
+    recipient_name: "Sophia",
+    personal_message: "Some people leave a mark on this world just by being themselves. You are one of them.",
+    sender_name: "Mia",
+  },
 
   blueprint: {
     globalStyle:

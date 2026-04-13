@@ -6,7 +6,28 @@ export const oceanBreezeTemplate: Template = {
   id: "ocean-breeze",
   name: "Ocean Calm",
   description: "Fresh sea breeze vibes — peaceful and refreshing for any occasion",
-  category: "celebration",
+  categories: ["celebration", "nature"],
+  preview: {
+    background: "linear-gradient(135deg, #134E4A 0%, #0F766E 100%)",
+    lines: [
+      {
+        text: "Thinking of You",
+        className: "text-xl font-bold",
+        style: { color: "#5EEAD4" },
+      },
+      {
+        text: "ocean calm",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#99F6E4" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "Sarah",
+    main_message: "Thinking of You",
+    personal_message: "Like the ocean, my appreciation for you is vast and deep.",
+    sender_name: "Michael",
+  },
 
   blueprint: {
     globalStyle:

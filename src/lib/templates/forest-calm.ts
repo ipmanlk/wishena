@@ -6,7 +6,28 @@ export const forestCalmTemplate: Template = {
   id: "forest-calm",
   name: "Forest Peace",
   description: "Earthy, grounding vibes inspired by nature's quiet moments",
-  category: "celebration",
+  categories: ["celebration", "nature"],
+  preview: {
+    background: "linear-gradient(135deg, #064E3B 0%, #065F46 100%)",
+    lines: [
+      {
+        text: "Find Your Peace",
+        className: "text-xl font-light",
+        style: { color: "#D1FAE5", fontFamily: "Georgia, serif" },
+      },
+      {
+        text: "forest calm",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#6EE7B7" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "David",
+    main_message: "Find Your Peace",
+    personal_message: "Like the forest, you bring calm and strength to those around you.",
+    sender_name: "Rachel",
+  },
 
   blueprint: {
     globalStyle:

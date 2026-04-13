@@ -6,7 +6,28 @@ export const sunsetLoveTemplate: Template = {
   id: "sunset-love",
   name: "Sunset Romance",
   description: "Warm sunset tones for heartfelt messages to someone special",
-  category: "love",
+  categories: ["love", "romance"],
+  preview: {
+    background: "linear-gradient(135deg, #881337 0%, #9A3412 100%)",
+    lines: [
+      {
+        text: "You Make My World Brighter",
+        className: "text-xl font-light italic",
+        style: { color: "#FECDD3", fontFamily: "Georgia, serif" },
+      },
+      {
+        text: "sunset romance",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#FDA4AF" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "My Love",
+    love_line: "You Make My World Brighter",
+    personal_message: "Every sunset reminds me of the beauty you bring to my life.",
+    sender_name: "Alex",
+  },
 
   blueprint: {
     globalStyle:

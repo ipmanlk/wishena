@@ -6,7 +6,28 @@ export const cherryBlossomTemplate: Template = {
   id: "cherry-blossom",
   name: "Cherry Blossom",
   description: "Delicate and beautiful — perfect for spring celebrations and gentle moments",
-  category: "celebration",
+  categories: ["celebration", "spring"],
+  preview: {
+    background: "linear-gradient(135deg, #FCE7F3 0%, #FFF1F2 100%)",
+    lines: [
+      {
+        text: "Blooming Wishes",
+        className: "text-xl font-light italic",
+        style: { color: "#BE185D", fontFamily: "Georgia, serif" },
+      },
+      {
+        text: "cherry blossom",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#FB7185" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "Lily",
+    main_message: "Blooming Wishes",
+    personal_message: "Like cherry blossoms, your presence makes everything more beautiful.",
+    sender_name: "Tom",
+  },
 
   blueprint: {
     globalStyle:

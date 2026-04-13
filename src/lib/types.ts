@@ -80,11 +80,24 @@ export interface Module {
   props?: Record<string, unknown>;
 }
 
+export interface PreviewLine {
+  text: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export interface TemplatePreview {
+  background: string;
+  lines: PreviewLine[];
+}
+
 export interface Template {
   id: string;
   name: string;
   description?: string;
-  category?: "birthday" | "celebration" | "love" | string;
+  categories: string[];
+  preview: TemplatePreview;
+  defaultValues: Record<string, string>;
 
   blueprint: {
     globalStyle?: string;

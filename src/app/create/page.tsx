@@ -4,11 +4,23 @@ import { AnimatePresence, motion } from "framer-motion";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { wishRepository } from "@/lib/storage/wish-repository";
 import { templates } from "@/lib/templates";
 import type { Template } from "@/lib/types";
 import WishRenderer from "@/components/wish/WishRenderer";
+
+const ALL_CATEGORY = "All";
+
+function getAllCategories(): string[] {
+  const categorySet = new Set<string>();
+  templates.forEach((t) => t.categories.forEach((c) => categorySet.add(c)));
+  return [ALL_CATEGORY, ...Array.from(categorySet).sort()];
+}
+
+function formatCategoryLabel(category: string): string {
+  return category.charAt(0).toUpperCase() + category.slice(1);
+}
 
 export default function CreatePage() {
   const router = useRouter();
@@ -17,14 +29,42 @@ export default function CreatePage() {
   );
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isCreating, setIsCreating] = useState(false);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    ALL_CATEGORY,
+  ]);
+
+  const allCategories = useMemo(() => getAllCategories(), []);
+
+  const filteredTemplates = useMemo(() => {
+    if (selectedCategories.includes(ALL_CATEGORY)) {
+      return templates;
+    }
+    return templates.filter((t) =>
+      t.categories.some((c) => selectedCategories.includes(c)),
+    );
+  }, [selectedCategories]);
+
+  const toggleCategory = (category: string) => {
+    if (category === ALL_CATEGORY) {
+      setSelectedCategories([ALL_CATEGORY]);
+      return;
+    }
+
+    setSelectedCategories((prev) => {
+      const withoutAll = prev.filter((c) => c !== ALL_CATEGORY);
+
+      if (withoutAll.includes(category)) {
+        const newSelection = withoutAll.filter((c) => c !== category);
+        return newSelection.length === 0 ? [ALL_CATEGORY] : newSelection;
+      }
+
+      return [...withoutAll, category];
+    });
+  };
 
   const handleSelect = (template: Template) => {
     setSelectedTemplate(template);
-    const initial: Record<string, string> = {};
-    template.blueprint.requiredInputs.forEach((input) => {
-      initial[input.key] = "";
-    });
-    setFormData(initial);
+    setFormData({ ...template.defaultValues });
   };
 
   const handleBack = () => {
@@ -64,7 +104,7 @@ export default function CreatePage() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
             >
-              <header className="text-center mb-16">
+              <header className="text-center mb-12">
                 <div className="inline-flex items-center gap-2 text-terracotta mb-4">
                   <Sparkles className="w-5 h-5" />
                   <span className="font-medium">Create a wish</span>
@@ -77,8 +117,28 @@ export default function CreatePage() {
                 </p>
               </header>
 
+              <div className="flex flex-wrap justify-center gap-2 mb-10">
+                {allCategories.map((category) => {
+                  const isSelected = selectedCategories.includes(category);
+                  return (
+                    <button
+                      key={category}
+                      type="button"
+                      onClick={() => toggleCategory(category)}
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                        isSelected
+                          ? "bg-terracotta text-white shadow-md"
+                          : "bg-white text-warm-gray-text hover:bg-warm-gray/10 border border-warm-gray/20"
+                      }`}
+                    >
+                      {formatCategoryLabel(category)}
+                    </button>
+                  );
+                })}
+              </div>
+
               <div className="grid md:grid-cols-2 gap-6">
-                {templates.map((template) => (
+                {filteredTemplates.map((template) => (
                   <motion.button
                     key={template.id}
                     type="button"
@@ -89,166 +149,19 @@ export default function CreatePage() {
                   >
                     <div
                       className="h-32 rounded-xl mb-4 overflow-hidden relative"
-                      style={{
-                        background: (() => {
-                          switch (template.id) {
-                            case "neon-birthday":
-                              return "linear-gradient(135deg, #080B1A 0%, #1a0533 100%)";
-                            case "gentle-celebration":
-                              return "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)";
-                            case "cherry-blossom":
-                              return "linear-gradient(135deg, #FCE7F3 0%, #FFF1F2 100%)";
-                            case "forest-calm":
-                              return "linear-gradient(135deg, #064E3B 0%, #065F46 100%)";
-                            case "ocean-breeze":
-                              return "linear-gradient(135deg, #134E4A 0%, #0F766E 100%)";
-                            case "snowy-winter":
-                              return "linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%)";
-                            case "starlight":
-                              return "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)";
-                            case "sunset-love":
-                              return "linear-gradient(135deg, #881337 0%, #9A3412 100%)";
-                            default:
-                              return "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)";
-                          }
-                        })(),
-                      }}
+                      style={{ background: template.preview.background }}
                     >
-                      {template.id === "neon-birthday" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                      <div className="h-full flex flex-col items-center justify-center gap-1">
+                        {template.preview.lines.map((line, index) => (
                           <span
-                            className="text-xl font-extrabold"
-                            style={{
-                              color: "#FF2D7C",
-                              textShadow:
-                                "0 0 7px #FF2D7C, 0 0 18px #FF2D7C, 0 0 36px #FF2D7C80",
-                            }}
+                            key={index}
+                            className={line.className}
+                            style={line.style}
                           >
-                            Happy Birthday!
+                            {line.text}
                           </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{
-                              color: "#00F5D4",
-                              textShadow: "0 0 8px #00F5D4",
-                            }}
-                          >
-                            midnight glow
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "gentle-celebration" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-semibold italic"
-                            style={{ color: "#C9983A", fontFamily: "Georgia, serif" }}
-                          >
-                            Sophia
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#9C5A5A" }}
-                          >
-                            golden hour
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "cherry-blossom" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-light italic"
-                            style={{ color: "#BE185D", fontFamily: "Georgia, serif" }}
-                          >
-                            Blooming Wishes
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#FB7185" }}
-                          >
-                            cherry blossom
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "forest-calm" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-light"
-                            style={{ color: "#D1FAE5", fontFamily: "Georgia, serif" }}
-                          >
-                            Find Your Peace
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#6EE7B7" }}
-                          >
-                            forest calm
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "ocean-breeze" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-bold"
-                            style={{ color: "#5EEAD4" }}
-                          >
-                            Thinking of You
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#99F6E4" }}
-                          >
-                            ocean calm
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "snowy-winter" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-light"
-                            style={{ color: "#E0F2FE", fontFamily: "Georgia, serif" }}
-                          >
-                            Warm Winter Wishes
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#7DD3FC" }}
-                          >
-                            winter warmth
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "starlight" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-bold"
-                            style={{ color: "#E9D5FF" }}
-                          >
-                            Reach for the Stars
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#C4B5FD" }}
-                          >
-                            starlight dreams
-                          </span>
-                        </div>
-                      )}
-                      {template.id === "sunset-love" && (
-                        <div className="h-full flex flex-col items-center justify-center gap-1">
-                          <span
-                            className="text-xl font-light italic"
-                            style={{ color: "#FECDD3", fontFamily: "Georgia, serif" }}
-                          >
-                            You Make My World Brighter
-                          </span>
-                          <span
-                            className="text-xs tracking-[0.3em] uppercase"
-                            style={{ color: "#FDA4AF" }}
-                          >
-                            sunset romance
-                          </span>
-                        </div>
-                      )}
+                        ))}
+                      </div>
                     </div>
                     <h3 className="text-xl text-ink font-medium mb-2">
                       {template.name}
@@ -345,10 +258,12 @@ export default function CreatePage() {
                 <div className="hidden md:block">
                   <div className="sticky top-8">
                     <p className="text-sm text-warm-gray-text mb-3">Preview</p>
-                    <div
-                      className="aspect-9/16 rounded-2xl shadow-xl overflow-hidden relative"
-                    >
-                      <WishRenderer template={selectedTemplate} payload={formData} isPreview />
+                    <div className="aspect-9/16 rounded-2xl shadow-xl overflow-hidden relative">
+                      <WishRenderer
+                        template={selectedTemplate}
+                        payload={formData}
+                        isPreview
+                      />
                     </div>
                   </div>
                 </div>

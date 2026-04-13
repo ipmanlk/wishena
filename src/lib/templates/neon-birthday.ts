@@ -6,7 +6,31 @@ export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
   name: "Midnight Glow",
   description: "An electric neon birthday experience built for the night",
-  category: "birthday",
+  categories: ["birthday"],
+  preview: {
+    background: "linear-gradient(135deg, #080B1A 0%, #1a0533 100%)",
+    lines: [
+      {
+        text: "Happy Birthday!",
+        className: "text-xl font-extrabold",
+        style: {
+          color: "#FF2D7C",
+          textShadow: "0 0 7px #FF2D7C, 0 0 18px #FF2D7C, 0 0 36px #FF2D7C80",
+        },
+      },
+      {
+        text: "midnight glow",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#00F5D4", textShadow: "0 0 8px #00F5D4" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "Alex",
+    birthday_line: "Happy 25th Birthday!",
+    personal_message: "Hope your day is as bright as you are!",
+    sender_name: "Jamie",
+  },
 
   blueprint: {
     globalStyle:

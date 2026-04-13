@@ -6,7 +6,29 @@ export const snowyWinterTemplate: Template = {
   id: "snowy-winter",
   name: "Winter Warmth",
   description: "Cozy winter wishes with gentle falling snow — perfect for holiday greetings",
-  category: "celebration",
+  categories: ["celebration", "holiday", "winter"],
+  preview: {
+    background: "linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%)",
+    lines: [
+      {
+        text: "Warm Winter Wishes",
+        className: "text-xl font-light",
+        style: { color: "#E0F2FE", fontFamily: "Georgia, serif" },
+      },
+      {
+        text: "winter warmth",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#7DD3FC" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "Sarah",
+    main_message: "Warm Winter Wishes",
+    season_wish: "May your holidays be filled with warmth and joy",
+    personal_message: "Wishing you a cozy winter season filled with love and laughter.",
+    sender_name: "Emma",
+  },
 
   blueprint: {
     globalStyle:

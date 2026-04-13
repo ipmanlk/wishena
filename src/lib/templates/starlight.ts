@@ -6,7 +6,28 @@ export const starlightTemplate: Template = {
   id: "starlight",
   name: "Starlight Dreams",
   description: "Dreamy and magical — for wishes that reach beyond the stars",
-  category: "celebration",
+  categories: ["celebration", "dreamy"],
+  preview: {
+    background: "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)",
+    lines: [
+      {
+        text: "Reach for the Stars",
+        className: "text-xl font-bold",
+        style: { color: "#E9D5FF" },
+      },
+      {
+        text: "starlight dreams",
+        className: "text-xs tracking-[0.3em] uppercase",
+        style: { color: "#C4B5FD" },
+      },
+    ],
+  },
+  defaultValues: {
+    recipient_name: "Stella",
+    dream_message: "Reach for the Stars",
+    personal_message: "May your dreams be as vast as the night sky and as bright as the stars.",
+    sender_name: "Astrid",
+  },
 
   blueprint: {
     globalStyle:
