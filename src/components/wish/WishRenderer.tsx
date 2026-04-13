@@ -11,10 +11,11 @@ import type { Template } from "@/lib/types";
 interface WishRendererProps {
   template: Template;
   payload: Record<string, string>;
+  defaultValues?: Record<string, string>;
   isPreview?: boolean;
 }
 
-export function WishRenderer({ template, payload, isPreview = false }: WishRendererProps) {
+export function WishRenderer({ template, payload, defaultValues, isPreview = false }: WishRendererProps) {
   const [isRevealedState, setIsRevealed] = useState(false);
   const isRevealed = isPreview || isRevealedState;
   const { blueprint } = template;
@@ -49,7 +50,9 @@ export function WishRenderer({ template, payload, isPreview = false }: WishRende
           const Component = componentMap[module.type];
           if (!Component) return null;
 
-          const text = module.bindTo ? payload[module.bindTo] : undefined;
+          const text = module.bindTo
+            ? payload[module.bindTo] || defaultValues?.[module.bindTo]
+            : undefined;
           const animation = module.animation
             ? animationVariants[module.animation]
             : null;

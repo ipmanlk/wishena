@@ -64,7 +64,7 @@ export default function CreatePage() {
 
   const handleSelect = (template: Template) => {
     setSelectedTemplate(template);
-    setFormData({ ...template.defaultValues });
+    setFormData({});
   };
 
   const handleBack = () => {
@@ -262,6 +262,7 @@ export default function CreatePage() {
                       <WishRenderer
                         template={selectedTemplate}
                         payload={formData}
+                        defaultValues={selectedTemplate.defaultValues}
                         isPreview
                       />
                     </div>
