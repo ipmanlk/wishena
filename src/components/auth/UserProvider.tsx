@@ -32,6 +32,10 @@ export function UserProvider({
   const router = useRouter();
 
   useEffect(() => {
+    setUser(serverUser);
+  }, [serverUser]);
+
+  useEffect(() => {
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
