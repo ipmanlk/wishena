@@ -6,7 +6,6 @@ export const snowyWinterTemplate: Template = {
   id: "snowy-winter",
   name: "Winter Warmth",
   description: "Cozy winter wishes with gentle falling snow — perfect for holiday greetings",
-  thumbnail: "/thumbnails/winter.png",
   category: "celebration",
 
   blueprint: {

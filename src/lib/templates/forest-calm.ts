@@ -6,7 +6,6 @@ export const forestCalmTemplate: Template = {
   id: "forest-calm",
   name: "Forest Peace",
   description: "Earthy, grounding vibes inspired by nature's quiet moments",
-  thumbnail: "/thumbnails/forest.png",
   category: "celebration",
 
   blueprint: {

@@ -6,7 +6,6 @@ export const gentleCelebrationTemplate: Template = {
   id: "gentle-celebration",
   name: "Golden Hour",
   description: "Warm, timeless and elegant — for moments that matter",
-  thumbnail: "/thumbnails/gentle.png",
   category: "celebration",
 
   blueprint: {

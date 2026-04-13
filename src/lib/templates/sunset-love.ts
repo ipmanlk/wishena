@@ -6,7 +6,6 @@ export const sunsetLoveTemplate: Template = {
   id: "sunset-love",
   name: "Sunset Romance",
   description: "Warm sunset tones for heartfelt messages to someone special",
-  thumbnail: "/thumbnails/sunset.png",
   category: "love",
 
   blueprint: {

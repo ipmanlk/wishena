@@ -6,7 +6,6 @@ export const oceanBreezeTemplate: Template = {
   id: "ocean-breeze",
   name: "Ocean Calm",
   description: "Fresh sea breeze vibes — peaceful and refreshing for any occasion",
-  thumbnail: "/thumbnails/ocean.png",
   category: "celebration",
 
   blueprint: {

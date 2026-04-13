@@ -6,7 +6,6 @@ export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
   name: "Midnight Glow",
   description: "An electric neon birthday experience built for the night",
-  thumbnail: "/thumbnails/neon.png",
   category: "birthday",
 
   blueprint: {

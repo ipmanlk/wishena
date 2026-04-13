@@ -6,7 +6,6 @@ export const cherryBlossomTemplate: Template = {
   id: "cherry-blossom",
   name: "Cherry Blossom",
   description: "Delicate and beautiful — perfect for spring celebrations and gentle moments",
-  thumbnail: "/thumbnails/blossom.png",
   category: "celebration",
 
   blueprint: {

@@ -90,10 +90,28 @@ export default function CreatePage() {
                     <div
                       className="h-32 rounded-xl mb-4 overflow-hidden relative"
                       style={{
-                        background:
-                          template.id === "neon-birthday"
-                            ? "linear-gradient(135deg, #080B1A 0%, #1a0533 100%)"
-                            : "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)",
+                        background: (() => {
+                          switch (template.id) {
+                            case "neon-birthday":
+                              return "linear-gradient(135deg, #080B1A 0%, #1a0533 100%)";
+                            case "gentle-celebration":
+                              return "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)";
+                            case "cherry-blossom":
+                              return "linear-gradient(135deg, #FCE7F3 0%, #FFF1F2 100%)";
+                            case "forest-calm":
+                              return "linear-gradient(135deg, #064E3B 0%, #065F46 100%)";
+                            case "ocean-breeze":
+                              return "linear-gradient(135deg, #134E4A 0%, #0F766E 100%)";
+                            case "snowy-winter":
+                              return "linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%)";
+                            case "starlight":
+                              return "linear-gradient(135deg, #1E1B4B 0%, #312E81 100%)";
+                            case "sunset-love":
+                              return "linear-gradient(135deg, #881337 0%, #9A3412 100%)";
+                            default:
+                              return "linear-gradient(135deg, #FEFAF4 0%, #F5E8C8 100%)";
+                          }
+                        })(),
                       }}
                     >
                       {template.id === "neon-birthday" && (
@@ -132,6 +150,102 @@ export default function CreatePage() {
                             style={{ color: "#9C5A5A" }}
                           >
                             golden hour
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "cherry-blossom" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-light italic"
+                            style={{ color: "#BE185D", fontFamily: "Georgia, serif" }}
+                          >
+                            Blooming Wishes
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#FB7185" }}
+                          >
+                            cherry blossom
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "forest-calm" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-light"
+                            style={{ color: "#D1FAE5", fontFamily: "Georgia, serif" }}
+                          >
+                            Find Your Peace
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#6EE7B7" }}
+                          >
+                            forest calm
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "ocean-breeze" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-bold"
+                            style={{ color: "#5EEAD4" }}
+                          >
+                            Thinking of You
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#99F6E4" }}
+                          >
+                            ocean calm
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "snowy-winter" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-light"
+                            style={{ color: "#E0F2FE", fontFamily: "Georgia, serif" }}
+                          >
+                            Warm Winter Wishes
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#7DD3FC" }}
+                          >
+                            winter warmth
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "starlight" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-bold"
+                            style={{ color: "#E9D5FF" }}
+                          >
+                            Reach for the Stars
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#C4B5FD" }}
+                          >
+                            starlight dreams
+                          </span>
+                        </div>
+                      )}
+                      {template.id === "sunset-love" && (
+                        <div className="h-full flex flex-col items-center justify-center gap-1">
+                          <span
+                            className="text-xl font-light italic"
+                            style={{ color: "#FECDD3", fontFamily: "Georgia, serif" }}
+                          >
+                            You Make My World Brighter
+                          </span>
+                          <span
+                            className="text-xs tracking-[0.3em] uppercase"
+                            style={{ color: "#FDA4AF" }}
+                          >
+                            sunset romance
                           </span>
                         </div>
                       )}

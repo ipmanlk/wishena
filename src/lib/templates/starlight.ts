@@ -6,7 +6,6 @@ export const starlightTemplate: Template = {
   id: "starlight",
   name: "Starlight Dreams",
   description: "Dreamy and magical — for wishes that reach beyond the stars",
-  thumbnail: "/thumbnails/starlight.png",
   category: "celebration",
 
   blueprint: {
