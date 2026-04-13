@@ -8,7 +8,17 @@ import { templates } from "@/lib/templates";
 import type { TemplateListItem } from "@/lib/types";
 
 export default function HomePage() {
-  const featuredTemplates: TemplateListItem[] = templates.slice(0, 3);
+  const featuredTemplates: TemplateListItem[] = templates
+    .filter((t) =>
+      ["golden-anniversary", "graduation-day", "lavender-fields"].includes(
+        t.id,
+      ),
+    )
+    .sort((a, b) => {
+      const order = ["golden-anniversary", "lavender-fields", "graduation-day"];
+      return order.indexOf(a.id) - order.indexOf(b.id);
+    });
+
   const { user, loading } = useUser();
 
   return (
