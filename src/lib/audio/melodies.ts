@@ -749,6 +749,473 @@ export const cityLightsHarmony: Note[] = [
 ];
 
 /**
+ * Tropical Sunset Melody
+ * Key: D Major
+ * Tempo: 78 BPM
+ * Feel: Warm, relaxed, vacation vibes
+ * Visual match: Orange, coral, tropical beach sunset
+ *
+ * Musical concept:
+ * - D major for bright, tropical feel
+ * - Island-inspired rhythmic patterns
+ * - Gentle ascending phrases like palm trees swaying
+ * - Warm, open intervals
+ */
+export const tropicalSunsetMelody: Note[] = [
+  // First phrase - warm arrival
+  { time: "0:0", note: "D4", duration: "8n", velocity: 0.6 },
+  { time: "0:0:2", note: "F#4", duration: "8n", velocity: 0.65 },
+  { time: "0:1", note: "A4", duration: "4n", velocity: 0.7 },
+  { time: "0:2", note: "B4", duration: "8n", velocity: 0.65 },
+  { time: "0:2:2", note: "A4", duration: "8n", velocity: 0.6 },
+  { time: "0:3", note: "F#4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - island breeze
+  { time: "1:0", note: "A4", duration: "8n", velocity: 0.6 },
+  { time: "1:0:2", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "1:1", note: "B4", duration: "4n", velocity: 0.7 },
+  { time: "1:2", note: "A4", duration: "8n", velocity: 0.65 },
+  { time: "1:2:2", note: "F#4", duration: "8n", velocity: 0.6 },
+  { time: "1:3", note: "D4", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - golden light
+  { time: "2:0", note: "F#4", duration: "8n", velocity: 0.65 },
+  { time: "2:0:2", note: "A4", duration: "8n", velocity: 0.7 },
+  { time: "2:1", note: "B4", duration: "4n", velocity: 0.75 },
+  { time: "2:2", note: "D5", duration: "8n", velocity: 0.7 },
+  { time: "2:2:2", note: "B4", duration: "8n", velocity: 0.65 },
+  { time: "2:3", note: "A4", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - peaceful evening
+  { time: "3:0", note: "D5", duration: "4n", velocity: 0.65 },
+  { time: "3:1", note: "B4", duration: "8n", velocity: 0.6 },
+  { time: "3:1:2", note: "A4", duration: "8n", velocity: 0.55 },
+  { time: "3:2", note: "F#4", duration: "2n", velocity: 0.6 },
+];
+
+export const tropicalSunsetHarmony: Note[] = [
+  // Bar 1: D major
+  { time: "0:0", note: "D3", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "A3", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: G major feel
+  { time: "1:0", note: "G2", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "D3", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: A major
+  { time: "2:0", note: "A2", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "E3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: D major resolution
+  { time: "3:0", note: "D3", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "F#3", duration: "1n", velocity: 0.27 },
+];
+
+/**
+ * Mountain Summit Melody
+ * Key: Bb Major
+ * Tempo: 80 BPM
+ * Feel: Triumphant, expansive, inspiring
+ * Visual match: White snow, blue sky, mountain peaks
+ *
+ * Musical concept:
+ * - Bb major for majestic, open feel
+ * - Rising phrases for sense of achievement
+ * - Clear, confident intervals
+ * - Wide range for dramatic effect
+ */
+export const mountainSummitMelody: Note[] = [
+  // First phrase - climbing
+  { time: "0:0", note: "Bb4", duration: "4n", velocity: 0.65 },
+  { time: "0:1", note: "D5", duration: "4n", velocity: 0.7 },
+  { time: "0:2", note: "F5", duration: "4n", velocity: 0.75 },
+  { time: "0:3", note: "Eb5", duration: "4n", velocity: 0.7 },
+
+  // Second phrase - reaching peak
+  { time: "1:0", note: "F5", duration: "4n", velocity: 0.75 },
+  { time: "1:1", note: "G5", duration: "4n", velocity: 0.8 },
+  { time: "1:2", note: "Bb5", duration: "2n", velocity: 0.85 },
+  { time: "1:3:2", note: "F5", duration: "4n", velocity: 0.7 },
+
+  // Third phrase - surveying view
+  { time: "2:0", note: "Eb5", duration: "4n", velocity: 0.7 },
+  { time: "2:1", note: "D5", duration: "4n", velocity: 0.65 },
+  { time: "2:2", note: "F5", duration: "4n", velocity: 0.7 },
+  { time: "2:3", note: "D5", duration: "4n", velocity: 0.65 },
+
+  // Fourth phrase - triumphant return
+  { time: "3:0", note: "Bb4", duration: "4n", velocity: 0.7 },
+  { time: "3:1", note: "F5", duration: "8n", velocity: 0.75 },
+  { time: "3:1:2", note: "D5", duration: "8n", velocity: 0.7 },
+  { time: "3:2", note: "Bb4", duration: "2n", velocity: 0.75 },
+];
+
+export const mountainSummitHarmony: Note[] = [
+  // Bar 1: Bb major
+  { time: "0:0", note: "Bb2", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "F3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: F major feel
+  { time: "1:0", note: "F2", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "C3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: G minor feel
+  { time: "2:0", note: "G2", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: Bb major resolution
+  { time: "3:0", note: "Bb2", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "F3", duration: "1n", velocity: 0.3 },
+];
+
+/**
+ * Garden Bloom Melody
+ * Key: E Major
+ * Tempo: 84 BPM
+ * Feel: Fresh, lively, spring renewal
+ * Visual match: Soft greens, florals, blooming petals
+ *
+ * Musical concept:
+ * - E major for bright, fresh feel
+ * - Light, bouncy rhythms like fluttering petals
+ * - Rising arpeggios like flowers blooming
+ * - Cheerful major intervals
+ */
+export const gardenBloomMelody: Note[] = [
+  // First phrase - new growth
+  { time: "0:0", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "0:0:2", note: "G#4", duration: "8n", velocity: 0.65 },
+  { time: "0:1", note: "B4", duration: "4n", velocity: 0.7 },
+  { time: "0:2", note: "E5", duration: "8n", velocity: 0.75 },
+  { time: "0:2:2", note: "B4", duration: "8n", velocity: 0.65 },
+  { time: "0:3", note: "G#4", duration: "4n", velocity: 0.6 },
+
+  // Second phrase - blooming
+  { time: "1:0", note: "A4", duration: "8n", velocity: 0.65 },
+  { time: "1:0:2", note: "B4", duration: "8n", velocity: 0.7 },
+  { time: "1:1", note: "E5", duration: "4n", velocity: 0.75 },
+  { time: "1:2", note: "G#4", duration: "8n", velocity: 0.65 },
+  { time: "1:2:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "1:3", note: "B3", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - flourishing
+  { time: "2:0", note: "G#4", duration: "8n", velocity: 0.65 },
+  { time: "2:0:2", note: "B4", duration: "8n", velocity: 0.7 },
+  { time: "2:1", note: "E5", duration: "4n", velocity: 0.75 },
+  { time: "2:2", note: "G#5", duration: "8n", velocity: 0.8 },
+  { time: "2:2:2", note: "E5", duration: "8n", velocity: 0.7 },
+  { time: "2:3", note: "B4", duration: "4n", velocity: 0.65 },
+
+  // Fourth phrase - radiant bloom
+  { time: "3:0", note: "A4", duration: "4n", velocity: 0.7 },
+  { time: "3:1", note: "G#4", duration: "4n", velocity: 0.65 },
+  { time: "3:2", note: "E4", duration: "2n", velocity: 0.7 },
+];
+
+export const gardenBloomHarmony: Note[] = [
+  // Bar 1: E major
+  { time: "0:0", note: "E2", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "B2", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: A major
+  { time: "1:0", note: "A2", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "E3", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: B major
+  { time: "2:0", note: "B2", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "F#3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: E major resolution
+  { time: "3:0", note: "E2", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "B2", duration: "1n", velocity: 0.27 },
+];
+
+/**
+ * Midnight Dream Melody
+ * Key: A Minor
+ * Tempo: 58 BPM
+ * Feel: Peaceful, ethereal, sleep-inducing
+ * Visual match: Deep navy, silver, gentle stars
+ *
+ * Musical concept:
+ * - A minor for dreamy, introspective feel
+ * - Very slow tempo for relaxation
+ * - Gentle, spacious phrases
+ * - Soft, floating intervals
+ */
+export const midnightDreamMelody: Note[] = [
+  // First phrase - drifting
+  { time: "0:0", note: "A3", duration: "4n", velocity: 0.55 },
+  { time: "0:2", note: "C4", duration: "4n", velocity: 0.6 },
+  { time: "0:3:2", note: "E4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - floating
+  { time: "1:0", note: "C4", duration: "4n", velocity: 0.55 },
+  { time: "1:2", note: "A3", duration: "4n", velocity: 0.5 },
+  { time: "1:3:2", note: "E3", duration: "4n", velocity: 0.5 },
+
+  // Third phrase - wandering
+  { time: "2:0", note: "F4", duration: "4n", velocity: 0.55 },
+  { time: "2:2", note: "E4", duration: "4n", velocity: 0.5 },
+  { time: "2:3:2", note: "C4", duration: "4n", velocity: 0.55 },
+
+  // Fourth phrase - restful
+  { time: "3:0", note: "A3", duration: "2n", velocity: 0.55 },
+  { time: "3:2", note: "E3", duration: "2n", velocity: 0.5 },
+];
+
+export const midnightDreamHarmony: Note[] = [
+  // Bar 1: A minor
+  { time: "0:0", note: "A2", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "E3", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: D minor
+  { time: "1:0", note: "D3", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "A3", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: F major
+  { time: "2:0", note: "F2", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "C3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: A minor resolution
+  { time: "3:0", note: "A2", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "E3", duration: "1n", velocity: 0.27 },
+];
+
+/**
+ * Golden Anniversary Melody
+ * Key: C Major
+ * Tempo: 66 BPM
+ * Feel: Elegant, timeless, celebratory
+ * Visual match: Gold, champagne, sophisticated black
+ *
+ * Musical concept:
+ * - C major for timeless elegance
+ * - Smooth, flowing phrases
+ * - Classic waltz-like movement
+ * - Rich, full harmonies
+ */
+export const goldenAnniversaryMelody: Note[] = [
+  // First phrase - elegant opening
+  { time: "0:0", note: "C4", duration: "2n", velocity: 0.6 },
+  { time: "0:2", note: "E4", duration: "4n", velocity: 0.65 },
+  { time: "0:3", note: "G4", duration: "4n", velocity: 0.7 },
+
+  // Second phrase - cherished memory
+  { time: "1:0", note: "E4", duration: "4n", velocity: 0.65 },
+  { time: "1:1", note: "G4", duration: "4n", velocity: 0.6 },
+  { time: "1:2", note: "C5", duration: "2n", velocity: 0.7 },
+
+  // Third phrase - lasting love
+  { time: "2:0", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "2:1", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "2:2", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "2:3", note: "C4", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - forever together
+  { time: "3:0", note: "C4", duration: "2n", velocity: 0.65 },
+  { time: "3:2", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "3:3", note: "G4", duration: "2n", velocity: 0.7 },
+];
+
+export const goldenAnniversaryHarmony: Note[] = [
+  // Bar 1: C major
+  { time: "0:0", note: "C3", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "G3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: A minor feel
+  { time: "1:0", note: "A2", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "E3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: F major
+  { time: "2:0", note: "F2", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "C3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: C major resolution
+  { time: "3:0", note: "C3", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "G3", duration: "1n", velocity: 0.3 },
+];
+
+/**
+ * Baby Shower Melody
+ * Key: G Major
+ * Tempo: 86 BPM
+ * Feel: Soft, gentle, joyful anticipation
+ * Visual match: Pastel pink/blue, soft clouds, gentle confetti
+ *
+ * Musical concept:
+ * - G major for innocent, happy feel
+ * - Light, delicate phrasing
+ * - Gentle rises like cooing
+ * - Sweet, simple intervals
+ */
+export const babyShowerMelody: Note[] = [
+  // First phrase - tiny hello
+  { time: "0:0", note: "G4", duration: "8n", velocity: 0.55 },
+  { time: "0:0:2", note: "B4", duration: "8n", velocity: 0.6 },
+  { time: "0:1", note: "D5", duration: "4n", velocity: 0.65 },
+  { time: "0:2", note: "B4", duration: "4n", velocity: 0.6 },
+  { time: "0:3", note: "G4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - sweet dreams
+  { time: "1:0", note: "E4", duration: "8n", velocity: 0.55 },
+  { time: "1:0:2", note: "G4", duration: "8n", velocity: 0.6 },
+  { time: "1:1", note: "B4", duration: "4n", velocity: 0.65 },
+  { time: "1:2", note: "D5", duration: "8n", velocity: 0.6 },
+  { time: "1:2:2", note: "B4", duration: "8n", velocity: 0.55 },
+  { time: "1:3", note: "G4", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - so much love
+  { time: "2:0", note: "D4", duration: "8n", velocity: 0.55 },
+  { time: "2:0:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "2:1", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "2:2", note: "B4", duration: "8n", velocity: 0.6 },
+  { time: "2:2:2", note: "D5", duration: "8n", velocity: 0.65 },
+  { time: "2:3", note: "G5", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - welcome little one
+  { time: "3:0", note: "G4", duration: "4n", velocity: 0.6 },
+  { time: "3:1", note: "D5", duration: "4n", velocity: 0.55 },
+  { time: "3:2", note: "B4", duration: "4n", velocity: 0.6 },
+  { time: "3:3", note: "G4", duration: "2n", velocity: 0.65 },
+];
+
+export const babyShowerHarmony: Note[] = [
+  // Bar 1: G major
+  { time: "0:0", note: "G2", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "D3", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: E minor
+  { time: "1:0", note: "E2", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "B2", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: C major
+  { time: "2:0", note: "C3", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "G3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: G major resolution
+  { time: "3:0", note: "G2", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "D3", duration: "1n", velocity: 0.27 },
+];
+
+/**
+ * Graduation Day Melody
+ * Key: F Major
+ * Tempo: 92 BPM
+ * Feel: Proud, uplifting, triumphant
+ * Visual match: Navy blue, gold accents, confetti
+ *
+ * Musical concept:
+ * - F major for confident, proud feel
+ * - March-like steady rhythm
+ * - Rising phrases for achievement
+ * - Strong, decisive intervals
+ */
+export const graduationDayMelody: Note[] = [
+  // First phrase - the moment
+  { time: "0:0", note: "F4", duration: "4n", velocity: 0.7 },
+  { time: "0:1", note: "A4", duration: "4n", velocity: 0.75 },
+  { time: "0:2", note: "C5", duration: "4n", velocity: 0.8 },
+  { time: "0:3", note: "F5", duration: "4n", velocity: 0.75 },
+
+  // Second phrase - achievement
+  { time: "1:0", note: "A4", duration: "4n", velocity: 0.75 },
+  { time: "1:1", note: "C5", duration: "4n", velocity: 0.7 },
+  { time: "1:2", note: "F4", duration: "4n", velocity: 0.65 },
+  { time: "1:3", note: "A4", duration: "4n", velocity: 0.7 },
+
+  // Third phrase - so proud
+  { time: "2:0", note: "Bb4", duration: "4n", velocity: 0.75 },
+  { time: "2:1", note: "C5", duration: "4n", velocity: 0.8 },
+  { time: "2:2", note: "D5", duration: "4n", velocity: 0.85 },
+  { time: "2:3", note: "C5", duration: "4n", velocity: 0.75 },
+
+  // Fourth phrase - bright future
+  { time: "3:0", note: "F5", duration: "4n", velocity: 0.8 },
+  { time: "3:1", note: "C5", duration: "4n", velocity: 0.75 },
+  { time: "3:2", note: "A4", duration: "4n", velocity: 0.7 },
+  { time: "3:3", note: "F4", duration: "2n", velocity: 0.75 },
+];
+
+export const graduationDayHarmony: Note[] = [
+  // Bar 1: F major
+  { time: "0:0", note: "F2", duration: "1n", velocity: 0.3 },
+  { time: "0:0", note: "C3", duration: "1n", velocity: 0.25 },
+
+  // Bar 2: Bb major
+  { time: "1:0", note: "Bb2", duration: "1n", velocity: 0.3 },
+  { time: "1:0", note: "F3", duration: "1n", velocity: 0.25 },
+
+  // Bar 3: G minor feel
+  { time: "2:0", note: "G2", duration: "1n", velocity: 0.3 },
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.25 },
+
+  // Bar 4: F major resolution
+  { time: "3:0", note: "F2", duration: "1n", velocity: 0.35 },
+  { time: "3:0", note: "C3", duration: "1n", velocity: 0.3 },
+];
+
+/**
+ * Thank You Bloom Melody
+ * Key: C Major
+ * Tempo: 70 BPM
+ * Feel: Warm, heartfelt, appreciative
+ * Visual match: Soft coral, cream, floral accents
+ *
+ * Musical concept:
+ * - C major for sincere warmth
+ * - Gentle, flowing phrases
+ * - Spacious for heartfelt feeling
+ * - Soft resolution for gratitude
+ */
+export const thankYouBloomMelody: Note[] = [
+  // First phrase - grateful heart
+  { time: "0:0", note: "C4", duration: "4n", velocity: 0.6 },
+  { time: "0:1", note: "E4", duration: "8n", velocity: 0.65 },
+  { time: "0:1:2", note: "G4", duration: "8n", velocity: 0.7 },
+  { time: "0:2", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "0:3", note: "C4", duration: "4n", velocity: 0.55 },
+
+  // Second phrase - thank you
+  { time: "1:0", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "1:0:2", note: "A4", duration: "8n", velocity: 0.7 },
+  { time: "1:1", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "1:2", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "1:3", note: "C4", duration: "4n", velocity: 0.55 },
+
+  // Third phrase - so much
+  { time: "2:0", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "2:1", note: "G4", duration: "8n", velocity: 0.65 },
+  { time: "2:1:2", note: "E4", duration: "8n", velocity: 0.6 },
+  { time: "2:2", note: "A4", duration: "4n", velocity: 0.65 },
+  { time: "2:3", note: "G4", duration: "4n", velocity: 0.6 },
+
+  // Fourth phrase - sincerely yours
+  { time: "3:0", note: "C5", duration: "4n", velocity: 0.7 },
+  { time: "3:1", note: "G4", duration: "4n", velocity: 0.65 },
+  { time: "3:2", note: "E4", duration: "4n", velocity: 0.6 },
+  { time: "3:3", note: "C4", duration: "2n", velocity: 0.65 },
+];
+
+export const thankYouBloomHarmony: Note[] = [
+  // Bar 1: C major
+  { time: "0:0", note: "C3", duration: "1n", velocity: 0.28 },
+  { time: "0:0", note: "G3", duration: "1n", velocity: 0.23 },
+
+  // Bar 2: F major
+  { time: "1:0", note: "F2", duration: "1n", velocity: 0.28 },
+  { time: "1:0", note: "C3", duration: "1n", velocity: 0.23 },
+
+  // Bar 3: G major
+  { time: "2:0", note: "G2", duration: "1n", velocity: 0.28 },
+  { time: "2:0", note: "D3", duration: "1n", velocity: 0.23 },
+
+  // Bar 4: C major resolution
+  { time: "3:0", note: "C3", duration: "1n", velocity: 0.32 },
+  { time: "3:0", note: "E3", duration: "1n", velocity: 0.27 },
+];
+
+/**
  * Melody collections by template ID for easy lookup
  */
 export const melodiesByTemplate: Record<
@@ -802,5 +1269,37 @@ export const melodiesByTemplate: Record<
   "city-lights": {
     melody: cityLightsMelody,
     harmony: cityLightsHarmony,
+  },
+  "tropical-sunset": {
+    melody: tropicalSunsetMelody,
+    harmony: tropicalSunsetHarmony,
+  },
+  "mountain-summit": {
+    melody: mountainSummitMelody,
+    harmony: mountainSummitHarmony,
+  },
+  "garden-bloom": {
+    melody: gardenBloomMelody,
+    harmony: gardenBloomHarmony,
+  },
+  "midnight-dream": {
+    melody: midnightDreamMelody,
+    harmony: midnightDreamHarmony,
+  },
+  "golden-anniversary": {
+    melody: goldenAnniversaryMelody,
+    harmony: goldenAnniversaryHarmony,
+  },
+  "baby-shower": {
+    melody: babyShowerMelody,
+    harmony: babyShowerHarmony,
+  },
+  "graduation-day": {
+    melody: graduationDayMelody,
+    harmony: graduationDayHarmony,
+  },
+  "thank-you-bloom": {
+    melody: thankYouBloomMelody,
+    harmony: thankYouBloomHarmony,
   },
 };

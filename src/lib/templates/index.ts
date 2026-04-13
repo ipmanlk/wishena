@@ -1,16 +1,24 @@
 import type { Template, TemplateListItem } from "../types";
+import { babyShowerTemplate } from "./baby-shower";
 import { cherryBlossomTemplate } from "./cherry-blossom";
 import { cityLightsTemplate } from "./city-lights";
 import { forestCalmTemplate } from "./forest-calm";
+import { gardenBloomTemplate } from "./garden-bloom";
 import { gentleCelebrationTemplate } from "./gentle-celebration";
+import { goldenAnniversaryTemplate } from "./golden-anniversary";
+import { graduationDayTemplate } from "./graduation-day";
 import { harvestMoonTemplate } from "./harvest-moon";
 import { lavenderFieldsTemplate } from "./lavender-fields";
+import { midnightDreamTemplate } from "./midnight-dream";
 import { morningCoffeeTemplate } from "./morning-coffee";
+import { mountainSummitTemplate } from "./mountain-summit";
 import { neonBirthdayTemplate } from "./neon-birthday";
 import { oceanBreezeTemplate } from "./ocean-breeze";
 import { snowyWinterTemplate } from "./snowy-winter";
 import { starlightTemplate } from "./starlight";
 import { sunsetLoveTemplate } from "./sunset-love";
+import { thankYouBloomTemplate } from "./thank-you-bloom";
+import { tropicalSunsetTemplate } from "./tropical-sunset";
 
 export const templates: Template[] = [
   neonBirthdayTemplate,
@@ -25,6 +33,14 @@ export const templates: Template[] = [
   lavenderFieldsTemplate,
   harvestMoonTemplate,
   cityLightsTemplate,
+  babyShowerTemplate,
+  gardenBloomTemplate,
+  goldenAnniversaryTemplate,
+  graduationDayTemplate,
+  midnightDreamTemplate,
+  mountainSummitTemplate,
+  thankYouBloomTemplate,
+  tropicalSunsetTemplate,
 ];
 
 export function getTemplateById(id: string): Template | null {
