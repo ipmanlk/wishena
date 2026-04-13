@@ -5,7 +5,8 @@ import { oceanBreezeMelody, oceanBreezeHarmony } from "../audio/melodies";
 export const oceanBreezeTemplate: Template = {
   id: "ocean-breeze",
   name: "Ocean Calm",
-  description: "Fresh sea breeze vibes — peaceful and refreshing for any occasion",
+  description:
+    "Fresh sea breeze vibes — peaceful and refreshing for any occasion",
   categories: ["celebration", "nature"],
   preview: {
     background: "linear-gradient(135deg, #134E4A 0%, #0F766E 100%)",
@@ -23,10 +24,11 @@ export const oceanBreezeTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "Sarah",
-    main_message: "Thinking of You",
-    personal_message: "Like the ocean, my appreciation for you is vast and deep.",
-    sender_name: "Michael",
+    recipientName: "Sarah",
+    mainMessage: "Thinking of You",
+    personalMessage:
+      "Like the ocean, my appreciation for you is vast and deep.",
+    senderName: "Michael",
   },
 
   blueprint: {
@@ -59,16 +61,15 @@ export const oceanBreezeTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-cyan-200/70 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "🌊  For  ",
         animation: "fade_up",
       },
       {
         id: "hero",
         type: "neon_text",
-        style:
-          "text-4xl md:text-6xl font-bold text-center leading-tight py-2",
-        bindTo: "main_message",
+        style: "text-4xl md:text-6xl font-bold text-center leading-tight py-2",
+        bindTo: "mainMessage",
         animation: "scale_in",
         props: { color: "#5EEAD4" },
       },
@@ -77,7 +78,7 @@ export const oceanBreezeTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-cyan-50/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -85,7 +86,7 @@ export const oceanBreezeTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-cyan-200/70",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "With care,  ",
         animation: "fade_up",
       },
@@ -93,7 +94,7 @@ export const oceanBreezeTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Sarah",
@@ -101,7 +102,7 @@ export const oceanBreezeTemplate: Template = {
         required: true,
       },
       {
-        key: "main_message",
+        key: "mainMessage",
         type: "text",
         label: "The main message",
         placeholder: "Thinking of You",
@@ -109,15 +110,16 @@ export const oceanBreezeTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
-        placeholder: "Like the ocean, my appreciation for you is vast and deep...",
+        placeholder:
+          "Like the ocean, my appreciation for you is vast and deep...",
         maxLength: 250,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Michael",

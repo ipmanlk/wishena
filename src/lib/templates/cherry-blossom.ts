@@ -5,7 +5,8 @@ import { cherryBlossomMelody, cherryBlossomHarmony } from "../audio/melodies";
 export const cherryBlossomTemplate: Template = {
   id: "cherry-blossom",
   name: "Cherry Blossom",
-  description: "Delicate and beautiful — perfect for spring celebrations and gentle moments",
+  description:
+    "Delicate and beautiful — perfect for spring celebrations and gentle moments",
   categories: ["celebration", "spring"],
   preview: {
     background: "linear-gradient(135deg, #FCE7F3 0%, #FFF1F2 100%)",
@@ -23,10 +24,11 @@ export const cherryBlossomTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "Lily",
-    main_message: "Blooming Wishes",
-    personal_message: "Like cherry blossoms, your presence makes everything more beautiful.",
-    sender_name: "Tom",
+    recipientName: "Lily",
+    mainMessage: "Blooming Wishes",
+    personalMessage:
+      "Like cherry blossoms, your presence makes everything more beautiful.",
+    senderName: "Tom",
   },
 
   blueprint: {
@@ -59,7 +61,7 @@ export const cherryBlossomTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-rose-400/80 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "🌸  For  ",
         animation: "fade_up",
       },
@@ -68,15 +70,14 @@ export const cherryBlossomTemplate: Template = {
         type: "standard_text",
         style:
           "text-4xl md:text-6xl font-light italic text-center leading-tight py-2 text-rose-800",
-        bindTo: "main_message",
+        bindTo: "mainMessage",
         animation: "scale_in",
       },
       {
         id: "sub-message",
         type: "standard_text",
-        style:
-          "text-sm md:text-base text-rose-600/70 text-center italic mt-2",
-        bindTo: "season_wish",
+        style: "text-sm md:text-base text-rose-600/70 text-center italic mt-2",
+        bindTo: "seasonWish",
         animation: "fade_up",
       },
       {
@@ -84,7 +85,7 @@ export const cherryBlossomTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-rose-900/70 text-center mt-4 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -92,7 +93,7 @@ export const cherryBlossomTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-rose-400/80",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "With love,  ",
         animation: "fade_up",
       },
@@ -100,7 +101,7 @@ export const cherryBlossomTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Lily",
@@ -108,7 +109,7 @@ export const cherryBlossomTemplate: Template = {
         required: true,
       },
       {
-        key: "main_message",
+        key: "mainMessage",
         type: "text",
         label: "Main greeting",
         placeholder: "Blooming Wishes",
@@ -116,15 +117,16 @@ export const cherryBlossomTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
-        placeholder: "Like cherry blossoms, your presence makes everything more beautiful...",
+        placeholder:
+          "Like cherry blossoms, your presence makes everything more beautiful...",
         maxLength: 250,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Tom",

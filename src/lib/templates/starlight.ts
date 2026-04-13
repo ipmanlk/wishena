@@ -23,10 +23,11 @@ export const starlightTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "Stella",
-    dream_message: "Reach for the Stars",
-    personal_message: "May your dreams be as vast as the night sky and as bright as the stars.",
-    sender_name: "Astrid",
+    recipientName: "Stella",
+    dreamMessage: "Reach for the Stars",
+    personalMessage:
+      "May your dreams be as vast as the night sky and as bright as the stars.",
+    senderName: "Astrid",
   },
 
   blueprint: {
@@ -59,16 +60,15 @@ export const starlightTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-purple-200/70 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "✨  For  ",
         animation: "fade_up",
       },
       {
         id: "hero",
         type: "neon_text",
-        style:
-          "text-4xl md:text-6xl font-bold text-center leading-tight py-2",
-        bindTo: "dream_message",
+        style: "text-4xl md:text-6xl font-bold text-center leading-tight py-2",
+        bindTo: "dreamMessage",
         animation: "scale_in",
         props: { color: "#E9D5FF" },
       },
@@ -77,7 +77,7 @@ export const starlightTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-purple-100/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -85,7 +85,7 @@ export const starlightTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-purple-200/70",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "Stargazing,  ",
         animation: "fade_up",
       },
@@ -93,7 +93,7 @@ export const starlightTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Stella",
@@ -101,7 +101,7 @@ export const starlightTemplate: Template = {
         required: true,
       },
       {
-        key: "dream_message",
+        key: "dreamMessage",
         type: "text",
         label: "Your wish",
         placeholder: "Reach for the Stars",
@@ -109,15 +109,16 @@ export const starlightTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
-        placeholder: "May your dreams be as vast as the night sky and as bright as the stars...",
+        placeholder:
+          "May your dreams be as vast as the night sky and as bright as the stars...",
         maxLength: 250,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Astrid",

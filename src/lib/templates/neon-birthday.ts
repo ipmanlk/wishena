@@ -26,10 +26,10 @@ export const neonBirthdayTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "Alex",
-    birthday_line: "Happy 25th Birthday!",
-    personal_message: "Hope your day is as bright as you are!",
-    sender_name: "Jamie",
+    recipientName: "Alex",
+    birthdayLine: "Happy 25th Birthday!",
+    personalMessage: "Hope your day is as bright as you are!",
+    senderName: "Jamie",
   },
 
   blueprint: {
@@ -62,7 +62,7 @@ export const neonBirthdayTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-[#00F5D4] opacity-80 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "✦  For  ",
         animation: "fade_up",
       },
@@ -71,7 +71,7 @@ export const neonBirthdayTemplate: Template = {
         type: "neon_text",
         style:
           "text-5xl md:text-7xl font-extrabold text-center leading-tight py-2",
-        bindTo: "birthday_line",
+        bindTo: "birthdayLine",
         animation: "scale_in",
         props: { color: "#FF2D7C" },
       },
@@ -80,7 +80,7 @@ export const neonBirthdayTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-white/70 text-center mt-4 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -88,7 +88,7 @@ export const neonBirthdayTemplate: Template = {
         type: "neon_text",
         style:
           "text-sm md:text-base tracking-widest uppercase text-center mt-6 pb-10",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "— from  ",
         animation: "fade_up",
         props: { color: "#00F5D4" },
@@ -102,7 +102,7 @@ export const neonBirthdayTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Alex",
@@ -110,7 +110,7 @@ export const neonBirthdayTemplate: Template = {
         required: true,
       },
       {
-        key: "birthday_line",
+        key: "birthdayLine",
         type: "text",
         label: "The big line",
         placeholder: "Happy 25th Birthday!",
@@ -118,7 +118,7 @@ export const neonBirthdayTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
         placeholder:
@@ -127,7 +127,7 @@ export const neonBirthdayTemplate: Template = {
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Jamie",

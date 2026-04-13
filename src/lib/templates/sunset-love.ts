@@ -23,10 +23,11 @@ export const sunsetLoveTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "My Love",
-    love_line: "You Make My World Brighter",
-    personal_message: "Every sunset reminds me of the beauty you bring to my life.",
-    sender_name: "Alex",
+    recipientName: "My Love",
+    loveLine: "You Make My World Brighter",
+    personalMessage:
+      "Every sunset reminds me of the beauty you bring to my life.",
+    senderName: "Alex",
   },
 
   blueprint: {
@@ -59,7 +60,7 @@ export const sunsetLoveTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-rose-200/70 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "💖  For  ",
         animation: "fade_up",
       },
@@ -68,7 +69,7 @@ export const sunsetLoveTemplate: Template = {
         type: "standard_text",
         style:
           "text-4xl md:text-6xl italic font-light text-center leading-tight py-2 text-rose-100",
-        bindTo: "love_line",
+        bindTo: "loveLine",
         animation: "scale_in",
       },
       {
@@ -76,7 +77,7 @@ export const sunsetLoveTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-rose-50/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -84,7 +85,7 @@ export const sunsetLoveTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-rose-200/70",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "Forever yours,  ",
         animation: "fade_up",
       },
@@ -97,7 +98,7 @@ export const sunsetLoveTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "My Love",
@@ -105,7 +106,7 @@ export const sunsetLoveTemplate: Template = {
         required: true,
       },
       {
-        key: "love_line",
+        key: "loveLine",
         type: "text",
         label: "Your love message",
         placeholder: "You Make My World Brighter",
@@ -113,15 +114,16 @@ export const sunsetLoveTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your heartfelt message",
-        placeholder: "Every sunset reminds me of the beauty you bring to my life...",
+        placeholder:
+          "Every sunset reminds me of the beauty you bring to my life...",
         maxLength: 280,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Alex",

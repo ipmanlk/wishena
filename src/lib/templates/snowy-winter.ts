@@ -1,11 +1,15 @@
 import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
-import { winterWonderlandMelody, winterWonderlandHarmony } from "../audio/melodies";
+import {
+  winterWonderlandMelody,
+  winterWonderlandHarmony,
+} from "../audio/melodies";
 
 export const snowyWinterTemplate: Template = {
   id: "snowy-winter",
   name: "Winter Warmth",
-  description: "Cozy winter wishes with gentle falling snow — perfect for holiday greetings",
+  description:
+    "Cozy winter wishes with gentle falling snow — perfect for holiday greetings",
   categories: ["celebration", "holiday", "winter"],
   preview: {
     background: "linear-gradient(135deg, #0F172A 0%, #1E3A5F 100%)",
@@ -23,11 +27,12 @@ export const snowyWinterTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "Sarah",
-    main_message: "Warm Winter Wishes",
-    season_wish: "May your holidays be filled with warmth and joy",
-    personal_message: "Wishing you a cozy winter season filled with love and laughter.",
-    sender_name: "Emma",
+    recipientName: "Sarah",
+    mainMessage: "Warm Winter Wishes",
+    seasonWish: "May your holidays be filled with warmth and joy",
+    personalMessage:
+      "Wishing you a cozy winter season filled with love and laughter.",
+    senderName: "Emma",
   },
 
   blueprint: {
@@ -60,7 +65,7 @@ export const snowyWinterTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-blue-200/70 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "❄  For  ",
         animation: "fade_up",
       },
@@ -69,15 +74,14 @@ export const snowyWinterTemplate: Template = {
         type: "standard_text",
         style:
           "text-4xl md:text-6xl font-light text-center leading-tight py-2 text-white",
-        bindTo: "main_message",
+        bindTo: "mainMessage",
         animation: "scale_in",
       },
       {
         id: "sub-message",
         type: "standard_text",
-        style:
-          "text-sm md:text-base text-blue-100/60 text-center italic mt-2",
-        bindTo: "season_wish",
+        style: "text-sm md:text-base text-blue-100/60 text-center italic mt-2",
+        bindTo: "seasonWish",
         animation: "fade_up",
       },
       {
@@ -85,7 +89,7 @@ export const snowyWinterTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-blue-100/80 text-center mt-4 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -93,7 +97,7 @@ export const snowyWinterTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-blue-300/70",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "Warmly,  ",
         animation: "fade_up",
       },
@@ -101,7 +105,7 @@ export const snowyWinterTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Sarah",
@@ -109,7 +113,7 @@ export const snowyWinterTemplate: Template = {
         required: true,
       },
       {
-        key: "main_message",
+        key: "mainMessage",
         type: "text",
         label: "Main greeting",
         placeholder: "Warm Winter Wishes",
@@ -117,7 +121,7 @@ export const snowyWinterTemplate: Template = {
         required: true,
       },
       {
-        key: "season_wish",
+        key: "seasonWish",
         type: "text",
         label: "Season wish",
         placeholder: "May your holidays be filled with warmth and joy",
@@ -125,15 +129,16 @@ export const snowyWinterTemplate: Template = {
         required: false,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
-        placeholder: "Wishing you a cozy winter season filled with love and laughter...",
+        placeholder:
+          "Wishing you a cozy winter season filled with love and laughter...",
         maxLength: 250,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Emma",

@@ -23,10 +23,11 @@ export const forestCalmTemplate: Template = {
     ],
   },
   defaultValues: {
-    recipient_name: "David",
-    main_message: "Find Your Peace",
-    personal_message: "Like the forest, you bring calm and strength to those around you.",
-    sender_name: "Rachel",
+    recipientName: "David",
+    mainMessage: "Find Your Peace",
+    personalMessage:
+      "Like the forest, you bring calm and strength to those around you.",
+    senderName: "Rachel",
   },
 
   blueprint: {
@@ -59,7 +60,7 @@ export const forestCalmTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.4em] uppercase text-emerald-200/70 text-center pt-12 pb-1",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         prefix: "🌿  For  ",
         animation: "fade_up",
       },
@@ -68,7 +69,7 @@ export const forestCalmTemplate: Template = {
         type: "standard_text",
         style:
           "text-4xl md:text-6xl font-light text-center leading-tight py-2 text-emerald-50",
-        bindTo: "main_message",
+        bindTo: "mainMessage",
         animation: "scale_in",
       },
       {
@@ -76,7 +77,7 @@ export const forestCalmTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-emerald-100/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -84,7 +85,7 @@ export const forestCalmTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-emerald-200/70",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "With peace,  ",
         animation: "fade_up",
       },
@@ -92,7 +93,7 @@ export const forestCalmTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "David",
@@ -100,7 +101,7 @@ export const forestCalmTemplate: Template = {
         required: true,
       },
       {
-        key: "main_message",
+        key: "mainMessage",
         type: "text",
         label: "Your message",
         placeholder: "Find Your Peace",
@@ -108,15 +109,16 @@ export const forestCalmTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your personal message",
-        placeholder: "Like the forest, you bring calm and strength to those around you...",
+        placeholder:
+          "Like the forest, you bring calm and strength to those around you...",
         maxLength: 250,
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Rachel",

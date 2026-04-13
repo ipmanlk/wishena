@@ -23,10 +23,11 @@ export const gentleCelebrationTemplate: Template = {
     ],
   },
   defaultValues: {
-    occasion_line: "On your birthday",
-    recipient_name: "Sophia",
-    personal_message: "Some people leave a mark on this world just by being themselves. You are one of them.",
-    sender_name: "Mia",
+    occasionLine: "On your birthday",
+    recipientName: "Sophia",
+    personalMessage:
+      "Some people leave a mark on this world just by being themselves. You are one of them.",
+    senderName: "Mia",
   },
 
   blueprint: {
@@ -59,7 +60,7 @@ export const gentleCelebrationTemplate: Template = {
         type: "standard_text",
         style:
           "text-xs tracking-[0.5em] uppercase text-[#9C5A5A] text-center pt-12 pb-1 opacity-80",
-        bindTo: "occasion_line",
+        bindTo: "occasionLine",
         animation: "fade_up",
       },
       {
@@ -67,7 +68,7 @@ export const gentleCelebrationTemplate: Template = {
         type: "standard_text",
         style:
           "text-4xl md:text-6xl italic font-semibold text-[#C9983A] text-center mt-2 leading-snug",
-        bindTo: "recipient_name",
+        bindTo: "recipientName",
         animation: "scale_in",
       },
       {
@@ -83,7 +84,7 @@ export const gentleCelebrationTemplate: Template = {
         type: "standard_text",
         style:
           "text-base md:text-lg text-[#5C4A35]/80 text-center italic leading-relaxed max-w-xs mx-auto mt-4 whitespace-pre-wrap",
-        bindTo: "personal_message",
+        bindTo: "personalMessage",
         animation: "fade_up",
       },
       {
@@ -91,7 +92,7 @@ export const gentleCelebrationTemplate: Template = {
         type: "standard_text",
         style:
           "text-sm text-[#9C5A5A] text-center mt-8 pb-10 tracking-widest uppercase not-italic",
-        bindTo: "sender_name",
+        bindTo: "senderName",
         prefix: "With love,  ",
         animation: "fade_up",
       },
@@ -99,7 +100,7 @@ export const gentleCelebrationTemplate: Template = {
 
     requiredInputs: [
       {
-        key: "occasion_line",
+        key: "occasionLine",
         type: "text",
         label: "The occasion",
         placeholder: "On your birthday",
@@ -107,7 +108,7 @@ export const gentleCelebrationTemplate: Template = {
         required: true,
       },
       {
-        key: "recipient_name",
+        key: "recipientName",
         type: "text",
         label: "Who is this for?",
         placeholder: "Sophia",
@@ -115,7 +116,7 @@ export const gentleCelebrationTemplate: Template = {
         required: true,
       },
       {
-        key: "personal_message",
+        key: "personalMessage",
         type: "textarea",
         label: "Your message",
         placeholder:
@@ -124,7 +125,7 @@ export const gentleCelebrationTemplate: Template = {
         required: true,
       },
       {
-        key: "sender_name",
+        key: "senderName",
         type: "text",
         label: "Your name",
         placeholder: "Mia",
