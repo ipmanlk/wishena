@@ -158,36 +158,34 @@ export default function CreatePage() {
             </p>
           </header>
 
-          <div className="flex items-center justify-between gap-4 mb-6">
+          <div className="flex items-center gap-4 mb-6">
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search templates by name, description or category"
               className="flex-1 px-4 py-3 rounded-xl border bg-white"
             />
-            <div className="ml-4 text-sm text-warm-gray-text">
-              {total} results
-            </div>
           </div>
 
           <div className="flex flex-wrap justify-center gap-2 mb-6">
-            {allCategories.map((category) => {
-              const isSelected = selectedCategories.includes(category);
-              return (
-                <button
-                  key={category}
-                  type="button"
-                  onClick={() => toggleCategory(category)}
-                  className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                    isSelected
-                      ? "bg-terracotta text-white shadow-md"
-                      : "bg-white text-warm-gray-text hover:bg-warm-gray/10 border border-warm-gray/20"
-                  }`}
-                >
-                  {formatCategoryLabel(category)}
-                </button>
-              );
-            })}
+            {(!loading || page > 1) &&
+              allCategories.map((category) => {
+                const isSelected = selectedCategories.includes(category);
+                return (
+                  <button
+                    key={category}
+                    type="button"
+                    onClick={() => toggleCategory(category)}
+                    className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                      isSelected
+                        ? "bg-terracotta text-white shadow-md"
+                        : "bg-white text-warm-gray-text hover:bg-warm-gray/10 border border-warm-gray/20"
+                    }`}
+                  >
+                    {formatCategoryLabel(category)}
+                  </button>
+                );
+              })}
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
@@ -229,24 +227,50 @@ export default function CreatePage() {
                 </p>
               </motion.button>
             ))}
+            {loading &&
+              page === 1 &&
+              ["skeleton-a", "skeleton-b", "skeleton-c", "skeleton-d"].map(
+                (key) => (
+                  <div
+                    key={key}
+                    className="bg-off-white rounded-2xl border border-warm-gray/20 p-6 shadow-sm animate-pulse"
+                  >
+                    <div className="h-32 rounded-xl mb-4 bg-warm-gray/20" />
+                    <div className="h-6 w-1/2 rounded bg-warm-gray/20 mb-3" />
+                    <div className="h-4 w-3/4 rounded bg-warm-gray/20" />
+                  </div>
+                ),
+              )}
           </div>
 
-          <div className="mt-8 flex justify-center">
-            {loading ? (
-              <div className="text-warm-gray-text">Loading…</div>
-            ) : error ? (
-              <div className="text-red-500">{error}</div>
-            ) : canLoadMore ? (
-              <button
-                type="button"
-                onClick={() => setPage((p) => p + 1)}
-                className="px-6 py-3 bg-white border rounded-xl"
-              >
-                Load more
-              </button>
-            ) : hasLoadedMore && templates.length > 0 ? (
-              <div className="text-warm-gray-text">No more templates</div>
-            ) : null}
+          <div className="mt-8 flex items-center justify-between">
+            <div />
+            <div className="flex items-center gap-4">
+              {error ? (
+                <div className="text-red-500">{error}</div>
+              ) : canLoadMore ? (
+                <button
+                  type="button"
+                  onClick={() => setPage((p) => p + 1)}
+                  disabled={loading}
+                  className="px-6 py-3 bg-white border rounded-xl disabled:opacity-50 disabled:cursor-not-allowed transition-opacity"
+                >
+                  {loading ? (
+                    <span className="inline-flex items-center gap-2">
+                      <span className="inline-block w-4 h-4 border-2 border-warm-gray/30 border-t-terracotta rounded-full animate-spin" />
+                      Loading…
+                    </span>
+                  ) : (
+                    "Load more"
+                  )}
+                </button>
+              ) : hasLoadedMore && templates.length > 0 ? (
+                <div className="text-warm-gray-text">No more templates</div>
+              ) : null}
+            </div>
+            {!loading && templates.length > 0 && (
+              <div className="text-sm text-warm-gray-text">{total} results</div>
+            )}
           </div>
         </motion.div>
       </div>
