@@ -182,6 +182,7 @@ export interface InviteInputField {
   key: string;
   type: "text" | "textarea" | "date" | "time";
   label: string;
+  description?: string;
   placeholder?: string;
   maxLength?: number;
   required: boolean;

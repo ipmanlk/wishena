@@ -163,6 +163,9 @@ export function ProjectDetailsForm({
                 className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
               />
             )}
+            {input.description && (
+              <p className="text-xs text-zinc-500 mt-1">{input.description}</p>
+            )}
           </div>
         ))}
       </div>

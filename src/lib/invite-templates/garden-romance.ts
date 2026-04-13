@@ -152,6 +152,8 @@ export const gardenRomanceTemplate: InviteTemplate = {
       {
         key: "rsvpDate",
         label: "RSVP By",
+        description:
+          "The last date guests can respond — displayed on their invite card.",
         type: "date",
         required: false,
         scope: "project",

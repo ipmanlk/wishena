@@ -140,6 +140,8 @@ export const minimalistVowsTemplate: InviteTemplate = {
         type: "date",
         required: false,
         scope: "project",
+        description:
+          "The last date guests can respond — displayed on their invite card.",
       },
     ],
     guestInputs: [
