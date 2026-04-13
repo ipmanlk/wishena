@@ -21,17 +21,18 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
   const [email, setEmail] = useState("");
   const [contactNumber, setContactNumber] = useState("");
   const [customFields, setCustomFields] = useState<
-    Record<string, { value: string; isPublic: boolean }>
+    Record<string, { label: string; value: string; isPublic: boolean }>
   >({});
 
   const handleCustomFieldChange = (
     key: string,
+    label: string,
     value: string,
     isPublic: boolean,
   ) => {
     setCustomFields((prev) => ({
       ...prev,
-      [key]: { value, isPublic },
+      [key]: { label, value, isPublic },
     }));
   };
 
@@ -222,6 +223,7 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
                       onChange={(e) =>
                         handleCustomFieldChange(
                           field.key,
+                          field.label,
                           e.target.value,
                           field.isPublic,
                         )
@@ -239,6 +241,7 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
                       onChange={(e) =>
                         handleCustomFieldChange(
                           field.key,
+                          field.label,
                           e.target.value,
                           field.isPublic,
                         )

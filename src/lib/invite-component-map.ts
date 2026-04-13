@@ -2,6 +2,7 @@ import { CustomNote } from "@/components/invite-modules/CustomNote";
 import { DecorativeDivider } from "@/components/invite-modules/DecorativeDivider";
 import { EventDetails } from "@/components/invite-modules/EventDetails";
 import { GuestAddress } from "@/components/invite-modules/GuestAddress";
+import { GuestCustomFields } from "@/components/invite-modules/GuestCustomFields";
 import { HonoreeNames } from "@/components/invite-modules/HonoreeNames";
 import { InviteHeader } from "@/components/invite-modules/InviteHeader";
 import { RsvpPrompt } from "@/components/invite-modules/RsvpPrompt";
@@ -21,4 +22,5 @@ export const inviteComponentMap: Record<
   rsvp_prompt: RsvpPrompt,
   decorative_divider: DecorativeDivider,
   custom_note: CustomNote,
+  guest_custom_fields: GuestCustomFields,
 };

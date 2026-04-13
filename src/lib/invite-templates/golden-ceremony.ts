@@ -108,6 +108,17 @@ export const goldenCeremonyTemplate: InviteTemplate = {
           },
         },
       },
+      {
+        id: "m_custom_fields",
+        type: "guest_custom_fields",
+        animation: "fade_up",
+        props: {
+          className: "text-center text-[#d4af37] mt-16 mb-8 font-serif px-6",
+          labelClassName:
+            "font-sans uppercase tracking-[0.25em] text-[10px] mb-1 opacity-80",
+          valueClassName: "italic font-light",
+        },
+      },
     ],
     projectInputs: [
       {

@@ -100,6 +100,17 @@ export const minimalistVowsTemplate: InviteTemplate = {
           },
         },
       },
+      {
+        id: "m_custom_fields",
+        type: "guest_custom_fields",
+        animation: "fade_up",
+        props: {
+          className: "text-center text-zinc-500 mt-16 mb-8 text-sm",
+          labelClassName:
+            "font-medium text-zinc-700 uppercase tracking-wider text-[10px] mb-1",
+          valueClassName: "text-zinc-600",
+        },
+      },
     ],
     projectInputs: [
       {

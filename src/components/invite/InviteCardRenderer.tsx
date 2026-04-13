@@ -119,6 +119,7 @@ export function InviteCardRenderer({
                 prefix={module.prefix}
                 animation={module.animation}
                 projectPayload={project.payload}
+                project={project}
                 guest={publicGuest}
                 {...rsvpProps}
               />

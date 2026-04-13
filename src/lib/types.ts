@@ -165,7 +165,8 @@ export type InviteModuleType =
   | "guest_address"
   | "rsvp_prompt"
   | "decorative_divider"
-  | "custom_note";
+  | "custom_note"
+  | "guest_custom_fields";
 
 export interface InviteModule {
   id: string;
@@ -247,9 +248,10 @@ export interface InviteGuest {
   displayName: string;
   personalNote?: string;
   internalNote?: string;
-  email?: string;
-  contactNumber?: string;
-  customFields: Record<string, GuestCustomField>;
+  customFields?: Record<
+    string,
+    { label: string; value: string; isPublic: boolean }
+  >;
   createdAt: string;
 }
 

@@ -26,17 +26,18 @@ export function EditGuestForm({
   const [email, setEmail] = useState(guest.email || "");
   const [contactNumber, setContactNumber] = useState(guest.contactNumber || "");
   const [customFields, setCustomFields] = useState<
-    Record<string, { value: string; isPublic: boolean }>
+    Record<string, { label: string; value: string; isPublic: boolean }>
   >(guest.customFields || {});
 
   const handleCustomFieldChange = (
     key: string,
+    label: string,
     value: string,
     isPublic: boolean,
   ) => {
     setCustomFields((prev) => ({
       ...prev,
-      [key]: { value, isPublic },
+      [key]: { label, value, isPublic },
     }));
   };
 
@@ -228,6 +229,7 @@ export function EditGuestForm({
                       onChange={(e) =>
                         handleCustomFieldChange(
                           field.key,
+                          field.label,
                           e.target.value,
                           field.isPublic,
                         )
@@ -245,6 +247,7 @@ export function EditGuestForm({
                       onChange={(e) =>
                         handleCustomFieldChange(
                           field.key,
+                          field.label,
                           e.target.value,
                           field.isPublic,
                         )

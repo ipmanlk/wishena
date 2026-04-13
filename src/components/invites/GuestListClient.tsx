@@ -3,6 +3,7 @@
 import { formatDistanceToNow } from "date-fns";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useState, useTransition } from "react";
+import { Modal } from "@/components/ui/Modal";
 import type { InviteGuest, InviteRsvp } from "@/lib/types";
 import { GuestRowActions } from "./GuestRowActions";
 
@@ -40,6 +41,7 @@ export function GuestListClient({
 
   const [search, setSearch] = useState(initialSearch);
   const [status, setStatus] = useState<FilterStatus>(initialStatus);
+  const [selectedGuest, setSelectedGuest] = useState<InviteGuest | null>(null);
 
   const rsvpMap = new Map(rsvps.map((r) => [r.guestId, r]));
   const pendingCount = totalGuests - rsvpCounts.yes - rsvpCounts.no;
@@ -222,9 +224,6 @@ export function GuestListClient({
                   Status
                 </th>
               )}
-              <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px]">
-                Details
-              </th>
               <th className="px-6 py-4 font-medium uppercase tracking-wider text-[11px] text-right">
                 Actions
               </th>
@@ -237,22 +236,13 @@ export function GuestListClient({
               const inviteUrl = `/i/${guest.id}`;
 
               return (
-                <tr key={guest.id} className="hover:bg-off-white/50 group">
+                <tr
+                  key={guest.id}
+                  className="hover:bg-off-white/80 group cursor-pointer transition-colors"
+                  onClick={() => setSelectedGuest(guest)}
+                >
                   <td className="px-6 py-4 font-medium text-ink relative">
                     {guest.displayName}
-                    {guest.personalNote && (
-                      <p className="text-xs text-muted font-normal mt-1 truncate max-w-xs">
-                        {guest.personalNote}
-                      </p>
-                    )}
-                    {guest.internalNote && (
-                      <div className="absolute left-6 bottom-1 invisible group-hover:visible z-10 w-max max-w-[200px] p-2 bg-zinc-800 text-white text-[10px] rounded shadow-lg whitespace-normal leading-tight">
-                        <span className="font-semibold block mb-0.5">
-                          Internal Note:
-                        </span>
-                        {guest.internalNote}
-                      </div>
-                    )}
                   </td>
                   <td className="px-6 py-4 text-warm-gray-text text-sm">
                     {guest.email && (
@@ -266,52 +256,17 @@ export function GuestListClient({
                     )}
                   </td>
                   {rsvpEnabled && (
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col gap-1">
+                    <td className="px-6 py-4 text-sm">
+                      <div className="flex flex-col gap-1 items-start">
                         {getStatusBadge(statusValue)}
-                        {rsvp && (
-                          <span className="text-[10px] text-muted">
-                            {formatDistanceToNow(new Date(rsvp.respondedAt), {
-                              addSuffix: true,
-                            })}
-                          </span>
-                        )}
                       </div>
                     </td>
                   )}
-                  <td className="px-6 py-4 text-warm-gray-text">
-                    {guest.customFields &&
-                    Object.keys(guest.customFields).length > 0 ? (
-                      <div className="flex flex-col gap-1.5 min-w-[120px]">
-                        {Object.entries(guest.customFields).map(
-                          ([k, field]) => (
-                            <div key={k} className="flex flex-col gap-0.5">
-                              <span className="text-[10px] uppercase font-medium text-warm-gray-text/70">
-                                {k}
-                              </span>
-                              <div className="flex items-center gap-1.5">
-                                <span className="text-xs text-ink truncate max-w-[150px]">
-                                  {field.value}
-                                </span>
-                                {field.isPublic ? (
-                                  <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-blue-50 text-blue-600 rounded">
-                                    👁 Public
-                                  </span>
-                                ) : (
-                                  <span className="flex-shrink-0 inline-flex px-1 py-0.5 text-[8px] bg-zinc-100 text-zinc-600 rounded">
-                                    🔒 Private
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          ),
-                        )}
-                      </div>
-                    ) : (
-                      <span className="text-warm-gray">-</span>
-                    )}
-                  </td>
-                  <td className="px-6 py-4 text-right">
+                  <td
+                    className="px-6 py-4 text-right"
+                    onClick={(e) => e.stopPropagation()}
+                    onKeyDown={(e) => e.stopPropagation()}
+                  >
                     <div className="flex items-center justify-end gap-2">
                       <GuestRowActions guest={guest} inviteUrl={inviteUrl} />
                     </div>
@@ -374,6 +329,143 @@ export function GuestListClient({
             Next
           </button>
         </div>
+      )}
+
+      {/* Guest Details Modal */}
+      {selectedGuest && (
+        <Modal onClose={() => setSelectedGuest(null)}>
+          <div className="p-8">
+            <h2 className="text-2xl font-bold text-zinc-900 mb-6">
+              Guest Details
+            </h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1">
+                    Name
+                  </h3>
+                  <p className="text-lg font-medium text-zinc-900">
+                    {selectedGuest.displayName}
+                  </p>
+                </div>
+
+                {(selectedGuest.email || selectedGuest.contactNumber) && (
+                  <div>
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">
+                      Contact
+                    </h3>
+                    {selectedGuest.email && (
+                      <div className="text-zinc-800">{selectedGuest.email}</div>
+                    )}
+                    {selectedGuest.contactNumber && (
+                      <div className="text-zinc-800 pt-1">
+                        {selectedGuest.contactNumber}
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {rsvpEnabled && (
+                  <div>
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-2">
+                      RSVP Status
+                    </h3>
+                    <div className="flex items-center gap-3">
+                      {getStatusBadge(
+                        rsvpMap.get(selectedGuest.id)?.response || "pending",
+                      )}
+                      {rsvpMap.has(selectedGuest.id) && (
+                        <span className="text-xs text-zinc-500">
+                          {formatDistanceToNow(
+                            new Date(
+                              rsvpMap.get(selectedGuest.id)?.respondedAt,
+                            ),
+                            {
+                              addSuffix: true,
+                            },
+                          )}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="space-y-6">
+                {selectedGuest.personalNote && (
+                  <div>
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1">
+                      Personal Note
+                    </h3>
+                    <p className="text-zinc-800 italic bg-zinc-50 p-3 rounded-lg text-sm border border-zinc-100">
+                      {selectedGuest.personalNote}
+                    </p>
+                  </div>
+                )}
+
+                {selectedGuest.internalNote && (
+                  <div>
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-1 flex items-center gap-1.5">
+                      Internal Note{" "}
+                      <span className="text-[10px] bg-zinc-200 text-zinc-600 px-1.5 rounded flex items-center">
+                        🔒 Private
+                      </span>
+                    </h3>
+                    <p className="text-zinc-800 bg-amber-50 p-3 rounded-lg text-sm border border-amber-100/50">
+                      {selectedGuest.internalNote}
+                    </p>
+                  </div>
+                )}
+
+                {selectedGuest.customFields &&
+                  Object.keys(selectedGuest.customFields).length > 0 && (
+                    <div>
+                      <h3 className="text-xs font-semibold uppercase tracking-wider text-zinc-500 mb-3">
+                        Additional Details
+                      </h3>
+                      <div className="space-y-3">
+                        {Object.entries(selectedGuest.customFields).map(
+                          ([k, field]) => (
+                            <div
+                              key={k}
+                              className="flex flex-col gap-0.5 bg-zinc-50 p-3 rounded-lg border border-zinc-100"
+                            >
+                              <span className="text-[10px] uppercase font-medium text-zinc-500 flex items-center justify-between">
+                                {field.label || k}
+                                {field.isPublic ? (
+                                  <span className="px-1.5 py-0.5 text-[8px] bg-blue-50 text-blue-600 rounded">
+                                    👁 Public
+                                  </span>
+                                ) : (
+                                  <span className="px-1.5 py-0.5 text-[8px] bg-zinc-200 text-zinc-600 rounded">
+                                    🔒 Private
+                                  </span>
+                                )}
+                              </span>
+                              <span className="text-sm text-zinc-900 mt-1 whitespace-pre-wrap">
+                                {field.value}
+                              </span>
+                            </div>
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+              </div>
+            </div>
+
+            <div className="mt-8 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setSelectedGuest(null)}
+                className="px-6 py-2 bg-zinc-900 text-white rounded-lg text-sm font-medium hover:bg-zinc-800 transition-colors"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </Modal>
       )}
     </div>
   );

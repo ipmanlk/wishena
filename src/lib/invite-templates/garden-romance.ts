@@ -116,6 +116,17 @@ export const gardenRomanceTemplate: InviteTemplate = {
           },
         },
       },
+      {
+        id: "m_custom_fields",
+        type: "guest_custom_fields",
+        animation: "fade_up",
+        props: {
+          className: "text-center text-[#738276] mt-16 mb-8 font-serif px-6",
+          labelClassName:
+            "font-medium mb-1 text-[11px] uppercase tracking-[0.2em]",
+          valueClassName: "italic",
+        },
+      },
     ],
     projectInputs: [
       {
