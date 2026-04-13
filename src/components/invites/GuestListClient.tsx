@@ -100,7 +100,7 @@ export function GuestListClient({
       );
     }
     return (
-      <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-mustard/20 text-mustard">
+      <span className="inline-flex items-center px-2 py-1 rounded-full text-[10px] font-medium bg-mustard/20 text-mustard border border-mustard/35">
         Pending
       </span>
     );
@@ -125,29 +125,27 @@ export function GuestListClient({
       {/* Stats Cards */}
       {rsvpEnabled && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-          <div className="bg-white p-4 rounded-xl border border-warm-gray/20 flex flex-col items-center justify-center">
-            <span className="text-2xl font-semibold text-ink">
-              {totalGuests}
-            </span>
+          <div className="bg-white p-4 rounded-xl border border-ink/20 flex flex-col items-center justify-center text-ink">
+            <span className="text-2xl font-semibold">{totalGuests}</span>
             <span className="text-xs text-warm-gray-text uppercase tracking-wider mt-1">
               Total Guests
             </span>
           </div>
-          <div className="bg-sage/10 p-4 rounded-xl border border-sage/20 flex flex-col items-center justify-center text-sage">
+          <div className="bg-sage/10 p-4 rounded-xl border border-sage/25 flex flex-col items-center justify-center text-sage">
             <span className="text-2xl font-semibold">{rsvpCounts.yes}</span>
-            <span className="text-xs text-sage/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-sage uppercase tracking-wider mt-1">
               Attending
             </span>
           </div>
-          <div className="bg-terracotta/10 p-4 rounded-xl border border-terracotta/20 flex flex-col items-center justify-center text-terracotta">
+          <div className="bg-terracotta/10 p-4 rounded-xl border border-terracotta/25 flex flex-col items-center justify-center text-terracotta">
             <span className="text-2xl font-semibold">{rsvpCounts.no}</span>
-            <span className="text-xs text-terracotta/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-terracotta uppercase tracking-wider mt-1">
               Declined
             </span>
           </div>
-          <div className="bg-mustard/10 p-4 rounded-xl border border-mustard/20 flex flex-col items-center justify-center text-mustard">
+          <div className="bg-mustard/20 p-4 rounded-xl border border-mustard/35 flex flex-col items-center justify-center text-mustard">
             <span className="text-2xl font-semibold">{pendingCount}</span>
-            <span className="text-xs text-mustard/80 uppercase tracking-wider mt-1">
+            <span className="text-xs text-mustard uppercase tracking-wider mt-1">
               Pending
             </span>
           </div>
