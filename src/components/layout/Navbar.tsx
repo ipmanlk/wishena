@@ -1,6 +1,6 @@
 "use client";
 
-import { CalendarHeart, LogOut, Sparkles, User } from "lucide-react";
+import { CalendarHeart, Heart, LogOut, Sparkles, User } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { logout } from "@/lib/auth/actions";
@@ -52,12 +52,13 @@ export function Navbar() {
                   className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
                 >
                   <CalendarHeart className="w-4 h-4" />
-                  Invites
+                  My Invites
                 </Link>
                 <Link
                   href="/my-wishes"
-                  className="text-sm font-medium text-ink hover:text-terracotta transition-colors"
+                  className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
                 >
+                  <Heart className="w-4 h-4" />
                   My Wishes
                 </Link>
 

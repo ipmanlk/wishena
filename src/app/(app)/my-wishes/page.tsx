@@ -1,4 +1,4 @@
-import { AlertCircle, Plus, Sparkles } from "lucide-react";
+import { AlertCircle, Heart, Plus } from "lucide-react";
 import Link from "next/link";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
 import { createClient } from "@/lib/supabase/server";
@@ -23,7 +23,7 @@ export default async function MyWishesPage() {
         <header className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-10">
           <div>
             <div className="inline-flex items-center gap-2 text-terracotta mb-2">
-              <Sparkles className="w-5 h-5" />
+              <Heart className="w-5 h-5" />
             </div>
             <h1 className="text-3xl md:text-4xl text-ink font-serif font-medium">
               My Wishes
@@ -54,7 +54,7 @@ export default async function MyWishesPage() {
         {wishes.length === 0 ? (
           <div className="text-center py-20 bg-off-white border border-warm-gray/20 rounded-3xl">
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-warm-gray/10 text-warm-gray-text mb-4">
-              <Sparkles className="w-8 h-8" />
+              <Heart className="w-8 h-8" />
             </div>
             <h3 className="text-xl font-medium text-ink mb-2">No wishes yet</h3>
             <p className="text-warm-gray-text mb-6">
