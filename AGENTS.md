@@ -63,3 +63,38 @@ This version has breaking changes — APIs, conventions, and file structure may 
 - It implicitly adds `children` prop which may not be desired
 - Regular functions and properly typed arrow functions are cleaner and more explicit
 - Better inference and less confusion
+
+## Running Commands
+
+This project uses **bun** as the package manager and runtime. Do not use npm or yarn.
+
+### Available Scripts
+
+```bash
+# Development server (runs on http://localhost:3000)
+bun run dev
+
+# Production build (verify TypeScript and build)
+bun run build
+
+# Start production server (after building)
+bun run start
+
+# Linting and formatting (uses Biome, not ESLint/Prettier)
+bun run lint       # Check for issues
+bun run format     # Auto-fix formatting
+```
+
+### Installing Dependencies
+
+```bash
+# Add a new dependency
+bun add <package-name>
+
+# Add a dev dependency
+bun add -D <package-name>
+```
+
+### Type Checking
+
+The project uses strict TypeScript. Always run `bun run build` before committing to ensure there are no type errors.
