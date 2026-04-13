@@ -4,10 +4,12 @@ import { motion } from "framer-motion";
 import { ArrowRight, Gift, Heart, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { templates } from "@/lib/templates";
+import { useUser } from "@/lib/auth/hooks";
 import type { TemplateListItem } from "@/lib/types";
 
 export default function HomePage() {
   const featuredTemplates: TemplateListItem[] = templates.slice(0, 3);
+  const { user, loading } = useUser();
 
   return (
     <div className="min-h-screen bg-cream">
@@ -38,12 +40,22 @@ export default function HomePage() {
                 Create a wish
                 <ArrowRight className="w-4 h-4" />
               </Link>
-              <Link
-                href="/auth/signup"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-ink border border-warm-gray/20 rounded-xl font-medium hover:bg-gray-50 transition-colors"
-              >
-                Sign up free
-              </Link>
+              {!loading && !user && (
+                <Link
+                  href="/auth/signup"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-ink border border-warm-gray/20 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                >
+                  Sign up free
+                </Link>
+              )}
+              {!loading && user && (
+                <Link
+                  href="/my-wishes"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-ink border border-warm-gray/20 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                >
+                  My wishes
+                </Link>
+              )}
             </div>
           </motion.div>
         </div>
@@ -188,7 +200,7 @@ export default function HomePage() {
             href="/create"
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-terracotta text-white rounded-xl font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
           >
-            Start creating
+            {!loading && user ? "Create another wish" : "Start creating"}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
