@@ -122,4 +122,12 @@ export interface Wish {
   payload: Record<string, string>;
   createdAt: string;
   expiresAt?: string;
+  userId?: string;
 }
+
+export interface GuestSession {
+  id: string;
+  wishCount: number;
+}
+
+export type AccountTier = "guest" | "unverified" | "verified";

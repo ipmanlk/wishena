@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Caveat, Playfair_Display, Source_Sans_3 } from "next/font/google";
+import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -38,7 +39,8 @@ export default function RootLayout({
       className={`${playfair.variable} ${source.variable} ${caveat.variable}`}
     >
       <body className="min-h-screen antialiased">
-        {children}
+        <Navbar />
+        <main>{children}</main>
         {modal}
       </body>
     </html>

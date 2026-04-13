@@ -548,7 +548,7 @@ export const melodiesByTemplate: Record<
     melody: cherryBlossomMelody,
     harmony: cherryBlossomHarmony,
   },
-  "starlight": {
+  starlight: {
     melody: starlightMelody,
     harmony: starlightHarmony,
   },

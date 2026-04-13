@@ -15,7 +15,12 @@ interface WishRendererProps {
   isPreview?: boolean;
 }
 
-export function WishRenderer({ template, payload, defaultValues, isPreview = false }: WishRendererProps) {
+export function WishRenderer({
+  template,
+  payload,
+  defaultValues,
+  isPreview = false,
+}: WishRendererProps) {
   const [isRevealedState, setIsRevealed] = useState(false);
   const isRevealed = isPreview || isRevealedState;
   const { blueprint } = template;

@@ -10,7 +10,8 @@ export default function TemplateNotFound() {
         </div>
         <h1 className="text-2xl text-ink mb-2">Template not found</h1>
         <p className="text-warm-gray-text mb-8">
-          The template you&apos;re looking for doesn&apos;t exist or may have been removed.
+          The template you&apos;re looking for doesn&apos;t exist or may have
+          been removed.
         </p>
         <Link
           href="/create"

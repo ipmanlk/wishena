@@ -18,7 +18,10 @@ interface FloatingHeartsProps {
   contained?: boolean;
 }
 
-export function FloatingHearts({ className = "", contained = false }: FloatingHeartsProps) {
+export function FloatingHearts({
+  className = "",
+  contained = false,
+}: FloatingHeartsProps) {
   const [hearts, setHearts] = useState<Heart[]>([]);
 
   useEffect(() => {
@@ -30,7 +33,7 @@ export function FloatingHearts({ className = "", contained = false }: FloatingHe
         duration: 6 + Math.random() * 5,
         size: 14 + Math.random() * 16,
         emoji: EMOJIS[Math.floor(Math.random() * EMOJIS.length)],
-      }))
+      })),
     );
   }, []);
 
@@ -46,7 +49,12 @@ export function FloatingHearts({ className = "", contained = false }: FloatingHe
       <div
         className={className}
         aria-hidden
-        style={{ position: contained ? "absolute" : "fixed", inset: 0, pointerEvents: "none", overflow: "hidden" }}
+        style={{
+          position: contained ? "absolute" : "fixed",
+          inset: 0,
+          pointerEvents: "none",
+          overflow: "hidden",
+        }}
       >
         {hearts.map((h) => (
           <span

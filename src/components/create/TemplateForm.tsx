@@ -5,8 +5,10 @@ import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import WishRenderer from "@/components/wish/WishRenderer";
-import { wishRepository } from "@/lib/storage/wish-repository";
 import type { Template } from "@/lib/types";
+import { GuestLimitModal } from "@/components/auth/GuestLimitModal";
+import { VerifyEmailModal } from "@/components/auth/VerifyEmailModal";
+import { createWishAction } from "@/lib/auth/actions";
 
 interface TemplateFormProps {
   template: Template;
@@ -14,7 +16,11 @@ interface TemplateFormProps {
   onBack?: () => void;
 }
 
-export function TemplateForm({ template, isModal = false, onBack }: TemplateFormProps) {
+export function TemplateForm({
+  template,
+  isModal = false,
+  onBack,
+}: TemplateFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState<Record<string, string>>({});
   const [isCreating, setIsCreating] = useState(false);
@@ -27,18 +33,32 @@ export function TemplateForm({ template, isModal = false, onBack }: TemplateForm
     }
   };
 
-  const handleCreate = () => {
+  const [showGuestLimit, setShowGuestLimit] = useState(false);
+  const [showVerifyLimit, setShowVerifyLimit] = useState(false);
+
+  const handleCreate = async () => {
     setIsCreating(true);
 
-    const wish = {
-      id: nanoid(10),
-      templateId: template.id,
-      payload: formData,
-      createdAt: new Date().toISOString(),
-    };
+    const result = await createWishAction(template.id, formData);
 
-    wishRepository.save(wish);
-    router.push(`/w/${wish.id}`);
+    if (result.error === "guest_limit_reached") {
+      setShowGuestLimit(true);
+      setIsCreating(false);
+      return;
+    }
+
+    if (result.error === "unverified_limit_reached") {
+      setShowVerifyLimit(true);
+      setIsCreating(false);
+      return;
+    }
+
+    if (result.success && result.id) {
+      router.push(`/w/${result.id}`);
+    } else {
+      // In case of general failure
+      setIsCreating(false);
+    }
   };
 
   const allFilled = template.blueprint.requiredInputs.every((field) =>
@@ -142,6 +162,14 @@ export function TemplateForm({ template, isModal = false, onBack }: TemplateForm
           </div>
         </div>
       </div>
+      <GuestLimitModal
+        isOpen={showGuestLimit}
+        onClose={() => setShowGuestLimit(false)}
+      />
+      <VerifyEmailModal
+        isOpen={showVerifyLimit}
+        onClose={() => setShowVerifyLimit(false)}
+      />
     </div>
   );
 }

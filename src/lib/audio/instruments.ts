@@ -145,7 +145,7 @@ export function createEffectChain(effects: EffectType[]): EffectChain {
             decay: 4,
             preDelay: 0.2,
             wet: 0.4,
-          })
+          }),
         );
         break;
 
@@ -155,7 +155,7 @@ export function createEffectChain(effects: EffectType[]): EffectChain {
             delayTime: "8n",
             feedback: 0.3,
             wet: 0.25,
-          })
+          }),
         );
         break;
 
@@ -166,7 +166,7 @@ export function createEffectChain(effects: EffectType[]): EffectChain {
             delayTime: 3.5,
             depth: 0.7,
             wet: 0.3,
-          })
+          }),
         );
         break;
 
@@ -177,7 +177,7 @@ export function createEffectChain(effects: EffectType[]): EffectChain {
             type: "lowpass",
             rolloff: -12,
             Q: 1,
-          })
+          }),
         );
         break;
     }

@@ -40,15 +40,19 @@ export function AudioPlayer({ audio, isPlaying }: AudioPlayerProps) {
     // Create melody part
     melodyPartRef.current = new Tone.Part(
       (time: number, value: unknown) => {
-        const note = value as { note: string; duration: string; velocity?: number };
+        const note = value as {
+          note: string;
+          duration: string;
+          velocity?: number;
+        };
         melodySynth.triggerAttackRelease(
           note.note,
           note.duration,
           time,
-          note.velocity || 0.8
+          note.velocity || 0.8,
         );
       },
-      audio.melody.map((m) => [m.time, m])
+      audio.melody.map((m) => [m.time, m]),
     );
 
     melodyPartRef.current.loop = audio.loop;
@@ -70,15 +74,19 @@ export function AudioPlayer({ audio, isPlaying }: AudioPlayerProps) {
 
       harmonyPartRef.current = new Tone.Part(
         (time: number, value: unknown) => {
-          const note = value as { note: string; duration: string; velocity?: number };
+          const note = value as {
+            note: string;
+            duration: string;
+            velocity?: number;
+          };
           harmonySynth.triggerAttackRelease(
             note.note,
             note.duration,
             time,
-            (note.velocity || 0.5) * 0.7
+            (note.velocity || 0.5) * 0.7,
           );
         },
-        audio.harmony.map((m) => [m.time, m])
+        audio.harmony.map((m) => [m.time, m]),
       );
 
       harmonyPartRef.current.loop = audio.loop;
