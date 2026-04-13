@@ -1,5 +1,5 @@
 import { createAdminClient } from "../supabase/server";
-import type { Wish, GuestSession } from "../types";
+import type { GuestSession, Wish } from "../types";
 
 export const guestWishRepository = {
   async getSession(sessionId: string): Promise<GuestSession | null> {

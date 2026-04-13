@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-import { Sparkles, Mail, Lock } from "lucide-react";
-import Link from "next/link";
-import { signup, signInWithGoogle } from "@/lib/auth/actions";
 import { motion } from "framer-motion";
+import { Lock, Mail, Sparkles } from "lucide-react";
+import Link from "next/link";
+import { useState } from "react";
+import { signInWithGoogle, signup } from "@/lib/auth/actions";
 
 export default function SignupPage() {
   const [error, setError] = useState<string | null>(null);
@@ -129,10 +129,16 @@ export default function SignupPage() {
 
             <div className="mt-6">
               <button
+                type="button"
                 onClick={() => signInWithGoogle()}
                 className="w-full flex justify-center items-center py-3 px-4 border border-warm-gray/30 rounded-xl shadow-sm bg-white text-sm font-medium text-ink hover:bg-gray-50 transition-colors"
               >
-                <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+                <svg
+                  className="h-5 w-5 mr-2"
+                  role="img"
+                  aria-label="Google"
+                  viewBox="0 0 24 24"
+                >
                   <path
                     d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                     fill="#4285F4"

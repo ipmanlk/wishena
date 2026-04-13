@@ -1,13 +1,12 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-import { headers, cookies } from "next/headers";
-import { createClient } from "../supabase/server";
-import { verifyGuestCookie, signGuestSessionId } from "../guest/session";
-import { guestWishRepository } from "../guest/guest-wish-repository";
-import { supabaseWishRepository } from "../storage/supabase-wish-repository";
 import { nanoid } from "nanoid";
+import { cookies, headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { guestWishRepository } from "../guest/guest-wish-repository";
+import { signGuestSessionId, verifyGuestCookie } from "../guest/session";
+import { supabaseWishRepository } from "../storage/supabase-wish-repository";
+import { createClient } from "../supabase/server";
 import type { Wish } from "../types";
 
 export async function login(formData: FormData) {
@@ -113,7 +112,8 @@ export async function resendVerificationEmail() {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  if (!user || user.email_confirmed_at) return { error: "Not eligible" };
+  if (!user || user.email_confirmed_at || !user.email)
+    return { error: "Not eligible" };
 
   const headersList = await headers();
   const origin =
@@ -123,7 +123,7 @@ export async function resendVerificationEmail() {
 
   const { error } = await supabase.auth.resend({
     type: "signup",
-    email: user.email!,
+    email: user.email,
     options: {
       emailRedirectTo: `${origin}/auth/callback`,
     },
@@ -152,7 +152,7 @@ export async function createWishAction(
   if (!user) {
     // Guest flow
     const cookieStore = await cookies();
-    let guestToken = cookieStore.get("wishena-guest")?.value;
+    const guestToken = cookieStore.get("wishena-guest")?.value;
     let sessionId: string | null = null;
 
     if (guestToken) {

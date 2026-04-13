@@ -1,10 +1,10 @@
 "use client";
 
+import { LogOut, Sparkles, User } from "lucide-react";
 import Link from "next/link";
-import { Sparkles, User, LogOut } from "lucide-react";
-import { useUser } from "@/lib/auth/hooks";
+import { useEffect, useRef, useState } from "react";
 import { logout } from "@/lib/auth/actions";
-import { useState, useRef, useEffect } from "react";
+import { useUser } from "@/lib/auth/hooks";
 
 export function Navbar() {
   const { user, loading } = useUser();
@@ -56,6 +56,7 @@ export function Navbar() {
 
                 <div className="relative" ref={dropdownRef}>
                   <button
+                    type="button"
                     onClick={() => setDropdownOpen(!dropdownOpen)}
                     className="flex items-center justify-center w-9 h-9 rounded-full bg-warm-gray/20 text-ink hover:bg-warm-gray/30 transition-colors focus:outline-none"
                   >
@@ -79,6 +80,7 @@ export function Navbar() {
                       </div>
                       <div className="py-1">
                         <button
+                          type="button"
                           onClick={() => {
                             setDropdownOpen(false);
                             logout();

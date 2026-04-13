@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { AlertCircle, X, CheckCircle } from "lucide-react";
-import { resendVerificationEmail } from "@/lib/auth/actions";
+import { AnimatePresence, motion } from "framer-motion";
+import { AlertCircle, CheckCircle, X } from "lucide-react";
 import { useState } from "react";
+import { resendVerificationEmail } from "@/lib/auth/actions";
 
 interface VerifyEmailModalProps {
   isOpen: boolean;
@@ -42,6 +42,7 @@ export function VerifyEmailModal({ isOpen, onClose }: VerifyEmailModalProps) {
               <div className="p-6 md:p-8">
                 <div className="flex justify-end -mt-2 -mr-2">
                   <button
+                    type="button"
                     onClick={onClose}
                     className="p-2 text-warm-gray-text hover:text-ink transition-colors"
                   >
@@ -70,6 +71,7 @@ export function VerifyEmailModal({ isOpen, onClose }: VerifyEmailModalProps) {
                   </div>
                 ) : (
                   <button
+                    type="button"
                     onClick={handleResend}
                     disabled={loading}
                     className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-terracotta hover:bg-terracotta/90 transition-colors disabled:opacity-50"

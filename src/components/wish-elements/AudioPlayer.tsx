@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 import * as Tone from "tone";
-import { createSynth, createEffectChain } from "@/lib/audio";
+import { createEffectChain, createSynth } from "@/lib/audio";
 import type { AudioConfig } from "@/lib/types";
 
 interface AudioPlayerProps {

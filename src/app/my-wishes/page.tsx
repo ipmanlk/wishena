@@ -1,12 +1,13 @@
-import { createClient } from "@/lib/supabase/server";
+import { AlertCircle, Plus, Sparkles } from "lucide-react";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
+import { createClient } from "@/lib/supabase/server";
 import { getTemplateById } from "@/lib/templates";
-import { WishCard } from "./WishCard";
-import { Sparkles, Plus, AlertCircle } from "lucide-react";
-import Link from "next/link";
-import { resendVerificationEmail } from "@/lib/auth/actions";
 import { ResendButton } from "./ResendButton";
+import { WishCard } from "./WishCard";
+
+export const dynamic = "force-dynamic";
 
 export default async function MyWishesPage() {
   const supabase = await createClient();

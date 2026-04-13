@@ -1,6 +1,6 @@
-import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
-import { forestCalmMelody, forestCalmHarmony } from "../audio/melodies";
+import { forestCalmHarmony, forestCalmMelody } from "../audio/melodies";
+import type { Template } from "../types";
 
 export const forestCalmTemplate: Template = {
   id: "forest-calm",

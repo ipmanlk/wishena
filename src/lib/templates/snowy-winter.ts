@@ -1,9 +1,9 @@
-import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
 import {
-  winterWonderlandMelody,
   winterWonderlandHarmony,
+  winterWonderlandMelody,
 } from "../audio/melodies";
+import type { Template } from "../types";
 
 export const snowyWinterTemplate: Template = {
   id: "snowy-winter",

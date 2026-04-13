@@ -1,14 +1,13 @@
 "use client";
 
 import { ArrowLeft } from "lucide-react";
-import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import WishRenderer from "@/components/wish/WishRenderer";
-import type { Template } from "@/lib/types";
 import { GuestLimitModal } from "@/components/auth/GuestLimitModal";
 import { VerifyEmailModal } from "@/components/auth/VerifyEmailModal";
+import WishRenderer from "@/components/wish/WishRenderer";
 import { createWishAction } from "@/lib/auth/actions";
+import type { Template } from "@/lib/types";
 
 interface TemplateFormProps {
   template: Template;

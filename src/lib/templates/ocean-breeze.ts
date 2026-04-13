@@ -1,6 +1,6 @@
-import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
-import { oceanBreezeMelody, oceanBreezeHarmony } from "../audio/melodies";
+import { oceanBreezeHarmony, oceanBreezeMelody } from "../audio/melodies";
+import type { Template } from "../types";
 
 export const oceanBreezeTemplate: Template = {
   id: "ocean-breeze",

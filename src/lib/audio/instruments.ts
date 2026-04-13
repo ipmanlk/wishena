@@ -100,8 +100,6 @@ export function createSynth(type: SynthType): Tone.PolySynth {
           },
         },
       }) as unknown as Tone.PolySynth;
-
-    case "Synth":
     default:
       return new Tone.PolySynth(Tone.Synth, {
         oscillator: {
@@ -123,8 +121,6 @@ export function createSynth(type: SynthType): Tone.PolySynth {
  */
 export function createEffectChain(effects: EffectType[]): EffectChain {
   const effectNodes: Tone.ToneAudioNode[] = [];
-  let input: Tone.ToneAudioNode;
-  let output: Tone.ToneAudioNode;
 
   if (effects.length === 0) {
     // No effects, create a simple pass-through
@@ -184,8 +180,8 @@ export function createEffectChain(effects: EffectType[]): EffectChain {
   }
 
   // Connect effects in series: input -> effect1 -> effect2 -> ... -> output
-  input = effectNodes[0];
-  output = effectNodes[effectNodes.length - 1];
+  const input = effectNodes[0];
+  const output = effectNodes[effectNodes.length - 1];
 
   for (let i = 0; i < effectNodes.length - 1; i++) {
     effectNodes[i].connect(effectNodes[i + 1]);

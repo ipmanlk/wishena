@@ -1,5 +1,5 @@
-import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
 import { guestWishRepository } from "@/lib/guest/guest-wish-repository";
+import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
 import { WishClientWrapper } from "./WishClientWrapper";
 
 export default async function WishPage({

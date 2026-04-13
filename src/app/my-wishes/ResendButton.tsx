@@ -1,8 +1,8 @@
 "use client";
 
+import { CheckCircle } from "lucide-react";
 import { useState } from "react";
 import { resendVerificationEmail } from "@/lib/auth/actions";
-import { CheckCircle } from "lucide-react";
 
 export function ResendButton() {
   const [sent, setSent] = useState(false);

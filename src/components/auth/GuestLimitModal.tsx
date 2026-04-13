@@ -1,7 +1,7 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, X, Mail } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Mail, Sparkles, X } from "lucide-react";
 import Link from "next/link";
 import { signInWithGoogle } from "@/lib/auth/actions";
 
@@ -32,6 +32,7 @@ export function GuestLimitModal({ isOpen, onClose }: GuestLimitModalProps) {
               <div className="p-6 md:p-8">
                 <div className="flex justify-end -mt-2 -mr-2">
                   <button
+                    type="button"
                     onClick={onClose}
                     className="p-2 text-warm-gray-text hover:text-ink transition-colors"
                   >
@@ -62,10 +63,16 @@ export function GuestLimitModal({ isOpen, onClose }: GuestLimitModalProps) {
                   </Link>
 
                   <button
+                    type="button"
                     onClick={() => signInWithGoogle()}
                     className="w-full flex justify-center items-center py-3.5 px-4 border border-warm-gray/30 rounded-xl shadow-sm bg-white text-sm font-medium text-ink hover:bg-gray-50 transition-colors"
                   >
-                    <svg className="h-5 w-5 mr-2" viewBox="0 0 24 24">
+                    <svg
+                      className="h-5 w-5 mr-2"
+                      role="img"
+                      aria-label="Google"
+                      viewBox="0 0 24 24"
+                    >
                       <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                         fill="#4285F4"

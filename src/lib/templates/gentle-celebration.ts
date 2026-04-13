@@ -1,6 +1,6 @@
-import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
-import { goldenHourMelody, goldenHourHarmony } from "../audio/melodies";
+import { goldenHourHarmony, goldenHourMelody } from "../audio/melodies";
+import type { Template } from "../types";
 
 export const gentleCelebrationTemplate: Template = {
   id: "gentle-celebration",

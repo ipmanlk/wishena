@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { Copy, Trash2, ExternalLink, Check } from "lucide-react";
+import { Check, Copy, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
+import { useState } from "react";
 import { deleteWishAction } from "@/app/my-wishes/actions";
 
 interface WishCardProps {
@@ -58,6 +58,7 @@ export function WishCard({ wishId, templateName, createdAt }: WishCardProps) {
           Open
         </Link>
         <button
+          type="button"
           onClick={handleCopy}
           className="flex-1 flex justify-center items-center py-2.5 px-4 border border-warm-gray/30 rounded-xl text-sm font-medium text-ink bg-off-white hover:bg-gray-50 transition-colors"
         >
@@ -74,6 +75,7 @@ export function WishCard({ wishId, templateName, createdAt }: WishCardProps) {
           )}
         </button>
         <button
+          type="button"
           disabled={isDeleting}
           onClick={handleDelete}
           className="flex justify-center items-center p-2.5 border border-red-100 rounded-xl text-red-600 bg-red-50 hover:bg-red-100 transition-colors focus:outline-none disabled:opacity-50"

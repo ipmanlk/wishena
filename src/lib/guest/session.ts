@@ -1,4 +1,4 @@
-import { SignJWT, jwtVerify } from "jose";
+import { jwtVerify, SignJWT } from "jose";
 
 const getSecret = () => {
   const secret = process.env.GUEST_SESSION_SECRET;
@@ -22,7 +22,7 @@ export async function verifyGuestCookie(token: string): Promise<string | null> {
   try {
     const { payload } = await jwtVerify(token, getSecret());
     return payload.id as string;
-  } catch (err) {
+  } catch (_err) {
     return null;
   }
 }

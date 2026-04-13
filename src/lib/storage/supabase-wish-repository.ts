@@ -1,4 +1,4 @@
-import { createClient, createAdminClient } from "../supabase/server";
+import { createAdminClient, createClient } from "../supabase/server";
 import type { Wish } from "../types";
 
 export const supabaseWishRepository = {

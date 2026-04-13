@@ -1,13 +1,9 @@
-import type { Unit } from "tone";
 import type {
-  FMSynthOptions,
-  AMSynthOptions,
-  DuoSynthOptions,
-  SynthOptions,
-  ReverbOptions,
-  FeedbackDelayOptions,
   ChorusOptions,
+  FeedbackDelayOptions,
   FilterOptions,
+  ReverbOptions,
+  Unit,
 } from "tone";
 
 export type VisualsPreset = "glow-dust" | "confetti" | "snow";

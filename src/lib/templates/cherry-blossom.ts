@@ -1,6 +1,6 @@
-import type { Template } from "../types";
 import { instrumentPresets } from "../audio";
-import { cherryBlossomMelody, cherryBlossomHarmony } from "../audio/melodies";
+import { cherryBlossomHarmony, cherryBlossomMelody } from "../audio/melodies";
+import type { Template } from "../types";
 
 export const cherryBlossomTemplate: Template = {
   id: "cherry-blossom",

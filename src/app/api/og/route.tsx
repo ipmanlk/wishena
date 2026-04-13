@@ -41,7 +41,7 @@ export async function GET(request: Request) {
             lineHeight: 1.2,
           }}
         >
-          {text.length > 60 ? text.slice(0, 60) + "..." : text}
+          {text.length > 60 ? `${text.slice(0, 60)}...` : text}
         </div>
         <div
           style={{

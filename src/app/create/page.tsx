@@ -11,7 +11,11 @@ const ALL_CATEGORY = "All";
 
 function getAllCategories(): string[] {
   const categorySet = new Set<string>();
-  templates.forEach((t) => t.categories.forEach((c) => categorySet.add(c)));
+  for (const t of templates) {
+    for (const c of t.categories) {
+      categorySet.add(c);
+    }
+  }
   return [ALL_CATEGORY, ...Array.from(categorySet).sort()];
 }
 
@@ -113,9 +117,9 @@ export default function CreatePage() {
                   style={{ background: template.preview.background }}
                 >
                   <div className="h-full flex flex-col items-center justify-center gap-1">
-                    {template.preview.lines.map((line, index) => (
+                    {template.preview.lines.map((line) => (
                       <span
-                        key={index}
+                        key={line.text}
                         className={line.className}
                         style={line.style}
                       >
