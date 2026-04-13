@@ -3,14 +3,31 @@
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 import { useEffect, useMemo, useState } from "react";
+import type { VisualsPreset } from "@/lib/types";
 
 interface ParticleBackgroundProps {
-  preset: "glow-dust" | "confetti" | "snow";
+  preset: VisualsPreset;
   mobileDensity: number;
   desktopDensity: number;
 }
 
-const presets = {
+interface ParticlePreset {
+  particles: {
+    color?: { value: string | string[] };
+    move?: {
+      enable: boolean;
+      speed: number;
+      direction: string;
+      outModes?: string;
+    };
+    opacity?: { value: number | { min: number; max: number } };
+    size?: { value: { min: number; max: number } };
+    blur?: { enable: boolean; value: number };
+    shape?: { type: "circle" };
+  };
+}
+
+const presets: Record<VisualsPreset, ParticlePreset> = {
   "glow-dust": {
     particles: {
       color: { value: ["#ec4899", "#06b6d4", "#8b5cf6"] },
@@ -35,6 +52,60 @@ const presets = {
       move: { enable: true, speed: 1, direction: "bottom" as const },
       opacity: { value: { min: 0.5, max: 1 } },
       size: { value: { min: 1, max: 3 } },
+    },
+  },
+  petals: {
+    particles: {
+      color: { value: ["#fbcfe8", "#ffffff", "#fce7f3"] },
+      move: {
+        enable: true,
+        speed: 1.5,
+        direction: "bottom" as const,
+        outModes: "out",
+      },
+      opacity: { value: { min: 0.6, max: 0.9 } },
+      size: { value: { min: 3, max: 6 } },
+      shape: { type: "circle" as const },
+    },
+  },
+  "gold-dust": {
+    particles: {
+      color: { value: "#fbbf24" },
+      move: { enable: true, speed: 0.3, direction: "none" as const },
+      opacity: { value: { min: 0.1, max: 0.5 } },
+      size: { value: { min: 1, max: 2 } },
+      blur: { enable: true, value: 3 },
+    },
+  },
+  linen: {
+    particles: {
+      color: { value: "#a8a29e" },
+      move: { enable: false, speed: 0, direction: "none" as const },
+      opacity: { value: { min: 0.05, max: 0.15 } },
+      size: { value: { min: 0.5, max: 1.5 } },
+    },
+  },
+  balloons: {
+    particles: {
+      color: { value: ["#ef4444", "#3b82f6", "#10b981", "#f59e0b", "#8b5cf6"] },
+      move: {
+        enable: true,
+        speed: 2,
+        direction: "top" as const,
+        outModes: "out",
+      },
+      opacity: { value: { min: 0.6, max: 0.9 } },
+      size: { value: { min: 10, max: 25 } },
+      shape: { type: "circle" as const },
+    },
+  },
+  spotlight: {
+    particles: {
+      color: { value: "#ffffff" },
+      move: { enable: true, speed: 0.5, direction: "none" as const },
+      opacity: { value: { min: 0.05, max: 0.2 } },
+      size: { value: { min: 50, max: 150 } },
+      blur: { enable: true, value: 50 },
     },
   },
 };

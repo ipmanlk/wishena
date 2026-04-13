@@ -6,7 +6,16 @@ import type {
   Unit,
 } from "tone";
 
-export type VisualsPreset = "glow-dust" | "confetti" | "snow";
+export type WishVisualsPreset = "glow-dust" | "confetti" | "snow";
+
+export type InviteVisualsPreset =
+  | "petals"
+  | "gold-dust"
+  | "linen"
+  | "balloons"
+  | "spotlight";
+
+export type VisualsPreset = WishVisualsPreset | InviteVisualsPreset;
 
 export type NoteTone = Unit.Note;
 
@@ -146,3 +155,94 @@ export interface GuestSession {
 }
 
 export type AccountTier = "guest" | "unverified" | "verified";
+
+// --- Invite System ---
+
+export type InviteModuleType =
+  | "invite_header"
+  | "honoree_names"
+  | "event_details"
+  | "guest_address"
+  | "rsvp_prompt"
+  | "decorative_divider"
+  | "custom_note";
+
+export interface InviteModule {
+  id: string;
+  type: InviteModuleType;
+  style?: string;
+  bindSource?: "project" | "guest";
+  bindTo?: string;
+  prefix?: string;
+  animation?: "fade_up" | "scale_in" | "typewriter";
+  props?: Record<string, unknown>;
+}
+
+export interface InviteInputField {
+  key: string;
+  type: "text" | "textarea" | "date" | "time";
+  label: string;
+  placeholder?: string;
+  maxLength?: number;
+  required: boolean;
+  scope: "project" | "guest";
+}
+
+export interface InviteTemplate {
+  id: string;
+  name: string;
+  description?: string;
+  inviteKind: string;
+  preview: TemplatePreview;
+
+  blueprint: {
+    globalStyle?: string;
+
+    visuals?: {
+      engine: "tsparticles";
+      preset: InviteVisualsPreset;
+      mobileDensity: number;
+      desktopDensity: number;
+    };
+
+    audio?: AudioConfig;
+
+    modules: InviteModule[];
+    projectInputs: InviteInputField[];
+    guestInputs: InviteInputField[];
+  };
+}
+
+export interface InviteProject {
+  id: string;
+  userId: string;
+  templateId: string;
+  inviteKind: string;
+  title: string;
+  payload: Record<string, string>;
+  rsvpEnabled: boolean;
+  guestLimit?: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface InviteGuest {
+  id: string;
+  projectId: string;
+  name: string;
+  note?: string;
+  email?: string;
+  contactNumber?: string;
+  extraData: Record<string, string>;
+  createdAt: string;
+}
+
+export type RsvpResponse = "yes" | "no";
+
+export interface InviteRsvp {
+  id: string;
+  guestId: string;
+  projectId: string;
+  response: RsvpResponse;
+  respondedAt: string;
+}

@@ -79,3 +79,91 @@ $$ language plpgsql security definer set search_path = public;
 create trigger on_auth_user_created
   after insert on auth.users
   for each row execute procedure public.handle_new_user();
+
+-- 7. Invite Projects (generic — works for wedding, party, concert, etc.)
+create table public.invite_projects (
+  id           text        primary key,
+  user_id      uuid        not null references auth.users(id) on delete cascade,
+  template_id  text        not null,
+  invite_kind  text        not null,              -- "wedding", "party", "concert", etc.
+  title        text        not null,
+  payload      jsonb       not null default '{}', -- All project-level input fields
+  rsvp_enabled boolean     not null default false,
+  guest_limit  int,                               -- null = unlimited; future premium gating
+  created_at   timestamptz not null default now(),
+  updated_at   timestamptz not null default now()
+);
+
+alter table public.invite_projects enable row level security;
+
+create policy "Users can manage their own invite projects"
+  on public.invite_projects
+  for all
+  using  (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
+-- 8. Invite Guests — one row = one personalised card + unique URL
+create table public.invite_guests (
+  id             text        primary key,
+  project_id     text        not null references public.invite_projects(id) on delete cascade,
+  name           text        not null,
+  note           text,
+  email          text,
+  contact_number text,
+  extra_data     jsonb       not null default '{}', -- Template-specific guest fields (tableNumber, section, etc.)
+  created_at     timestamptz not null default now()
+);
+
+alter table public.invite_guests enable row level security;
+
+-- Guest cards are publicly readable — invite links work for anyone
+create policy "Invite guests are publicly readable"
+  on public.invite_guests
+  for select
+  using (true);
+
+-- Only the project owner can write guest records
+create policy "Project owner can manage guests"
+  on public.invite_guests
+  for all
+  using (
+    exists (
+      select 1 from public.invite_projects p
+      where p.id = project_id and p.user_id = auth.uid()
+    )
+  )
+  with check (
+    exists (
+      select 1 from public.invite_projects p
+      where p.id = project_id and p.user_id = auth.uid()
+    )
+  );
+
+-- 9. RSVP responses — upsert pattern allows changing mind via same URL
+create table public.invite_rsvps (
+  id           text        primary key,
+  guest_id     text        not null references public.invite_guests(id) on delete cascade,
+  project_id   text        not null references public.invite_projects(id) on delete cascade,
+  response     text        not null check (response in ('yes', 'no')),
+  responded_at timestamptz not null default now()
+);
+
+alter table public.invite_rsvps enable row level security;
+
+-- Anyone can submit/update an RSVP (guest identified by their unique guestId)
+create policy "Anyone can upsert their RSVP"
+  on public.invite_rsvps
+  for all
+  using (true)
+  with check (true);
+
+-- Creator can read all RSVPs for their projects
+create policy "Project owner can read RSVPs"
+  on public.invite_rsvps
+  for select
+  using (
+    exists (
+      select 1 from public.invite_projects p
+      where p.id = project_id and p.user_id = auth.uid()
+    )
+  );

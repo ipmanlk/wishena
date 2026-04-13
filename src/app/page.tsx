@@ -36,36 +36,42 @@ export default function HomePage() {
               <span className="font-medium">Make every moment memorable</span>
             </div>
             <h1 className="text-5xl md:text-6xl text-ink mb-6 leading-tight">
-              Create wishes that feel like magic
+              A magical experience for every moment
             </h1>
             <p className="text-warm-gray-text text-lg md:text-xl max-w-xl mx-auto mb-10">
-              Beautiful, personalized digital wishes for birthdays,
-              celebrations, and every moment worth sharing.
+              Beautiful, personalized digital wishes and campaign-ready dynamic
+              invitations.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/create"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-terracotta text-white rounded-xl font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
-              >
-                Create a wish
-                <ArrowRight className="w-4 h-4" />
-              </Link>
-              {!loading && !user && (
+            <div className="flex flex-col sm:flex-row gap-6 mx-auto">
+              <div className="flex-1 bg-white p-8 rounded-2xl border border-warm-gray/20 text-left shadow-sm hover:shadow-md transition-shadow group">
+                <h3 className="text-xl font-medium text-ink mb-2">
+                  ✨ Create a Wish
+                </h3>
+                <p className="text-warm-gray-text mb-6">
+                  For birthdays, quick celebrations, and one-off magical
+                  moments.
+                </p>
                 <Link
-                  href="/auth/signup"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-ink border border-warm-gray/20 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                  href="/create"
+                  className="text-terracotta font-medium group-hover:text-terracotta/80 inline-flex items-center gap-1"
                 >
-                  Sign up free
+                  Create a wish <ArrowRight className="w-4 h-4" />
                 </Link>
-              )}
-              {!loading && user && (
+              </div>
+              <div className="flex-1 bg-white p-8 rounded-2xl border border-warm-gray/20 text-left shadow-sm hover:shadow-md transition-shadow group">
+                <h3 className="text-xl font-medium text-ink mb-2">
+                  💌 Send Personalised Invites
+                </h3>
+                <p className="text-warm-gray-text mb-6">
+                  One design. Many guests. Every card individually addressed.
+                </p>
                 <Link
-                  href="/my-wishes"
-                  className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-ink border border-warm-gray/20 rounded-xl font-medium hover:bg-gray-50 transition-colors"
+                  href="/invites"
+                  className="text-terracotta font-medium group-hover:text-terracotta/80 inline-flex items-center gap-1"
                 >
-                  My wishes
+                  Start an invite project <ArrowRight className="w-4 h-4" />
                 </Link>
-              )}
+              </div>
             </div>
           </motion.div>
         </div>
