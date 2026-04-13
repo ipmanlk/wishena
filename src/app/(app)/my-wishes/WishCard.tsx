@@ -3,7 +3,7 @@
 import { Check, Copy, ExternalLink, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
-import { deleteWishAction } from "@/app/my-wishes/actions";
+import { deleteWishAction } from "./actions";
 
 interface WishCardProps {
   wishId: string;
