@@ -162,7 +162,7 @@ export default function CreatePage() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search templates by name, description or category"
+              placeholder="Search for a moment to celebrate..."
               className="flex-1 px-4 py-3 rounded-xl border bg-white"
             />
           </div>
