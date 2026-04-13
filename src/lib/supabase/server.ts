@@ -14,7 +14,7 @@ export async function createClient() {
 
   return createServerClient(
     getEnv("NEXT_PUBLIC_SUPABASE_URL"),
-    getEnv("NEXT_PUBLIC_SUPABASE_ANON_KEY"),
+    getEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
     {
       cookies: {
         getAll() {
