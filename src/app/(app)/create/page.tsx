@@ -12,23 +12,35 @@ function formatCategoryLabel(category: string): string {
   return category.charAt(0).toUpperCase() + category.slice(1);
 }
 
+interface TemplatesResponse {
+  items: Template[];
+  page: number;
+  limit: number;
+  total: number;
+  categories: string[];
+}
+
 async function fetchTemplates({
   q,
+  categories,
   page,
   limit,
 }: {
   q?: string;
+  categories?: string[];
   page: number;
   limit: number;
-}) {
+}): Promise<TemplatesResponse> {
   const params = new URLSearchParams();
   if (q) params.set("q", q);
+  if (categories && categories.length > 0)
+    params.set("categories", categories.join(","));
   params.set("page", String(page));
   params.set("limit", String(limit));
 
   const res = await fetch(`/api/templates?${params.toString()}`);
   if (!res.ok) throw new Error("Failed to load templates");
-  return res.json();
+  return res.json() as Promise<TemplatesResponse>;
 }
 
 export default function CreatePage() {
@@ -42,6 +54,12 @@ export default function CreatePage() {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [hasLoadedMore, setHasLoadedMore] = useState(false);
+
+  const [allCategories, setAllCategories] = useState<string[]>([ALL_CATEGORY]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([
+    ALL_CATEGORY,
+  ]);
 
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(search.trim()), 220);
@@ -49,23 +67,32 @@ export default function CreatePage() {
   }, [search]);
 
   useEffect(() => {
-    // reset when search changes
-    setTemplates([]);
-    setPage(1);
-  }, [debouncedSearch]);
-
-  useEffect(() => {
     let mounted = true;
     setLoading(true);
     setError(null);
 
-    fetchTemplates({ q: debouncedSearch || undefined, page, limit })
+    const categoriesParam =
+      selectedCategories.includes(ALL_CATEGORY) ||
+      selectedCategories.length === 0
+        ? undefined
+        : selectedCategories;
+
+    fetchTemplates({
+      q: debouncedSearch || undefined,
+      categories: categoriesParam,
+      page,
+      limit,
+    })
       .then((data) => {
         if (!mounted) return;
         setTemplates((prev) =>
           page === 1 ? data.items : [...prev, ...data.items],
         );
         setTotal(data.total);
+        setAllCategories([ALL_CATEGORY, ...data.categories]);
+        if (page > 1) {
+          setHasLoadedMore(true);
+        }
       })
       .catch((err) => {
         if (!mounted) return;
@@ -79,19 +106,8 @@ export default function CreatePage() {
     return () => {
       mounted = false;
     };
-  }, [debouncedSearch, page, limit]);
-
-  const allCategories = useMemo(() => {
-    const set = new Set<string>();
-    for (const t of templates) {
-      for (const c of t.categories) set.add(c);
-    }
-    return [ALL_CATEGORY, ...Array.from(set).sort()];
-  }, [templates]);
-
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([
-    ALL_CATEGORY,
-  ]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch, page, limit, selectedCategories]);
 
   const toggleCategory = (category: string) => {
     if (category === ALL_CATEGORY) {
@@ -185,7 +201,7 @@ export default function CreatePage() {
                 className="group relative text-left bg-off-white rounded-2xl border border-warm-gray/20 p-6 shadow-sm hover:shadow-md transition-all"
               >
                 {template.isPremium && (
-                  <span className="absolute right-4 top-4 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full font-medium">
+                  <span className="absolute right-4 top-4 z-10 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded-full font-medium">
                     Premium
                   </span>
                 )}
@@ -228,9 +244,9 @@ export default function CreatePage() {
               >
                 Load more
               </button>
-            ) : (
+            ) : hasLoadedMore && templates.length > 0 ? (
               <div className="text-warm-gray-text">No more templates</div>
-            )}
+            ) : null}
           </div>
         </motion.div>
       </div>
