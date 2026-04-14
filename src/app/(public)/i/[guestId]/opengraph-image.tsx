@@ -1,5 +1,5 @@
+import { getEventTemplateById } from "@templates/events";
 import { ImageResponse } from "next/og";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { getAdminClient, getServerClient } from "@/lib/supabase/server";
@@ -31,12 +31,12 @@ export default async function Image(props: {
     );
     if (!project) throw new Error("Not found");
 
-    const template = getInviteTemplateById(project.templateId);
+    const template = getEventTemplateById(project.templateId);
     if (!template) throw new Error("Not found");
 
     const coupleNames = project.payload.coupleNames || project.title;
     const date = project.payload.date;
-    const kind = template.inviteKind;
+    const kind = template.kind;
 
     return new ImageResponse(
       <div

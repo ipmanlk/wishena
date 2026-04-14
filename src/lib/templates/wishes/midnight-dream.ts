@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { midnightDreamHarmony, midnightDreamMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  midnightDreamHarmony,
+  midnightDreamMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const midnightDreamTemplate: Template = {
   id: "midnight-dream",

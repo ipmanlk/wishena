@@ -1,8 +1,8 @@
 "use client";
 
+import { createEffectChain, createSynth } from "@templates/audio";
 import { useEffect, useRef } from "react";
 import * as Tone from "tone";
-import { createEffectChain, createSynth } from "@/lib/audio";
 import type { AudioConfig } from "@/lib/types";
 
 interface AudioPlayerProps {

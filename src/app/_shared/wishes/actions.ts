@@ -4,7 +4,7 @@ import {
   type FilterTemplatesOptions,
   type FilterTemplatesResult,
   filterTemplates,
-} from "@/lib/templates";
+} from "@templates/wishes";
 
 export async function loadTemplatesAction(
   options: FilterTemplatesOptions,

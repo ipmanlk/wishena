@@ -194,7 +194,8 @@ export interface InviteTemplate {
   id: string;
   name: string;
   description?: string;
-  inviteKind: string;
+  kind: string;
+  categories: string[];
   preview: TemplatePreview;
 
   blueprint: {

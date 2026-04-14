@@ -1,62 +1,61 @@
-import { instrumentPresets } from "../audio";
+import { instrumentPresets } from "@templates/audio";
 import {
-  goldenAnniversaryHarmony,
-  goldenAnniversaryMelody,
-} from "../audio/melodies";
-import type { Template } from "../types";
+  graduationDayHarmony,
+  graduationDayMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
-export const goldenAnniversaryTemplate: Template = {
-  id: "golden-anniversary",
-  name: "Golden Anniversary",
-  isPremium: true,
-  description: "Elegant celebration for years of love and commitment",
-  categories: ["love", "celebration"],
+export const graduationDayTemplate: Template = {
+  id: "graduation-day",
+  name: "Graduation Day",
+  description: "Proud achievement celebration with classic navy and gold",
+  categories: ["celebration", "achievement"],
   preview: {
     background:
-      "linear-gradient(135deg, #1C1917 0%, #292524 50%, #44403C 100%)",
+      "linear-gradient(135deg, #1E3A5F 0%, #1E40AF 50%, #3B82F6 100%)",
     lines: [
       {
-        text: "Forever and Always",
+        text: "The Future Is Yours",
         className: "text-xl font-light",
-        style: { color: "#FCD34D", fontFamily: "Georgia, serif" },
+        style: { color: "#FDE68A", fontFamily: "Georgia, serif" },
       },
       {
-        text: "anniversary",
+        text: "congratulations",
         className: "text-xs tracking-[0.3em] uppercase",
-        style: { color: "#FDE68A" },
+        style: { color: "#FCD34D" },
       },
     ],
   },
   defaultValues: {
-    recipientName: "My Love",
-    mainMessage: "Forever and Always",
+    recipientName: "Casey",
+    mainMessage: "The Future Is Yours",
     personalMessage:
-      "Every year together is a chapter in our story of love. Here's to many more pages.",
-    senderName: "Chris",
+      "Your dedication and hard work have brought you here. Go forth and achieve greatness.",
+    senderName: "Principal Rivera",
   },
 
   blueprint: {
     globalStyle:
-      "bg-gradient-to-b from-stone-950 via-stone-900 to-stone-800 font-serif text-white overflow-hidden justify-center",
+      "bg-gradient-to-b from-blue-950 via-blue-900 to-blue-800 font-serif text-white overflow-hidden justify-center",
 
     visuals: {
       engine: "tsparticles",
-      preset: "glow-dust",
-      mobileDensity: 35,
-      desktopDensity: 80,
+      preset: "confetti",
+      mobileDensity: 45,
+      desktopDensity: 100,
     },
 
     audio: {
       engine: "tonejs",
-      key: "C",
+      key: "F",
       mode: "major",
-      tempo: 66,
-      instrument: instrumentPresets.gentleBells,
-      melody: goldenAnniversaryMelody,
-      harmony: goldenAnniversaryHarmony,
+      tempo: 92,
+      instrument: instrumentPresets.mellowEP,
+      melody: graduationDayMelody,
+      harmony: graduationDayHarmony,
       loop: true,
-      fadeIn: 2.5,
-      volume: -13,
+      fadeIn: 1.5,
+      volume: -11,
     },
 
     modules: [
@@ -66,7 +65,7 @@ export const goldenAnniversaryTemplate: Template = {
         style:
           "text-xs tracking-[0.4em] uppercase text-amber-200/70 text-center pt-12 pb-1",
         bindTo: "recipientName",
-        prefix: "💛  For  ",
+        prefix: "🎓  For  ",
         animation: "fade_up",
       },
       {
@@ -81,7 +80,7 @@ export const goldenAnniversaryTemplate: Template = {
         id: "message",
         type: "standard_text",
         style:
-          "text-base md:text-lg text-stone-200/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
+          "text-base md:text-lg text-blue-100/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
         bindTo: "personalMessage",
         animation: "fade_up",
       },
@@ -91,7 +90,7 @@ export const goldenAnniversaryTemplate: Template = {
         style:
           "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-amber-200/70",
         bindTo: "senderName",
-        prefix: "All my love,  ",
+        prefix: "With pride,  ",
         animation: "fade_up",
       },
     ],
@@ -101,7 +100,7 @@ export const goldenAnniversaryTemplate: Template = {
         key: "recipientName",
         type: "text",
         label: "Who is this for?",
-        placeholder: "My Love",
+        placeholder: "Casey",
         maxLength: 30,
         required: true,
       },
@@ -109,7 +108,7 @@ export const goldenAnniversaryTemplate: Template = {
         key: "mainMessage",
         type: "text",
         label: "Your message",
-        placeholder: "Forever and Always",
+        placeholder: "The Future Is Yours",
         maxLength: 40,
         required: true,
       },
@@ -118,16 +117,16 @@ export const goldenAnniversaryTemplate: Template = {
         type: "textarea",
         label: "Your personal message",
         placeholder:
-          "Every year together is a chapter in our story of love. Here's to many more pages...",
-        maxLength: 280,
+          "Your dedication and hard work have brought you here. Go forth and achieve greatness...",
+        maxLength: 250,
         required: true,
       },
       {
         key: "senderName",
         type: "text",
         label: "Your name",
-        placeholder: "Chris",
-        maxLength: 25,
+        placeholder: "Principal Rivera",
+        maxLength: 30,
         required: true,
       },
     ],

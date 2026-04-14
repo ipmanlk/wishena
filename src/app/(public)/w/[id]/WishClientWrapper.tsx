@@ -1,11 +1,11 @@
 "use client";
 
+import { getTemplateById } from "@templates/wishes";
 import { useEffect, useState } from "react";
 import NotFound from "@/components/wish/NotFound";
 import ShareButtons from "@/components/wish/ShareButtons";
 import WishRenderer from "@/components/wish/WishRenderer";
 import { wishRepository } from "@/lib/storage/wish-repository";
-import { getTemplateById } from "@/lib/templates";
 import type { Template, Wish } from "@/lib/types";
 
 export function WishClientWrapper({

@@ -1,6 +1,6 @@
+import { filterEventTemplates } from "@templates/events";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
-import { filterInviteTemplates } from "@/lib/invite-templates";
 
 interface NewInviteTemplatePageProps {
   params: Promise<{ kind: string }>;
@@ -11,7 +11,7 @@ export default async function NewInviteTemplatePage(
 ) {
   const params = await props.params;
   const kind = params.kind;
-  const templates = filterInviteTemplates(kind);
+  const templates = filterEventTemplates(kind);
 
   return (
     <div className="min-h-screen bg-cream">

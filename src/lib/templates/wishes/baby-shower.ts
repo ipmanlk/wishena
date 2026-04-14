@@ -1,6 +1,6 @@
-import { instrumentPresets } from "../audio";
-import { babyShowerHarmony, babyShowerMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import { babyShowerHarmony, babyShowerMelody } from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const babyShowerTemplate: Template = {
   id: "baby-shower",

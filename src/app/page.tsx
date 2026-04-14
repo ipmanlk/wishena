@@ -1,10 +1,10 @@
 "use client";
 
+import { templates } from "@templates/wishes";
 import { motion } from "framer-motion";
 import { ArrowRight, Gift, Heart, Sparkles, Zap } from "lucide-react";
 import Link from "next/link";
 import { useUser } from "@/lib/auth/hooks";
-import { templates } from "@/lib/templates";
 import type { TemplateListItem } from "@/lib/types";
 
 export default function HomePage() {

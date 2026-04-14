@@ -1,6 +1,6 @@
-import { instrumentPresets } from "../audio";
-import { cityLightsHarmony, cityLightsMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import { cityLightsHarmony, cityLightsMelody } from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const cityLightsTemplate: Template = {
   id: "city-lights",

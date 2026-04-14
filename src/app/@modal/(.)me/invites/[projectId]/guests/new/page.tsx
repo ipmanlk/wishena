@@ -1,7 +1,7 @@
+import { getEventTemplateById } from "@templates/events";
 import { notFound } from "next/navigation";
 import { AddGuestForm } from "@/components/invites/AddGuestForm";
 import { Modal } from "@/components/ui/Modal";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { getAdminClient, getServerClient } from "@/lib/supabase/server";
 
@@ -28,7 +28,7 @@ export default async function AddGuestModalPage({ params }: PageProps) {
     notFound();
   }
 
-  const template = getInviteTemplateById(project.templateId);
+  const template = getEventTemplateById(project.templateId);
   if (!template) {
     notFound();
   }

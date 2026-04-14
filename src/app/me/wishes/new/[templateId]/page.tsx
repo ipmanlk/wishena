@@ -1,6 +1,6 @@
+import { getTemplateById } from "@templates/wishes";
 import { notFound } from "next/navigation";
 import { TemplateForm } from "@/components/create/TemplateForm";
-import { getTemplateById } from "@/lib/templates";
 
 interface PageProps {
   params: Promise<{

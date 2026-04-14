@@ -1,7 +1,7 @@
+import { getEventTemplateById } from "@templates/events";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { InviteCardRenderer } from "@/components/invite/InviteCardRenderer";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
@@ -60,7 +60,7 @@ export default async function InvitePage(props: InvitePageProps) {
   );
   if (!project) notFound();
 
-  const template = getInviteTemplateById(project.templateId);
+  const template = getEventTemplateById(project.templateId);
   if (!template) notFound();
 
   let currentRsvp: InviteRsvp | undefined;

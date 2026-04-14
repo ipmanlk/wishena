@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { harvestMoonHarmony, harvestMoonMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  harvestMoonHarmony,
+  harvestMoonMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const harvestMoonTemplate: Template = {
   id: "harvest-moon",

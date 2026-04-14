@@ -207,7 +207,7 @@ export function ProjectDetailsForm({
       } else {
         const res = await createInviteProjectAction(
           template.id,
-          template.inviteKind,
+          template.kind,
           payload,
           title,
           rsvpEnabled,

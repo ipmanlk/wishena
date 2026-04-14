@@ -1,8 +1,8 @@
+import { getEventTemplateById } from "@templates/events";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectDetailsForm } from "@/components/invites/ProjectDetailsForm";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { getAdminClient, getServerClient } from "@/lib/supabase/server";
 
@@ -29,7 +29,7 @@ export default async function EditProjectPage({ params }: PageProps) {
     notFound();
   }
 
-  const template = getInviteTemplateById(project.templateId);
+  const template = getEventTemplateById(project.templateId);
   if (!template) {
     notFound();
   }

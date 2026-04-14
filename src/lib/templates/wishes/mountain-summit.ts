@@ -1,39 +1,43 @@
-import { instrumentPresets } from "../audio";
-import { thankYouBloomHarmony, thankYouBloomMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  mountainSummitHarmony,
+  mountainSummitMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
-export const thankYouBloomTemplate: Template = {
-  id: "thank-you-bloom",
-  name: "Blooming Thanks",
-  description: "Warm gratitude with floral elegance",
-  categories: ["celebration"],
+export const mountainSummitTemplate: Template = {
+  id: "mountain-summit",
+  name: "Mountain Summit",
+  isPremium: true,
+  description: "Triumphant achievement vibes with majestic peak scenery",
+  categories: ["celebration", "achievement"],
   preview: {
     background:
-      "linear-gradient(135deg, #FEF3C7 0%, #FDE68A 50%, #FBBF24 100%)",
+      "linear-gradient(135deg, #1E3A5F 0%, #2D5A87 50%, #4A90A4 100%)",
     lines: [
       {
-        text: "Thank You So Much",
+        text: "You Made It To The Top",
         className: "text-xl font-light",
-        style: { color: "#78350F", fontFamily: "Georgia, serif" },
+        style: { color: "#E2E8F0", fontFamily: "Georgia, serif" },
       },
       {
-        text: "with gratitude",
+        text: "summit achievement",
         className: "text-xs tracking-[0.3em] uppercase",
-        style: { color: "#92400E" },
+        style: { color: "#94A3B8" },
       },
     ],
   },
   defaultValues: {
-    recipientName: "Maria",
-    mainMessage: "Thank You So Much",
+    recipientName: "Jordan",
+    mainMessage: "You Made It To The Top",
     personalMessage:
-      "Your kindness and support mean the world to me. I am so grateful.",
-    senderName: "David",
+      "Every step brought you here. This moment is yours to savor.",
+    senderName: "Taylor",
   },
 
   blueprint: {
     globalStyle:
-      "bg-gradient-to-b from-amber-100 via-amber-200 to-orange-200 font-serif text-white overflow-hidden justify-center",
+      "bg-gradient-to-b from-slate-900 via-blue-900 to-sky-800 font-serif text-white overflow-hidden justify-center",
 
     visuals: {
       engine: "tsparticles",
@@ -44,12 +48,12 @@ export const thankYouBloomTemplate: Template = {
 
     audio: {
       engine: "tonejs",
-      key: "C",
+      key: "Bb",
       mode: "major",
-      tempo: 70,
-      instrument: instrumentPresets.warmPluck,
-      melody: thankYouBloomMelody,
-      harmony: thankYouBloomHarmony,
+      tempo: 80,
+      instrument: instrumentPresets.gentleBells,
+      melody: mountainSummitMelody,
+      harmony: mountainSummitHarmony,
       loop: true,
       fadeIn: 2,
       volume: -12,
@@ -60,16 +64,16 @@ export const thankYouBloomTemplate: Template = {
         id: "for-label",
         type: "standard_text",
         style:
-          "text-xs tracking-[0.4em] uppercase text-orange-900/70 text-center pt-12 pb-1",
+          "text-xs tracking-[0.4em] uppercase text-slate-300/70 text-center pt-12 pb-1",
         bindTo: "recipientName",
-        prefix: "🌼  For  ",
+        prefix: "⛰️  For  ",
         animation: "fade_up",
       },
       {
         id: "hero",
         type: "standard_text",
         style:
-          "text-4xl md:text-6xl font-light text-center leading-tight py-2 text-orange-900",
+          "text-4xl md:text-6xl font-light text-center leading-tight py-2 text-slate-100",
         bindTo: "mainMessage",
         animation: "scale_in",
       },
@@ -77,7 +81,7 @@ export const thankYouBloomTemplate: Template = {
         id: "message",
         type: "standard_text",
         style:
-          "text-base md:text-lg text-orange-800/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
+          "text-base md:text-lg text-slate-200/80 text-center mt-6 leading-relaxed max-w-sm mx-auto whitespace-pre-wrap",
         bindTo: "personalMessage",
         animation: "fade_up",
       },
@@ -85,9 +89,9 @@ export const thankYouBloomTemplate: Template = {
         id: "sender",
         type: "standard_text",
         style:
-          "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-orange-900/70",
+          "text-sm tracking-widest uppercase text-center mt-8 pb-10 text-slate-300/70",
         bindTo: "senderName",
-        prefix: "Warmly,  ",
+        prefix: "With admiration,  ",
         animation: "fade_up",
       },
     ],
@@ -97,7 +101,7 @@ export const thankYouBloomTemplate: Template = {
         key: "recipientName",
         type: "text",
         label: "Who is this for?",
-        placeholder: "Maria",
+        placeholder: "Jordan",
         maxLength: 30,
         required: true,
       },
@@ -105,7 +109,7 @@ export const thankYouBloomTemplate: Template = {
         key: "mainMessage",
         type: "text",
         label: "Your message",
-        placeholder: "Thank You So Much",
+        placeholder: "You Made It To The Top",
         maxLength: 40,
         required: true,
       },
@@ -114,7 +118,7 @@ export const thankYouBloomTemplate: Template = {
         type: "textarea",
         label: "Your personal message",
         placeholder:
-          "Your kindness and support mean the world to me. I am so grateful...",
+          "Every step brought you here. This moment is yours to savor...",
         maxLength: 250,
         required: true,
       },
@@ -122,7 +126,7 @@ export const thankYouBloomTemplate: Template = {
         key: "senderName",
         type: "text",
         label: "Your name",
-        placeholder: "David",
+        placeholder: "Taylor",
         maxLength: 25,
         required: true,
       },

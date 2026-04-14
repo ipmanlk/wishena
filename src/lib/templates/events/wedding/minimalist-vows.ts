@@ -1,10 +1,11 @@
-import type { InviteTemplate } from "../types";
+import type { InviteTemplate } from "@/lib/types";
 
 export const minimalistVowsTemplate: InviteTemplate = {
   id: "minimalist-vows",
   name: "Minimalist Vows",
   description: "Clean, editorial design focusing on modern typography",
-  inviteKind: "wedding",
+  kind: "wedding",
+  categories: ["minimal"],
   preview: {
     background: "#fafafa",
     lines: [

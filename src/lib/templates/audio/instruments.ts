@@ -4,7 +4,7 @@ import {
   effectTypes,
   type SynthType,
   synthTypes,
-} from "../types";
+} from "@/lib/types";
 
 export interface EffectChain {
   input: Tone.ToneAudioNode;

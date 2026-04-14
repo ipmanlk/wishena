@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { gardenBloomHarmony, gardenBloomMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  gardenBloomHarmony,
+  gardenBloomMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const gardenBloomTemplate: Template = {
   id: "garden-bloom",

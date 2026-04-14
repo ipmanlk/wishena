@@ -1,8 +1,8 @@
+import { getEventTemplateById } from "@templates/events";
 import { ChevronLeft, Plus, Settings } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { GuestListClient } from "@/components/invites/GuestListClient";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
@@ -43,7 +43,7 @@ export default async function InviteProjectDashboard({
     notFound();
   }
 
-  const template = getInviteTemplateById(project.templateId);
+  const template = getEventTemplateById(project.templateId);
   if (!template) {
     notFound();
   }

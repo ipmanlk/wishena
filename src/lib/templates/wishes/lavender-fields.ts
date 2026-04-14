@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { lavenderFieldsHarmony, lavenderFieldsMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  lavenderFieldsHarmony,
+  lavenderFieldsMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const lavenderFieldsTemplate: Template = {
   id: "lavender-fields",

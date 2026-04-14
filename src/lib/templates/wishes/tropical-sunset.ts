@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { tropicalSunsetHarmony, tropicalSunsetMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  tropicalSunsetHarmony,
+  tropicalSunsetMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const tropicalSunsetTemplate: Template = {
   id: "tropical-sunset",

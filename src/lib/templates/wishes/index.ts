@@ -1,4 +1,4 @@
-import type { Template, TemplateListItem } from "../types";
+import type { Template, TemplateListItem } from "@/lib/types";
 import { babyShowerTemplate } from "./baby-shower";
 import { cherryBlossomTemplate } from "./cherry-blossom";
 import { cityLightsTemplate } from "./city-lights";

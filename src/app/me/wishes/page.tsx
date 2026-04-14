@@ -1,10 +1,10 @@
+import { getTemplateById } from "@templates/wishes";
 import { AlertCircle, Heart, Plus } from "lucide-react";
 import Link from "next/link";
 import { ResendButton } from "@/app/me/wishes/ResendButton";
 import { WishCard } from "@/app/me/wishes/WishCard";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
 import { getServerClient } from "@/lib/supabase/server";
-import { getTemplateById } from "@/lib/templates";
 
 export const dynamic = "force-dynamic";
 

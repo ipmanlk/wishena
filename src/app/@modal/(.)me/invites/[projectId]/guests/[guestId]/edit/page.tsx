@@ -1,7 +1,7 @@
+import { getEventTemplateById } from "@templates/events";
 import { notFound } from "next/navigation";
 import { EditGuestForm } from "@/components/invites/EditGuestForm";
 import { Modal } from "@/components/ui/Modal";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { getAdminClient, getServerClient } from "@/lib/supabase/server";
@@ -38,7 +38,7 @@ export default async function EditGuestModalPage({ params }: PageProps) {
     notFound();
   }
 
-  const template = getInviteTemplateById(project.templateId);
+  const template = getEventTemplateById(project.templateId);
   if (!template) {
     notFound();
   }

@@ -1,6 +1,6 @@
-import { instrumentPresets } from "../audio";
-import { starlightHarmony, starlightMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import { starlightHarmony, starlightMelody } from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const starlightTemplate: Template = {
   id: "starlight",

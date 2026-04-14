@@ -1,7 +1,7 @@
+import { getEventTemplateById } from "@templates/events";
 import { CalendarHeart, Plus } from "lucide-react";
 import Link from "next/link";
 import { InviteProjectCard } from "@/components/invites/InviteProjectCard";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
@@ -38,7 +38,7 @@ export default async function InvitesPage() {
         {userProjects.length > 0 ? (
           <div className="grid md:grid-cols-2 gap-6">
             {userProjects.map(async (project) => {
-              const template = getInviteTemplateById(project.templateId);
+              const template = getEventTemplateById(project.templateId);
               const guests = await supabaseInviteGuestRepository.getByProjectId(
                 supabase,
                 project.id,

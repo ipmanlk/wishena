@@ -1,11 +1,12 @@
-import type { InviteTemplate } from "../types";
+import type { InviteTemplate } from "@/lib/types";
 
 export const gardenRomanceTemplate: InviteTemplate = {
   id: "garden-romance",
   name: "Garden Romance",
   description:
     "Soft florals and elegant serifs for a romantic outdoor celebration",
-  inviteKind: "wedding",
+  kind: "wedding",
+  categories: ["classic"],
   preview: {
     background: "linear-gradient(to bottom, #Fdfbf7, #fdf4f6)",
     lines: [

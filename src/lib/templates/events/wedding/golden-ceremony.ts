@@ -1,10 +1,11 @@
-import type { InviteTemplate } from "../types";
+import type { InviteTemplate } from "@/lib/types";
 
 export const goldenCeremonyTemplate: InviteTemplate = {
   id: "golden-ceremony",
   name: "Golden Ceremony",
   description: "Classic navy and gold foil elegance for formal events",
-  inviteKind: "wedding",
+  kind: "wedding",
+  categories: ["formal"],
   preview: {
     background: "linear-gradient(to bottom, #0f172a, #1e293b)",
     lines: [

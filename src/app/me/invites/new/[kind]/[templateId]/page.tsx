@@ -1,16 +1,16 @@
+import { getEventTemplateById } from "@templates/events";
 import { ChevronLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectDetailsForm } from "@/components/invites/ProjectDetailsForm";
-import { getInviteTemplateById } from "@/lib/invite-templates";
 
 export default async function NewInviteProjectPage(props: {
   params: Promise<{ kind: string; templateId: string }>;
 }) {
   const params = await props.params;
-  const template = getInviteTemplateById(params.templateId);
+  const template = getEventTemplateById(params.templateId);
 
-  if (!template || template.inviteKind !== params.kind) {
+  if (!template || template.kind !== params.kind) {
     notFound();
   }
 

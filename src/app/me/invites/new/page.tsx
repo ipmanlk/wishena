@@ -1,3 +1,4 @@
+import { getEventKinds } from "@templates/events";
 import {
   Briefcase,
   CalendarHeart,
@@ -6,10 +7,9 @@ import {
   PartyPopper,
 } from "lucide-react";
 import Link from "next/link";
-import { getInviteKinds } from "@/lib/invite-templates";
 
 export default function NewInviteKindPage() {
-  const kinds = getInviteKinds();
+  const kinds = getEventKinds();
 
   const getKindDetails = (kind: string) => {
     switch (kind) {

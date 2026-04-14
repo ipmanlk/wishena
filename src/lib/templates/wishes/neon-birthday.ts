@@ -1,6 +1,9 @@
-import { instrumentPresets } from "../audio";
-import { midnightGlowHarmony, midnightGlowMelody } from "../audio/melodies";
-import type { Template } from "../types";
+import { instrumentPresets } from "@templates/audio";
+import {
+  midnightGlowHarmony,
+  midnightGlowMelody,
+} from "@templates/audio/melodies";
+import type { Template } from "@/lib/types";
 
 export const neonBirthdayTemplate: Template = {
   id: "neon-birthday",
