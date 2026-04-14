@@ -75,13 +75,13 @@ export function InviteProjectCard({
 
       <div className="bg-off-white px-6 py-4 flex gap-3 border-t border-warm-gray/20">
         <Link
-          href={`/invites/${project.id}/edit`}
+          href={`/me/invites/${project.id}/edit`}
           className="px-4 py-2 bg-white border border-warm-gray/30 text-ink rounded-xl text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
         >
           <Edit3 className="w-4 h-4" />
         </Link>
         <Link
-          href={`/invites/${project.id}`}
+          href={`/me/invites/${project.id}`}
           className="flex-grow px-4 py-2 bg-terracotta text-white rounded-xl text-sm font-medium hover:bg-terracotta/90 transition-colors flex items-center justify-center gap-1.5"
         >
           Manage Guests

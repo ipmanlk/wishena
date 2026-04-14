@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { updateGuestAction } from "@/app/(app)/invites/actions";
+import { updateGuestAction } from "@/app/_shared/invites/actions";
 import type { GuestCustomField, InviteGuest, InviteProject } from "@/lib/types";
 
 interface EditGuestFormProps {
@@ -62,7 +62,7 @@ export function EditGuestForm({
         if (onSuccess) {
           onSuccess();
         } else {
-          router.push(`/invites/${project.id}`);
+          router.push(`/me/invites/${project.id}`);
           router.refresh();
         }
       } else {

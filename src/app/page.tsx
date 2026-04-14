@@ -46,13 +46,13 @@ export default function HomePage() {
               {user ? (
                 <>
                   <Link
-                    href="/my-wishes"
+                    href="/me/wishes"
                     className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-terracotta text-white text-sm font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
                   >
                     My Wishes
                   </Link>
                   <Link
-                    href="/invites"
+                    href="/me/invites"
                     className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl border border-warm-gray/30 text-sm font-medium text-ink hover:border-warm-gray/50 transition-colors"
                   >
                     My Invites
@@ -85,7 +85,7 @@ export default function HomePage() {
                   moments.
                 </p>
                 <Link
-                  href="/create"
+                  href={user ? "/me/wishes/new" : "/guest/wishes/new"}
                   className="text-terracotta font-medium group-hover:text-terracotta/80 inline-flex items-center gap-1"
                 >
                   Create a wish <ArrowRight className="w-4 h-4" />
@@ -99,7 +99,7 @@ export default function HomePage() {
                   One design. Many guests. Every card individually addressed.
                 </p>
                 <Link
-                  href="/invites"
+                  href="/me/invites"
                   className="text-terracotta font-medium group-hover:text-terracotta/80 inline-flex items-center gap-1"
                 >
                   Start an invite project <ArrowRight className="w-4 h-4" />
@@ -137,7 +137,11 @@ export default function HomePage() {
                 transition={{ delay: index * 0.1 }}
               >
                 <Link
-                  href={`/create/${template.id}`}
+                  href={
+                    user
+                      ? `/me/wishes/new/${template.id}`
+                      : `/guest/wishes/new/${template.id}`
+                  }
                   className="group block text-left bg-cream rounded-2xl border border-warm-gray/20 p-5 shadow-sm hover:shadow-md transition-all"
                 >
                   <div
@@ -169,7 +173,7 @@ export default function HomePage() {
 
           <div className="mt-10 text-center">
             <Link
-              href="/create"
+              href={user ? "/me/wishes/new" : "/guest/wishes/new"}
               className="inline-flex items-center gap-2 text-terracotta font-medium hover:underline"
             >
               Browse all templates
@@ -246,7 +250,7 @@ export default function HomePage() {
             share the magic.
           </p>
           <Link
-            href="/create"
+            href={user ? "/me/wishes/new" : "/guest/wishes/new"}
             className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-terracotta text-white rounded-xl font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
           >
             {user ? "Create another wish" : "Start creating"}

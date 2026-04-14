@@ -3,7 +3,6 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 
-export const runtime = "edge";
 export const alt = "Invitation Card";
 export const size = {
   width: 1200,

@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Copy, Share2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 interface ShareButtonsProps {
   wishId: string;
@@ -10,10 +10,11 @@ interface ShareButtonsProps {
 export function ShareButtons({ wishId }: ShareButtonsProps) {
   const [copied, setCopied] = useState(false);
   const [canShare, setCanShare] = useState(false);
-  const url =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/w/${wishId}`
-      : `/w/${wishId}`;
+  const url = useMemo(() => {
+    if (typeof window === "undefined") return "";
+    const baseUrl = new URL(window.location.href);
+    return new URL(`/w/${wishId}`, baseUrl.origin).toString();
+  }, [wishId]);
 
   useEffect(() => {
     setCanShare(typeof navigator !== "undefined" && !!navigator.share);
@@ -21,6 +22,7 @@ export function ShareButtons({ wishId }: ShareButtonsProps) {
 
   const handleCopy = async () => {
     try {
+      if (!url) return;
       await navigator.clipboard.writeText(url);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
@@ -30,7 +32,7 @@ export function ShareButtons({ wishId }: ShareButtonsProps) {
   };
 
   const handleNativeShare = async () => {
-    if (canShare) {
+    if (canShare && url) {
       try {
         await navigator.share({
           title: "Someone sent you a wish!",

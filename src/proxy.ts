@@ -1,7 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
-const PROTECTED_ROUTES = ["/invites", "/my-wishes", "/settings"];
+const PROTECTED_ROUTES = ["/me", "/settings"];
 const AUTH_ROUTES = ["/auth"];
 
 function isProtectedRoute(pathname: string): boolean {
@@ -51,7 +51,10 @@ export async function updateSession(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   if (isProtectedRoute(pathname) && !user) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    const nextUrl = encodeURIComponent(pathname + request.nextUrl.search);
+    return NextResponse.redirect(
+      new URL(`/auth/login?next=${nextUrl}`, request.url),
+    );
   }
 
   if (isAuthRoute(pathname) && user) {

@@ -39,7 +39,8 @@ export async function login(formData: FormData) {
     }
   }
 
-  redirect("/my-wishes");
+  const next = formData.get("next")?.toString();
+  redirect(next || "/me/wishes");
 }
 
 export async function signup(formData: FormData) {
@@ -71,7 +72,8 @@ export async function signup(formData: FormData) {
     }
   }
 
-  redirect("/my-wishes");
+  const next = formData.get("next")?.toString();
+  redirect(next || "/me/wishes");
 }
 
 export async function signInWithGoogle() {

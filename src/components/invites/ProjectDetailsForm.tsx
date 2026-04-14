@@ -7,7 +7,7 @@ import { useState } from "react";
 import {
   createInviteProjectAction,
   updateInviteProjectAction,
-} from "@/app/(app)/invites/actions";
+} from "@/app/_shared/invites/actions";
 import type { GuestFieldDefinition, InviteTemplate } from "@/lib/types";
 
 interface ProjectDetailsFormProps {
@@ -99,7 +99,7 @@ export function ProjectDetailsForm({
           guestFields,
         );
         if (res.success) {
-          router.push(`/invites/${initialData?.id}`);
+          router.push(`/me/invites/${initialData?.id}`);
           router.refresh();
         }
       } else {
@@ -112,7 +112,7 @@ export function ProjectDetailsForm({
           guestFields,
         );
         if (res.success) {
-          router.push(`/invites/${res.id}`);
+          router.push(`/me/invites/${res.id}`);
           router.refresh();
         }
       }

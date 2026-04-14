@@ -4,7 +4,7 @@ import { Check, Copy, ExternalLink, Pencil, Trash2 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { deleteGuestAction } from "@/app/(app)/invites/actions";
+import { deleteGuestAction } from "@/app/_shared/invites/actions";
 import type { InviteGuest } from "@/lib/types";
 
 interface GuestRowActionsProps {
@@ -43,7 +43,9 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
   };
 
   const handleCopyLink = async () => {
-    const fullUrl = `${window.location.origin}${inviteUrl}`;
+    if (typeof window === "undefined") return;
+    const baseUrl = new URL(window.location.href);
+    const fullUrl = new URL(inviteUrl, baseUrl.origin).toString();
     try {
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
@@ -77,7 +79,7 @@ export function GuestRowActions({ guest, inviteUrl }: GuestRowActionsProps) {
         <ExternalLink className="w-4 h-4" />
       </Link>
       <Link
-        href={`/invites/${guest.projectId}/guests/${guest.id}/edit`}
+        href={`/me/invites/${guest.projectId}/guests/${guest.id}/edit`}
         className="p-1.5 text-warm-gray-text hover:text-ink hover:bg-warm-gray/20 rounded-md transition-colors"
         title="Edit Guest"
       >

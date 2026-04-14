@@ -44,7 +44,8 @@ export function GuestListClient({
   const [selectedGuest, setSelectedGuest] = useState<InviteGuest | null>(null);
 
   const rsvpMap = new Map(rsvps.map((r) => [r.guestId, r]));
-  const pendingCount = totalGuests - rsvpCounts.yes - rsvpCounts.no - rsvpCounts.unsure;
+  const pendingCount =
+    totalGuests - rsvpCounts.yes - rsvpCounts.no - rsvpCounts.unsure;
 
   const createQueryString = useCallback(
     (params: Record<string, string | number | undefined>) => {
@@ -393,7 +394,8 @@ export function GuestListClient({
                         <span className="text-xs text-zinc-500">
                           {formatDistanceToNow(
                             new Date(
-                              rsvpMap.get(selectedGuest.id)!.respondedAt,
+                              rsvpMap.get(selectedGuest.id)?.respondedAt ??
+                                new Date().toISOString(),
                             ),
                             {
                               addSuffix: true,

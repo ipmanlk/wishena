@@ -13,12 +13,14 @@ interface TemplateFormProps {
   template: Template;
   isModal?: boolean;
   onBack?: () => void;
+  backHref?: string;
 }
 
 export function TemplateForm({
   template,
   isModal = false,
   onBack,
+  backHref,
 }: TemplateFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState<Record<string, string>>({});
@@ -27,9 +29,15 @@ export function TemplateForm({
   const handleBack = () => {
     if (onBack) {
       onBack();
-    } else {
-      router.push("/create");
+      return;
     }
+
+    if (backHref) {
+      router.push(backHref);
+      return;
+    }
+
+    router.push("/guest/wishes/new");
   };
 
   const [showGuestLimit, setShowGuestLimit] = useState(false);

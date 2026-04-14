@@ -1,20 +1,20 @@
 # Wishena Codebase Reference
 
-This document provides a comprehensive reference for the Wishena MVP codebase, a procedural wish generation platform.
+This document provides a comprehensive reference for the Wishena codebase, a wish and invite platform.
 
 ## Project Overview
 
-**Wishena** is a wish generation platform where users can:
+**Wishena** is a wish and invite platform where users can:
 - Select from templates (birthday, celebration, etc.)
 - Customize with personal messages
 - Generate shareable links
 - View wishes with animations, particles, and audio
+- Create invite projects and manage guest lists
 
 **Key Constraints:**
-- No authentication required
-- All data stored in browser localStorage
-- Client-side rendering only
-- Links contain wish ID; recipient loads from their localStorage
+- Guest wish creation is supported (limited via guest sessions)
+- Authenticated users can manage invite projects and save wishes
+- Data is stored in Supabase (wishes, invites, guests, RSVPs)
 
 ## Tech Stack
 
@@ -46,8 +46,13 @@ This document provides a comprehensive reference for the Wishena MVP codebase, a
 ```
 Template (Static JSON)
   → User Customization (Form)
-  → Wish Instance (localStorage)
+  → Wish Instance (Supabase)
   → Shareable Link (/w/[id])
+
+Invite Template
+  → Project Details
+  → Guest List
+  → Guest Links (/i/[guestId])
 ```
 
 ### Core Abstractions
@@ -59,10 +64,8 @@ Template (Static JSON)
 - Templates registered in `src/lib/templates/index.ts`
 
 **Storage Layer:**
-- Key: `wishena:wishes`
-- Value: `Record<string, Wish>` (object map for O(1) lookup)
-- Repository pattern in `src/lib/storage/wish-repository.ts`
-- Safe localStorage wrappers handle SSR/Edge cases
+- Supabase repositories in `src/lib/storage/*`
+- Guest wishes stored in `guest_wishes` with session cookie flow
 
 **Component Mapping:**
 - Module types (e.g., "neon_text") map to React components
@@ -75,51 +78,33 @@ Template (Static JSON)
 src/
 ├── app/
 │   ├── layout.tsx              # Root layout with fonts (Playfair, Source Sans, Caveat)
-│   ├── page.tsx                # Redirects to /create
+│   ├── page.tsx                # Landing page
 │   ├── globals.css             # Tailwind + custom CSS properties (warm colors)
-│   ├── create/
-│   │   └── page.tsx            # Template selection + form
-│   ├── w/
-│   │   └── [id]/
-│   │       ├── page.tsx        # Wish display (client component)
-│   │       └── layout.tsx      # OG meta tags
-│   └── api/
-│       └── og/
-│           └── route.tsx       # Open Graph image generation (@vercel/og)
+│   ├── (public)/
+│   │   ├── auth/                # Login / signup / verify
+│   │   ├── guest/wishes/new/    # Guest wish creation
+│   │   ├── w/[id]/              # Wish viewer
+│   │   └── i/[guestId]/         # Invite guest view
+│   ├── me/
+│   │   ├── wishes/              # Authenticated wish list + create
+│   │   └── invites/             # Authenticated invite projects
+│   ├── @modal/                  # Invite guest modals
+│   └── _shared/                 # Shared route utilities
 │
 ├── components/
 │   ├── modules/                # Template module renderers
-│   │   ├── NeonText.tsx        # Glowing neon text
-│   │   ├── StandardText.tsx    # Regular text display
-│   │   ├── Countdown.tsx       # Date countdown
-│   │   └── FloatingHearts.tsx  # Decorative hearts
-│   │
 │   ├── wish-elements/          # Visual/audio effects
-│   │   ├── ParticleBackground.tsx   # tsParticles wrapper
-│   │   ├── AudioPlayer.tsx          # Tone.js wrapper
-│   │   └── TapToReveal.tsx          # Overlay for audio start
-│   │
-│   └── wish/
-│       ├── WishRenderer.tsx    # Core rendering engine
-│       ├── ShareButtons.tsx    # Copy link + native share
-│       └── NotFound.tsx        # Wish not found state
+│   ├── wish/                   # Wish renderer + share
+│   └── invites/                # Invite UI
 │
 ├── lib/
-│   ├── templates/
-│   │   ├── index.ts            # Template registry + getTemplateById
-│   │   ├── neon-birthday.ts    # Cyber neon template
-│   │   └── gentle-celebration.ts # Soft elegant template
-│   │
-│   ├── storage/
-│   │   ├── local-storage.ts    # Safe localStorage wrappers
-│   │   └── wish-repository.ts  # CRUD operations
-│   │
+│   ├── templates/              # Wish template registry
+│   ├── invite-templates/       # Invite templates
+│   ├── storage/                # Supabase repositories
 │   ├── component-map.ts        # Maps module types → components
 │   ├── types.ts                # TypeScript interfaces
 │   └── utils.ts                # Helper functions (generateId, etc.)
-│
 └── hooks/
-    └── (currently empty, reserved for future)
 ```
 
 ## Design Philosophy
@@ -216,11 +201,13 @@ interface Module {
 Component mapping in `src/lib/component-map.ts`:
 
 ```typescript
-export const componentMap: Record<string, React.FC<Record<string, unknown>>> = {
-  neon_text: NeonText,
-  standard_text: StandardText,
-  floating_hearts: FloatingHearts,
-  countdown: Countdown,
+type ModuleComponent = (props: Record<string, unknown>) => React.ReactNode;
+
+export const componentMap: Record<string, ModuleComponent> = {
+  neon_text: NeonText as ModuleComponent,
+  standard_text: StandardText as ModuleComponent,
+  floating_hearts: FloatingHearts as ModuleComponent,
+  countdown: Countdown as ModuleComponent,
 };
 ```
 
@@ -287,14 +274,7 @@ Uses Tone.js:
 
 - **Copy Link:** Uses `navigator.clipboard.writeText()`
 - **Native Share:** Uses `navigator.share()` when available (mobile)
-- **OG Images:** Generated via `@vercel/og` at `/api/og`
-
-### Cross-Device Sharing
-
-Since data is localStorage-only:
-- Users can **Export** wishes as JSON file
-- Users can **Import** wishes from JSON file
-- Links work if both sender and receiver have the wish in localStorage
+- **OG Images:** Generated via `@vercel/og`
 
 ## Performance Considerations
 
@@ -381,8 +361,7 @@ import { animationVariants } from "@/lib/component-map";
 - Check mobileDensity/desktopDensity values
 
 **Wish not found:**
-- Wish stored in sender's localStorage only
-- Recipient needs wish imported or in their localStorage
+- Wish may have expired (guest)
 - Check wish ID in URL matches stored wish
 
 **Type errors:**

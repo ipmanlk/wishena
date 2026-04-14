@@ -3,7 +3,7 @@
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { addGuestAction } from "@/app/(app)/invites/actions";
+import { addGuestAction } from "@/app/_shared/invites/actions";
 import type { GuestCustomField, InviteProject } from "@/lib/types";
 
 interface AddGuestFormProps {
@@ -56,7 +56,7 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
         if (onSuccess) {
           onSuccess();
         } else {
-          router.push(`/invites/${project.id}`);
+          router.push(`/me/invites/${project.id}`);
           router.refresh();
         }
       } else {

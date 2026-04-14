@@ -155,6 +155,7 @@ Run:
 
 ```bash
 bun run build
+bun run lint
 ```
 
 Fix any TypeScript errors. Common issues:

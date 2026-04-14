@@ -48,14 +48,14 @@ export function Navbar() {
             {user && (
               <div className="flex items-center gap-6">
                 <Link
-                  href="/invites"
+                  href="/me/invites"
                   className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
                 >
                   <CalendarHeart className="w-4 h-4" />
                   My Invites
                 </Link>
                 <Link
-                  href="/my-wishes"
+                  href="/me/wishes"
                   className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
                 >
                   <Heart className="w-4 h-4" />
