@@ -5,7 +5,7 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { getAdminClient } from "@/lib/supabase/server";
+import { getAdminClient, getServerClient } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
 interface InvitePageProps {
@@ -16,13 +16,14 @@ export async function generateMetadata(
   props: InvitePageProps,
 ): Promise<Metadata> {
   const params = await props.params;
-  const adminClient = getAdminClient();
-  const guest = await supabaseInviteGuestRepository.getById(
-    adminClient,
+  const supabase = await getServerClient();
+  const guest = await supabaseInviteGuestRepository.getPublicById(
+    supabase,
     params.guestId,
   );
   if (!guest) return {};
 
+  const adminClient = getAdminClient();
   const project = await supabaseInviteRepository.getById(
     adminClient,
     guest.projectId,
@@ -44,14 +45,15 @@ export async function generateMetadata(
 
 export default async function InvitePage(props: InvitePageProps) {
   const params = await props.params;
-  const adminClient = getAdminClient();
+  const supabase = await getServerClient();
 
-  const guest = await supabaseInviteGuestRepository.getById(
-    adminClient,
+  const guest = await supabaseInviteGuestRepository.getPublicById(
+    supabase,
     params.guestId,
   );
   if (!guest) notFound();
 
+  const adminClient = getAdminClient();
   const project = await supabaseInviteRepository.getById(
     adminClient,
     guest.projectId,

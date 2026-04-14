@@ -5,17 +5,21 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { getAdminClient, getServerClient } from "@/lib/supabase/server";
+import { getServerClient } from "@/lib/supabase/server";
 
 export default async function InvitesPage() {
   const supabase = await getServerClient();
-  const adminClient = getAdminClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const projects = await supabaseInviteRepository.getAll(supabase);
-  const userProjects = projects.filter((p) => p.userId === user?.id);
+  if (!user) {
+    return null;
+  }
+
+  const userProjects = (await supabaseInviteRepository.getAll(supabase)).filter(
+    (project) => project.userId === user.id,
+  );
 
   return (
     <div className="min-h-screen bg-cream py-12 px-6">
@@ -43,7 +47,7 @@ export default async function InvitesPage() {
             {userProjects.map(async (project) => {
               const template = getInviteTemplateById(project.templateId);
               const guests = await supabaseInviteGuestRepository.getByProjectId(
-                adminClient,
+                supabase,
                 project.id,
               );
               let yes = 0,
@@ -52,7 +56,7 @@ export default async function InvitesPage() {
 
               if (project.rsvpEnabled) {
                 const rsvps = await supabaseRsvpRepository.getByProjectId(
-                  adminClient,
+                  supabase,
                   project.id,
                 );
                 yes = rsvps.filter((r) => r.response === "yes").length;

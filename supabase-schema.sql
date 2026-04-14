@@ -35,8 +35,9 @@ create policy "Users can manage their own wishes"
   using  (auth.uid() = user_id)
   with check (auth.uid() = user_id);
 
--- Note: We don't enable RLS on guest_sessions or guest_wishes 
--- as they will only be accessed via the Service Role key on the server.
+-- Enable RLS on guest tables (service role bypasses RLS on server).
+alter table public.guest_sessions enable row level security;
+alter table public.guest_wishes enable row level security;
 
 -- 5. Create a public users table for profile management
 create table public.users (
@@ -128,11 +129,6 @@ create table public.invite_guests (
 
 alter table public.invite_guests enable row level security;
 
-create policy "Invite guests are publicly readable"
-  on public.invite_guests
-  for select
-  using (true);
-
 create policy "Project owner can manage guests"
   on public.invite_guests
   for all
@@ -149,6 +145,26 @@ create policy "Project owner can manage guests"
     )
   );
 
+-- Public-safe view for invite guests (filters private fields and private custom fields)
+create view public.invite_guests_public as
+  select
+    id,
+    project_id,
+    display_name,
+    personal_note,
+    coalesce(
+      (
+        select jsonb_object_agg(key, value)
+        from jsonb_each(custom_fields)
+        where (value->>'isPublic')::boolean is true
+      ),
+      '{}'::jsonb
+    ) as custom_fields,
+    created_at
+  from public.invite_guests;
+
+grant select on public.invite_guests_public to anon, authenticated;
+
 -- 9. RSVP responses — upsert pattern allows changing mind via same URL
 create table public.invite_rsvps (
   id           text        primary key,
@@ -160,11 +176,43 @@ create table public.invite_rsvps (
 
 alter table public.invite_rsvps enable row level security;
 
-create policy "Anyone can upsert their RSVP"
+create policy "Guests can insert RSVP"
   on public.invite_rsvps
-  for all
-  using (true)
-  with check (true);
+  for insert
+  with check (
+    exists (
+      select 1
+      from public.invite_guests g
+      join public.invite_projects p on p.id = g.project_id
+      where g.id = invite_rsvps.guest_id
+        and g.project_id = invite_rsvps.project_id
+        and p.rsvp_enabled = true
+    )
+  );
+
+create policy "Guests can update RSVP"
+  on public.invite_rsvps
+  for update
+  using (
+    exists (
+      select 1
+      from public.invite_guests g
+      join public.invite_projects p on p.id = g.project_id
+      where g.id = invite_rsvps.guest_id
+        and g.project_id = invite_rsvps.project_id
+        and p.rsvp_enabled = true
+    )
+  )
+  with check (
+    exists (
+      select 1
+      from public.invite_guests g
+      join public.invite_projects p on p.id = g.project_id
+      where g.id = invite_rsvps.guest_id
+        and g.project_id = invite_rsvps.project_id
+        and p.rsvp_enabled = true
+    )
+  );
 
 create policy "Project owner can read RSVPs"
   on public.invite_rsvps

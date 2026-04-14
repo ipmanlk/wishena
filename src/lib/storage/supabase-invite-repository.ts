@@ -1,5 +1,36 @@
 import type { SupabaseClientType } from "../supabase/client-types";
-import type { InviteProject } from "../types";
+import type { Json } from "../supabase/types";
+import type { GuestFieldDefinition, InviteProject } from "../types";
+
+function isGuestFieldDefinitionList(
+  value: Json | null,
+): value is Json & GuestFieldDefinition[] {
+  if (!Array.isArray(value)) return false;
+  return value.every((item) => {
+    if (!item || typeof item !== "object" || Array.isArray(item)) {
+      return false;
+    }
+
+    return (
+      typeof item.key === "string" &&
+      typeof item.label === "string" &&
+      (item.type === "text" || item.type === "textarea") &&
+      typeof item.required === "boolean" &&
+      typeof item.isPublic === "boolean" &&
+      (item.placeholder === undefined || typeof item.placeholder === "string")
+    );
+  });
+}
+
+function isStringRecord(
+  value: Json | null,
+): value is Json & Record<string, string> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => typeof entry === "string");
+}
 
 export const supabaseInviteRepository = {
   async getCount(
@@ -28,10 +59,14 @@ export const supabaseInviteRepository = {
       templateId: row.template_id,
       inviteKind: row.invite_kind,
       title: row.title,
-      payload: row.payload,
+      payload: isStringRecord(row.payload) ? row.payload : {},
       rsvpEnabled: row.rsvp_enabled,
       guestLimit: row.guest_limit,
-      guestFieldDefinitions: row.guest_field_definitions || [],
+      guestFieldDefinitions: isGuestFieldDefinitionList(
+        row.guest_field_definitions,
+      )
+        ? row.guest_field_definitions
+        : [],
       createdAt: row.created_at,
       updatedAt: row.updated_at,
     }));
@@ -55,10 +90,14 @@ export const supabaseInviteRepository = {
       templateId: data.template_id,
       inviteKind: data.invite_kind,
       title: data.title,
-      payload: data.payload,
+      payload: isStringRecord(data.payload) ? data.payload : {},
       rsvpEnabled: data.rsvp_enabled,
       guestLimit: data.guest_limit,
-      guestFieldDefinitions: data.guest_field_definitions || [],
+      guestFieldDefinitions: isGuestFieldDefinitionList(
+        data.guest_field_definitions,
+      )
+        ? data.guest_field_definitions
+        : [],
       createdAt: data.created_at,
       updatedAt: data.updated_at,
     };
@@ -74,10 +113,10 @@ export const supabaseInviteRepository = {
       template_id: project.templateId,
       invite_kind: project.inviteKind,
       title: project.title,
-      payload: project.payload,
+      payload: project.payload as unknown as Json,
       rsvp_enabled: project.rsvpEnabled,
       guest_limit: project.guestLimit,
-      guest_field_definitions: project.guestFieldDefinitions,
+      guest_field_definitions: project.guestFieldDefinitions as unknown as Json,
       created_at: project.createdAt,
       updated_at: project.updatedAt,
     });
@@ -95,18 +134,27 @@ export const supabaseInviteRepository = {
     updates: Partial<InviteProject>,
   ): Promise<boolean> {
     // Map camcelCase to snake_case for Supabase
-    const dbUpdates: Record<string, unknown> = {
+    const dbUpdates: {
+      updated_at: string;
+      title?: string;
+      payload?: Json;
+      rsvp_enabled?: boolean;
+      guest_limit?: number | null;
+      guest_field_definitions?: Json;
+    } = {
       updated_at: new Date().toISOString(),
     };
 
     if (updates.title !== undefined) dbUpdates.title = updates.title;
-    if (updates.payload !== undefined) dbUpdates.payload = updates.payload;
+    if (updates.payload !== undefined)
+      dbUpdates.payload = updates.payload as unknown as Json;
     if (updates.rsvpEnabled !== undefined)
       dbUpdates.rsvp_enabled = updates.rsvpEnabled;
     if (updates.guestLimit !== undefined)
       dbUpdates.guest_limit = updates.guestLimit;
     if (updates.guestFieldDefinitions !== undefined)
-      dbUpdates.guest_field_definitions = updates.guestFieldDefinitions;
+      dbUpdates.guest_field_definitions =
+        updates.guestFieldDefinitions as unknown as Json;
 
     const { error } = await supabase
       .from("invite_projects")

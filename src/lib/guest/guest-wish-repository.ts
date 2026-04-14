@@ -1,5 +1,23 @@
 import { getAdminClient } from "../supabase/server";
+import type { Json } from "../supabase/types";
 import type { GuestSession, Wish } from "../types";
+
+function normalizePayload(payload: Json): Record<string, string> {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return {};
+  }
+
+  const normalized: Record<string, string> = {};
+  for (const [key, value] of Object.entries(payload)) {
+    if (typeof value === "string") {
+      normalized[key] = value;
+    } else if (typeof value === "number" || typeof value === "boolean") {
+      normalized[key] = String(value);
+    }
+  }
+
+  return normalized;
+}
 
 export const guestWishRepository = {
   async getSession(sessionId: string): Promise<GuestSession | null> {
@@ -96,7 +114,7 @@ export const guestWishRepository = {
     return data.map((row) => ({
       id: row.id,
       templateId: row.template_id,
-      payload: row.payload,
+      payload: normalizePayload(row.payload),
       createdAt: row.created_at,
       expiresAt: row.expires_at,
     }));
@@ -115,7 +133,7 @@ export const guestWishRepository = {
     return {
       id: data.id,
       templateId: data.template_id,
-      payload: data.payload,
+      payload: normalizePayload(data.payload),
       createdAt: data.created_at,
       expiresAt: data.expires_at,
     };

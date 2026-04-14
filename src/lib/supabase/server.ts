@@ -1,6 +1,7 @@
+import "server-only";
 import { createServerClient } from "@supabase/ssr";
-import { cache } from "react";
 import { cookies } from "next/headers";
+import { cache } from "react";
 import type { SupabaseClientType } from "./client-types";
 
 function getEnv(name: string): string {
@@ -38,6 +39,7 @@ export async function createClient(): Promise<SupabaseClientType> {
   ) as SupabaseClientType;
 }
 
+// User-context client that enforces RLS policies.
 export const getServerClient = cache(async (): Promise<SupabaseClientType> => {
   return await createClient();
 });
@@ -64,6 +66,7 @@ export function createAdminClient(): SupabaseClientType {
   ) as SupabaseClientType;
 }
 
+// Service-role client for server-only operations that must bypass RLS.
 export const getAdminClient = cache((): SupabaseClientType => {
   return createAdminClient();
 });

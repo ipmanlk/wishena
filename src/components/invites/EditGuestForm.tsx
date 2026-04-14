@@ -21,13 +21,13 @@ export function EditGuestForm({
   const [loading, setLoading] = useState(false);
 
   const [displayName, setDisplayName] = useState(guest.displayName || "");
-  const [personalNote, setPersonalNote] = useState(guest.personalNote || "");
-  const [internalNote, setInternalNote] = useState(guest.internalNote || "");
-  const [email, setEmail] = useState(guest.email || "");
-  const [contactNumber, setContactNumber] = useState(guest.contactNumber || "");
+  const [personalNote, setPersonalNote] = useState(guest.personalNote ?? "");
+  const [internalNote, setInternalNote] = useState(guest.internalNote ?? "");
+  const [email, setEmail] = useState(guest.email ?? "");
+  const [contactNumber, setContactNumber] = useState(guest.contactNumber ?? "");
   const [customFields, setCustomFields] = useState<
     Record<string, GuestCustomField>
-  >(guest.customFields || {});
+  >(guest.customFields ?? {});
 
   const handleCustomFieldChange = (
     key: string,
@@ -51,10 +51,10 @@ export function EditGuestForm({
         guest.id,
         project.id,
         displayName.trim(),
-        personalNote.trim() || undefined,
-        internalNote.trim() || undefined,
-        email.trim() || undefined,
-        contactNumber.trim() || undefined,
+        personalNote.trim() || null,
+        internalNote.trim() || null,
+        email.trim() || null,
+        contactNumber.trim() || null,
         customFields,
       );
 

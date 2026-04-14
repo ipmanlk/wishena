@@ -1,5 +1,16 @@
 import type { SupabaseClientType } from "../supabase/client-types";
+import type { Json } from "../supabase/types";
 import type { Wish } from "../types";
+
+function isStringRecord(
+  value: Json | null,
+): value is Json & Record<string, string> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((entry) => typeof entry === "string");
+}
 
 export const supabaseWishRepository = {
   async getAll(supabase: SupabaseClientType): Promise<Wish[]> {
@@ -13,7 +24,7 @@ export const supabaseWishRepository = {
     return data.map((row) => ({
       id: row.id,
       templateId: row.template_id,
-      payload: row.payload,
+      payload: isStringRecord(row.payload) ? row.payload : {},
       createdAt: row.created_at,
       expiresAt: row.expires_at,
       userId: row.user_id,
@@ -36,7 +47,7 @@ export const supabaseWishRepository = {
     return {
       id: data.id,
       templateId: data.template_id,
-      payload: data.payload,
+      payload: isStringRecord(data.payload) ? data.payload : {},
       createdAt: data.created_at,
       expiresAt: data.expires_at,
       userId: data.user_id,
@@ -60,7 +71,7 @@ export const supabaseWishRepository = {
       id: wish.id,
       user_id: userId,
       template_id: wish.templateId,
-      payload: wish.payload,
+      payload: wish.payload as unknown as Json,
       created_at: wish.createdAt,
       expires_at: expiresAt,
     });

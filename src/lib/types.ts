@@ -145,7 +145,7 @@ export interface Wish {
   templateId: string;
   payload: Record<string, string>;
   createdAt: string;
-  expiresAt?: string;
+  expiresAt: string | null;
   userId?: string;
 }
 
@@ -222,7 +222,7 @@ export interface InviteProject {
   title: string;
   payload: Record<string, string>;
   rsvpEnabled: boolean;
-  guestLimit?: number;
+  guestLimit: number | null;
   guestFieldDefinitions: GuestFieldDefinition[];
   createdAt: string;
   updatedAt: string;
@@ -247,11 +247,11 @@ export interface InviteGuest {
   id: string;
   projectId: string;
   displayName: string;
-  email?: string;
-  contactNumber?: string;
-  personalNote?: string;
-  internalNote?: string;
-  customFields?: Record<string, GuestCustomField>;
+  email: string | null;
+  contactNumber: string | null;
+  personalNote: string | null;
+  internalNote: string | null;
+  customFields: Record<string, GuestCustomField> | null;
   createdAt: string;
 }
 

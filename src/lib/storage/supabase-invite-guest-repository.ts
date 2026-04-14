@@ -1,5 +1,26 @@
 import type { SupabaseClientType } from "../supabase/client-types";
-import type { InviteGuest } from "../types";
+import type { Json } from "../supabase/types";
+import type { GuestCustomField, InviteGuest } from "../types";
+
+function isGuestCustomFieldRecord(
+  value: Json | null,
+): value is Json & Record<string, GuestCustomField> {
+  if (!value || typeof value !== "object" || Array.isArray(value)) {
+    return false;
+  }
+
+  return Object.values(value).every((field) => {
+    if (!field || typeof field !== "object" || Array.isArray(field)) {
+      return false;
+    }
+
+    return (
+      typeof field.value === "string" &&
+      typeof field.isPublic === "boolean" &&
+      (field.label === undefined || typeof field.label === "string")
+    );
+  });
+}
 
 export const supabaseInviteGuestRepository = {
   async getByProjectId(
@@ -22,7 +43,9 @@ export const supabaseInviteGuestRepository = {
       internalNote: row.internal_note,
       email: row.email,
       contactNumber: row.contact_number,
-      customFields: row.custom_fields,
+      customFields: isGuestCustomFieldRecord(row.custom_fields)
+        ? row.custom_fields
+        : null,
       createdAt: row.created_at,
     }));
   },
@@ -99,7 +122,9 @@ export const supabaseInviteGuestRepository = {
             internalNote: row.internal_note,
             email: row.email,
             contactNumber: row.contact_number,
-            customFields: row.custom_fields,
+            customFields: isGuestCustomFieldRecord(row.custom_fields)
+              ? row.custom_fields
+              : null,
             createdAt: row.created_at,
           })),
           total: count ?? 0,
@@ -165,7 +190,9 @@ export const supabaseInviteGuestRepository = {
         internalNote: row.internal_note,
         email: row.email,
         contactNumber: row.contact_number,
-        customFields: row.custom_fields,
+        customFields: isGuestCustomFieldRecord(row.custom_fields)
+          ? row.custom_fields
+          : null,
         createdAt: row.created_at,
       })),
       total: count ?? 0,
@@ -192,8 +219,48 @@ export const supabaseInviteGuestRepository = {
       internalNote: data.internal_note,
       email: data.email,
       contactNumber: data.contact_number,
-      customFields: data.custom_fields,
+      customFields: isGuestCustomFieldRecord(data.custom_fields)
+        ? data.custom_fields
+        : null,
       createdAt: data.created_at,
+    };
+  },
+
+  async getPublicById(
+    supabase: SupabaseClientType,
+    id: string,
+  ): Promise<InviteGuest | null> {
+    const { data, error } = await supabase
+      .from("invite_guests_public")
+      .select(
+        "id, project_id, display_name, personal_note, custom_fields, created_at",
+      )
+      .eq("id", id)
+      .single();
+
+    if (error || !data) return null;
+
+    const guestRow = data as {
+      id: string;
+      project_id: string;
+      display_name: string;
+      personal_note: string | null;
+      custom_fields: Json | null;
+      created_at: string;
+    };
+
+    return {
+      id: guestRow.id,
+      projectId: guestRow.project_id,
+      displayName: guestRow.display_name,
+      personalNote: guestRow.personal_note,
+      internalNote: null,
+      email: null,
+      contactNumber: null,
+      customFields: isGuestCustomFieldRecord(guestRow.custom_fields)
+        ? guestRow.custom_fields
+        : null,
+      createdAt: guestRow.created_at,
     };
   },
 
@@ -209,7 +276,7 @@ export const supabaseInviteGuestRepository = {
       internal_note: guest.internalNote,
       email: guest.email,
       contact_number: guest.contactNumber,
-      custom_fields: guest.customFields,
+      custom_fields: guest.customFields as Json | null,
       created_at: guest.createdAt,
     });
 
@@ -225,18 +292,26 @@ export const supabaseInviteGuestRepository = {
     id: string,
     updates: Partial<InviteGuest>,
   ): Promise<boolean> {
-    const dbUpdates: Record<string, unknown> = {};
+    const dbUpdates: {
+      display_name?: string;
+      personal_note?: string | null;
+      internal_note?: string | null;
+      email?: string | null;
+      contact_number?: string | null;
+      custom_fields?: Json | null;
+    } = {};
     if (updates.displayName !== undefined)
       dbUpdates.display_name = updates.displayName;
     if (updates.personalNote !== undefined)
-      dbUpdates.personal_note = updates.personalNote;
+      dbUpdates.personal_note = updates.personalNote ?? null;
     if (updates.internalNote !== undefined)
-      dbUpdates.internal_note = updates.internalNote;
-    if (updates.email !== undefined) dbUpdates.email = updates.email;
+      dbUpdates.internal_note = updates.internalNote ?? null;
+    if (updates.email !== undefined) dbUpdates.email = updates.email ?? null;
     if (updates.contactNumber !== undefined)
-      dbUpdates.contact_number = updates.contactNumber;
-    if (updates.customFields !== undefined)
-      dbUpdates.custom_fields = updates.customFields;
+      dbUpdates.contact_number = updates.contactNumber ?? null;
+    if (updates.customFields !== undefined) {
+      dbUpdates.custom_fields = updates.customFields as Json | null;
+    }
 
     const { error } = await supabase
       .from("invite_guests")
@@ -275,7 +350,7 @@ export const supabaseInviteGuestRepository = {
       internal_note: guest.internalNote,
       email: guest.email,
       contact_number: guest.contactNumber,
-      custom_fields: guest.customFields,
+      custom_fields: guest.customFields as Json | null,
       created_at: guest.createdAt,
     }));
 

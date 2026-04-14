@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 
 interface GuestCustomFieldsProps extends InviteModule {
   guest?: {
-    customFields?: Record<string, GuestCustomField>;
+    customFields: Record<string, GuestCustomField> | null;
   };
 }
 
@@ -13,7 +13,7 @@ export function GuestCustomFields({
   guest,
   animation,
 }: GuestCustomFieldsProps) {
-  const customFields = guest?.customFields || {};
+  const customFields = guest?.customFields ?? {};
 
   const publicFields = Object.entries(customFields)
     .filter(([_, field]) => field.isPublic && field.value)

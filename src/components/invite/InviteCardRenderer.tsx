@@ -37,7 +37,7 @@ export function InviteCardRenderer({
 
   // Sanitize guest data for public display — only expose fields that
   // templates are allowed to bind to. Never leak internal notes or private custom fields.
-  const publicCustomFields = Object.entries(guest.customFields || {})
+  const publicCustomFields = Object.entries(guest.customFields ?? {})
     .filter(([_, field]) => field.isPublic)
     .reduce(
       (acc, [key, field]) => {

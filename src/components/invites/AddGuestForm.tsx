@@ -45,10 +45,10 @@ export function AddGuestForm({ project, onSuccess }: AddGuestFormProps) {
       const result = await addGuestAction(
         project.id,
         displayName.trim(),
-        personalNote.trim() || undefined,
-        internalNote.trim() || undefined,
-        email.trim() || undefined,
-        contactNumber.trim() || undefined,
+        personalNote.trim() || null,
+        internalNote.trim() || null,
+        email.trim() || null,
+        contactNumber.trim() || null,
         customFields,
       );
 

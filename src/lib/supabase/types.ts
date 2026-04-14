@@ -212,6 +212,13 @@ export type Database = {
             referencedColumns: ["id"];
           },
           {
+            foreignKeyName: "invite_rsvps_guest_id_fkey";
+            columns: ["guest_id"];
+            isOneToOne: false;
+            referencedRelation: "invite_guests_public";
+            referencedColumns: ["id"];
+          },
+          {
             foreignKeyName: "invite_rsvps_project_id_fkey";
             columns: ["project_id"];
             isOneToOne: false;
@@ -276,7 +283,41 @@ export type Database = {
       };
     };
     Views: {
-      [_ in never]: never;
+      invite_guests_public: {
+        Row: {
+          created_at: string | null;
+          custom_fields: Json | null;
+          display_name: string | null;
+          id: string | null;
+          personal_note: string | null;
+          project_id: string | null;
+        };
+        Insert: {
+          created_at?: string | null;
+          custom_fields?: never;
+          display_name?: string | null;
+          id?: string | null;
+          personal_note?: string | null;
+          project_id?: string | null;
+        };
+        Update: {
+          created_at?: string | null;
+          custom_fields?: never;
+          display_name?: string | null;
+          id?: string | null;
+          personal_note?: string | null;
+          project_id?: string | null;
+        };
+        Relationships: [
+          {
+            foreignKeyName: "invite_guests_project_id_fkey";
+            columns: ["project_id"];
+            isOneToOne: false;
+            referencedRelation: "invite_projects";
+            referencedColumns: ["id"];
+          },
+        ];
+      };
     };
     Functions: {
       [_ in never]: never;

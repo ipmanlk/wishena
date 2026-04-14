@@ -6,7 +6,7 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { getAdminClient, getServerClient } from "@/lib/supabase/server";
+import { getServerClient } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
 const PAGE_SIZE = 20;
@@ -37,16 +37,16 @@ export default async function InviteProjectDashboard({
       : "all";
 
   const supabase = await getServerClient();
-  const adminClient = getAdminClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const project = await supabaseInviteRepository.getById(
-    adminClient,
-    projectId,
-  );
-  if (!project || project.userId !== user?.id) {
+  if (!user) {
+    notFound();
+  }
+
+  const project = await supabaseInviteRepository.getById(supabase, projectId);
+  if (!project || project.userId !== user.id) {
     notFound();
   }
 
@@ -57,7 +57,7 @@ export default async function InviteProjectDashboard({
 
   const { guests, total } =
     await supabaseInviteGuestRepository.getByProjectIdPaginated(
-      adminClient,
+      supabase,
       project.id,
       {
         page,
@@ -71,13 +71,13 @@ export default async function InviteProjectDashboard({
   let rsvps: InviteRsvp[] = [];
   if (project.rsvpEnabled) {
     rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(
-      adminClient,
+      supabase,
       project.id,
     );
     if (guests.length > 0) {
       const guestIds = guests.map((g) => g.id);
       const allRsvps = await supabaseRsvpRepository.getByProjectId(
-        adminClient,
+        supabase,
         project.id,
       );
       rsvps = allRsvps.filter((r) => guestIds.includes(r.guestId));
