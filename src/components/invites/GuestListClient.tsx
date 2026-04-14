@@ -122,7 +122,8 @@ export function GuestListClient({
       ? ([
           { key: "yes", label: "Attending", count: rsvpCounts.yes },
           { key: "no", label: "Declined", count: rsvpCounts.no },
-          { key: "unsure", label: "Unsure", count: rsvpCounts.unsure },
+          // Temporarily hidden for weddings; enable when "unsure" is supported.
+          // { key: "unsure", label: "Unsure", count: rsvpCounts.unsure },
           { key: "pending", label: "Pending", count: pendingCount },
         ] satisfies { key: FilterStatus; label: string; count: number }[])
       : []),
@@ -154,12 +155,15 @@ export function GuestListClient({
               Declined
             </span>
           </div>
+          {/* Temporarily hidden for weddings; enable when "unsure" is supported. */}
+          {/*
           <div className="bg-blue-50 p-4 rounded-xl border border-blue-200 flex flex-col items-center justify-center text-blue-700">
             <span className="text-2xl font-semibold">{rsvpCounts.unsure}</span>
             <span className="text-xs text-blue-700 uppercase tracking-wider mt-1">
               Unsure
             </span>
           </div>
+          */}
           <div className="bg-mustard/20 p-4 rounded-xl border border-mustard/35 flex flex-col items-center justify-center text-mustard">
             <span className="text-2xl font-semibold">{pendingCount}</span>
             <span className="text-xs text-mustard uppercase tracking-wider mt-1">
