@@ -3,12 +3,89 @@
 import { Loader2, Plus, Settings2, Trash2 } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   createInviteProjectAction,
   updateInviteProjectAction,
 } from "@/app/_shared/invites/actions";
 import type { GuestFieldDefinition, InviteTemplate } from "@/lib/types";
+
+type TimePeriod = "AM" | "PM";
+
+interface TimeParts {
+  hour: string;
+  minute: string;
+  period: TimePeriod;
+}
+
+const TIME_DEFAULT: TimeParts = {
+  hour: "7",
+  minute: "00",
+  period: "PM",
+};
+
+const TIME_HOURS = Array.from({ length: 12 }, (_, i) => `${i + 1}`);
+const TIME_MINUTES = Array.from({ length: 60 }, (_, i) =>
+  String(i).padStart(2, "0"),
+);
+const TIME_PERIODS: TimePeriod[] = ["AM", "PM"];
+
+function timeValueToParts(value: string | undefined): TimeParts | null {
+  if (!value) return null;
+  const trimmed = value.trim();
+  const ampmMatch = trimmed.match(/^([0-1]?\d):(\d{2})\s*([aApP][mM])$/);
+  if (ampmMatch) {
+    const hour = String(Number(ampmMatch[1] || ""));
+    const minute = String(ampmMatch[2] || "00");
+    const period = ampmMatch[3].toUpperCase() as TimePeriod;
+    if (Number(hour) < 1 || Number(hour) > 12) return null;
+    return {
+      hour,
+      minute,
+      period,
+    };
+  }
+
+  const twentyFourMatch = trimmed.match(/^([0-2]?\d):(\d{2})$/);
+  if (!twentyFourMatch) return null;
+  const hour24 = Number(twentyFourMatch[1] || "");
+  if (Number.isNaN(hour24) || hour24 > 23) return null;
+  const minute = String(twentyFourMatch[2] || "00");
+  const period: TimePeriod = hour24 >= 12 ? "PM" : "AM";
+  const hour12 = hour24 % 12 === 0 ? 12 : hour24 % 12;
+  return {
+    hour: String(hour12),
+    minute,
+    period,
+  };
+}
+
+function timePartsToValue(parts: TimeParts): string {
+  const hourNum = Number(parts.hour);
+  const minuteNum = Number(parts.minute);
+  if (
+    Number.isNaN(hourNum) ||
+    Number.isNaN(minuteNum) ||
+    hourNum < 1 ||
+    hourNum > 12 ||
+    minuteNum < 0 ||
+    minuteNum > 59
+  ) {
+    return "";
+  }
+  let hour24 = hourNum % 12;
+  if (parts.period === "PM") hour24 += 12;
+  return `${String(hour24).padStart(2, "0")}:${String(minuteNum).padStart(
+    2,
+    "0",
+  )}`;
+}
+
+function formatTimeDisplay(value: string | undefined): string {
+  const parts = timeValueToParts(value);
+  if (!parts) return "";
+  return `${parts.hour}:${parts.minute} ${parts.period}`;
+}
 
 interface ProjectDetailsFormProps {
   template: InviteTemplate;
@@ -40,10 +117,35 @@ export function ProjectDetailsForm({
   const [guestFields, setGuestFields] = useState<GuestFieldDefinition[]>(
     initialData?.guestFieldDefinitions || [],
   );
+  const [openTimeKey, setOpenTimeKey] = useState<string | null>(null);
+  const timePopoverRef = useRef<HTMLDivElement | null>(null);
 
   const handleChange = (key: string, value: string) => {
     setPayload((prev) => ({ ...prev, [key]: value }));
   };
+
+  const handleTimeChange = (key: string, updates: Partial<TimeParts>) => {
+    const current = timeValueToParts(payload[key]) ?? TIME_DEFAULT;
+    const next: TimeParts = {
+      hour: updates.hour ?? current.hour,
+      minute: updates.minute ?? current.minute,
+      period: updates.period ?? current.period,
+    };
+    handleChange(key, timePartsToValue(next));
+  };
+
+  useEffect(() => {
+    if (!openTimeKey) return;
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target;
+      if (!(target instanceof Node)) return;
+      if (timePopoverRef.current?.contains(target)) return;
+      setOpenTimeKey(null);
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openTimeKey]);
 
   const handleAddField = () => {
     setGuestFields((prev) => [
@@ -291,7 +393,7 @@ export function ProjectDetailsForm({
 
       <div className="bg-white p-6 rounded-2xl border border-warm-gray/20 space-y-6 shadow-sm">
         <h2 className="text-xl font-semibold mb-4 text-ink">
-          Template Design Inputs
+          Invitation Details
         </h2>
 
         {template.blueprint.projectInputs.map((input) => (
@@ -315,6 +417,115 @@ export function ProjectDetailsForm({
                 rows={3}
                 className="w-full px-4 py-3 bg-off-white border border-warm-gray/30 rounded-xl outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink resize-none"
               />
+            ) : input.type === "time" ? (
+              <div className="relative" ref={timePopoverRef}>
+                <input
+                  id={`input-${input.key}`}
+                  type="text"
+                  required={input.required}
+                  readOnly
+                  value={formatTimeDisplay(payload[input.key])}
+                  placeholder={input.placeholder || "Select time"}
+                  onClick={() =>
+                    setOpenTimeKey((prev) =>
+                      prev === input.key ? null : input.key,
+                    )
+                  }
+                  className="w-full px-4 py-2 bg-off-white border border-warm-gray/30 rounded-xl outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink cursor-pointer"
+                />
+                {openTimeKey === input.key && (
+                  <div className="absolute z-20 mt-2 w-full rounded-2xl border border-warm-gray/20 bg-white shadow-xl">
+                    <div className="px-4 py-3 border-b border-warm-gray/20 flex items-center justify-between">
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-warm-gray-text">
+                          Select time
+                        </p>
+                        <p className="text-sm font-medium text-ink">
+                          {formatTimeDisplay(payload[input.key]) || "Not set"}
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        {TIME_PERIODS.map((period) => (
+                          <button
+                            key={period}
+                            type="button"
+                            onClick={() =>
+                              handleTimeChange(input.key, { period })
+                            }
+                            className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
+                              timeValueToParts(payload[input.key])?.period ===
+                              period
+                                ? "bg-terracotta text-white border-terracotta"
+                                : "bg-off-white text-ink border-warm-gray/20 hover:border-warm-gray/40"
+                            }`}
+                          >
+                            {period}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 gap-4 p-4">
+                      <div>
+                        <p className="text-xs font-medium text-warm-gray-text mb-2">
+                          Hour
+                        </p>
+                        <div className="max-h-52 overflow-y-auto rounded-xl border border-warm-gray/20 bg-off-white/60">
+                          {TIME_HOURS.map((hour) => (
+                            <button
+                              key={hour}
+                              type="button"
+                              onClick={() =>
+                                handleTimeChange(input.key, { hour })
+                              }
+                              className={`w-full px-3 py-2 text-sm text-left transition-colors ${
+                                timeValueToParts(payload[input.key])?.hour ===
+                                hour
+                                  ? "bg-terracotta/10 text-terracotta"
+                                  : "text-ink hover:bg-white"
+                              }`}
+                            >
+                              {hour}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                      <div>
+                        <p className="text-xs font-medium text-warm-gray-text mb-2">
+                          Minute
+                        </p>
+                        <div className="max-h-52 overflow-y-auto rounded-xl border border-warm-gray/20 bg-off-white/60">
+                          {TIME_MINUTES.map((minute) => (
+                            <button
+                              key={minute}
+                              type="button"
+                              onClick={() =>
+                                handleTimeChange(input.key, { minute })
+                              }
+                              className={`w-full px-3 py-2 text-sm text-left transition-colors ${
+                                timeValueToParts(payload[input.key])?.minute ===
+                                minute
+                                  ? "bg-terracotta/10 text-terracotta"
+                                  : "text-ink hover:bg-white"
+                              }`}
+                            >
+                              {minute}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="px-4 py-3 border-t border-warm-gray/20 flex justify-end">
+                      <button
+                        type="button"
+                        onClick={() => setOpenTimeKey(null)}
+                        className="px-4 py-2 rounded-xl bg-terracotta text-white text-sm font-medium hover:bg-terracotta/90 transition-colors"
+                      >
+                        Done
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
             ) : (
               <input
                 id={`input-${input.key}`}
