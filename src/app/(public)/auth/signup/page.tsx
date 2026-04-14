@@ -9,7 +9,7 @@ import { signInWithGoogle, signup } from "@/lib/auth/actions";
 
 export default function SignupPage() {
   const searchParams = useSearchParams();
-  const nextPath = searchParams.get("next") || "/me/wishes";
+  const nextPath = searchParams.get("next") || "/me";
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 

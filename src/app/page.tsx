@@ -46,10 +46,10 @@ export default function HomePage() {
               {user ? (
                 <>
                   <Link
-                    href="/me/wishes"
+                    href="/me"
                     className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-terracotta text-white text-sm font-medium shadow-sm hover:bg-terracotta/90 transition-colors"
                   >
-                    My Wishes
+                    My Moments
                   </Link>
                   <Link
                     href="/me/invites"

@@ -26,10 +26,10 @@ export default function VerifySuccessPage() {
             unlocked.
           </p>
           <Link
-            href="/me/wishes"
+            href="/me"
             className="inline-flex justify-center py-3 px-6 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-terracotta hover:bg-terracotta/90 transition-colors"
           >
-            Go to My Wishes
+            Go to My Moments
           </Link>
         </motion.div>
       </div>

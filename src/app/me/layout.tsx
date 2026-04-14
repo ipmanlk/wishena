@@ -13,7 +13,7 @@ export default async function MeLayout({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect("/auth/login?next=/me/wishes");
+    redirect("/auth/login?next=/me");
   }
 
   return (

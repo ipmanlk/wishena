@@ -2,6 +2,16 @@ import { createAdminClient, createClient } from "../supabase/server";
 import type { InviteProject } from "../types";
 
 export const supabaseInviteRepository = {
+  async getCount(userId: string): Promise<number> {
+    const supabase = createAdminClient();
+    const { count, error } = await supabase
+      .from("invite_projects")
+      .select("*", { count: "exact", head: true })
+      .eq("user_id", userId);
+
+    if (error) return 0;
+    return count ?? 0;
+  },
   async getAll(): Promise<InviteProject[]> {
     const supabase = await createClient();
     const { data, error } = await supabase

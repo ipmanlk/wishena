@@ -48,6 +48,13 @@ export function Navbar() {
             {user && (
               <div className="flex items-center gap-6">
                 <Link
+                  href="/me"
+                  className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
+                >
+                  <User className="w-4 h-4" />
+                  My Moments
+                </Link>
+                <Link
                   href="/me/invites"
                   className="text-sm font-medium text-ink hover:text-terracotta transition-colors flex items-center gap-1.5"
                 >
