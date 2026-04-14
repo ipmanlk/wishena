@@ -1,5 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
+import { cache } from "react";
 import { cookies } from "next/headers";
+import type { SupabaseClientType } from "./client-types";
 
 function getEnv(name: string): string {
   const value = process.env[name];
@@ -9,7 +11,7 @@ function getEnv(name: string): string {
   return value;
 }
 
-export async function createClient() {
+export async function createClient(): Promise<SupabaseClientType> {
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -33,10 +35,14 @@ export async function createClient() {
         },
       },
     },
-  );
+  ) as SupabaseClientType;
 }
 
-export function createAdminClient() {
+export const getServerClient = cache(async (): Promise<SupabaseClientType> => {
+  return await createClient();
+});
+
+export function createAdminClient(): SupabaseClientType {
   return createServerClient(
     getEnv("NEXT_PUBLIC_SUPABASE_URL"),
     getEnv("SUPABASE_SECRET_KEY"),
@@ -55,5 +61,23 @@ export function createAdminClient() {
         detectSessionInUrl: false,
       },
     },
-  );
+  ) as SupabaseClientType;
+}
+
+export const getAdminClient = cache((): SupabaseClientType => {
+  return createAdminClient();
+});
+
+export async function getUser() {
+  const supabase = await getServerClient();
+  const {
+    data: { user },
+    error,
+  } = await supabase.auth.getUser();
+
+  if (error) {
+    return { supabase, user: null, error };
+  }
+
+  return { supabase, user, error: null };
 }

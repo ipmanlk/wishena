@@ -6,7 +6,7 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { createClient } from "@/lib/supabase/server";
+import { getAdminClient, getServerClient } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
 const PAGE_SIZE = 20;
@@ -36,12 +36,16 @@ export default async function InviteProjectDashboard({
       ? query.status
       : "all";
 
-  const supabase = await createClient();
+  const supabase = await getServerClient();
+  const adminClient = getAdminClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const project = await supabaseInviteRepository.getById(projectId);
+  const project = await supabaseInviteRepository.getById(
+    adminClient,
+    projectId,
+  );
   if (!project || project.userId !== user?.id) {
     notFound();
   }
@@ -52,20 +56,30 @@ export default async function InviteProjectDashboard({
   }
 
   const { guests, total } =
-    await supabaseInviteGuestRepository.getByProjectIdPaginated(project.id, {
-      page,
-      pageSize: PAGE_SIZE,
-      search: search || undefined,
-      status,
-    });
+    await supabaseInviteGuestRepository.getByProjectIdPaginated(
+      adminClient,
+      project.id,
+      {
+        page,
+        pageSize: PAGE_SIZE,
+        search: search || undefined,
+        status,
+      },
+    );
 
   let rsvpCounts = { yes: 0, no: 0, unsure: 0, total: 0 };
   let rsvps: InviteRsvp[] = [];
   if (project.rsvpEnabled) {
-    rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(project.id);
+    rsvpCounts = await supabaseRsvpRepository.getCountsByProjectId(
+      adminClient,
+      project.id,
+    );
     if (guests.length > 0) {
       const guestIds = guests.map((g) => g.id);
-      const allRsvps = await supabaseRsvpRepository.getByProjectId(project.id);
+      const allRsvps = await supabaseRsvpRepository.getByProjectId(
+        adminClient,
+        project.id,
+      );
       rsvps = allRsvps.filter((r) => guestIds.includes(r.guestId));
     }
   }

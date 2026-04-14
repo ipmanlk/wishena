@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 import { guestWishRepository } from "@/lib/guest/guest-wish-repository";
 import { verifyGuestCookie } from "@/lib/guest/session";
-import { createClient } from "@/lib/supabase/server";
+import { getServerClient } from "@/lib/supabase/server";
 
 export async function GET(request: Request) {
   const { searchParams, origin } = new URL(request.url);
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   const next = searchParams.get("next") ?? "/me";
 
   if (code) {
-    const supabase = await createClient();
+    const supabase = await getServerClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
     if (!error) {

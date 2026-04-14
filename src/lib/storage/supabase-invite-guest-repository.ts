@@ -1,9 +1,11 @@
-import { createAdminClient, createClient } from "../supabase/server";
+import type { SupabaseClientType } from "../supabase/client-types";
 import type { InviteGuest } from "../types";
 
 export const supabaseInviteGuestRepository = {
-  async getByProjectId(projectId: string): Promise<InviteGuest[]> {
-    const supabase = createAdminClient();
+  async getByProjectId(
+    supabase: SupabaseClientType,
+    projectId: string,
+  ): Promise<InviteGuest[]> {
     const { data, error } = await supabase
       .from("invite_guests")
       .select("*")
@@ -26,6 +28,7 @@ export const supabaseInviteGuestRepository = {
   },
 
   async getByProjectIdPaginated(
+    supabase: SupabaseClientType,
     projectId: string,
     options: {
       page: number;
@@ -34,7 +37,6 @@ export const supabaseInviteGuestRepository = {
       status?: "all" | "yes" | "no" | "unsure" | "pending";
     },
   ): Promise<{ guests: InviteGuest[]; total: number }> {
-    const supabase = createAdminClient();
     const { page, pageSize, search, status } = options;
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
@@ -170,8 +172,10 @@ export const supabaseInviteGuestRepository = {
     };
   },
 
-  async getById(id: string): Promise<InviteGuest | null> {
-    const supabase = createAdminClient();
+  async getById(
+    supabase: SupabaseClientType,
+    id: string,
+  ): Promise<InviteGuest | null> {
     const { data, error } = await supabase
       .from("invite_guests")
       .select("*")
@@ -193,9 +197,10 @@ export const supabaseInviteGuestRepository = {
     };
   },
 
-  async save(guest: InviteGuest): Promise<boolean> {
-    const supabase = await createClient();
-
+  async save(
+    supabase: SupabaseClientType,
+    guest: InviteGuest,
+  ): Promise<boolean> {
     const { error } = await supabase.from("invite_guests").insert({
       id: guest.id,
       project_id: guest.projectId,
@@ -215,9 +220,11 @@ export const supabaseInviteGuestRepository = {
     return !error;
   },
 
-  async update(id: string, updates: Partial<InviteGuest>): Promise<boolean> {
-    const supabase = await createClient();
-
+  async update(
+    supabase: SupabaseClientType,
+    id: string,
+    updates: Partial<InviteGuest>,
+  ): Promise<boolean> {
     const dbUpdates: Record<string, unknown> = {};
     if (updates.displayName !== undefined)
       dbUpdates.display_name = updates.displayName;
@@ -243,8 +250,7 @@ export const supabaseInviteGuestRepository = {
     return !error;
   },
 
-  async delete(id: string): Promise<boolean> {
-    const supabase = await createClient();
+  async delete(supabase: SupabaseClientType, id: string): Promise<boolean> {
     const { error } = await supabase
       .from("invite_guests")
       .delete()
@@ -257,9 +263,10 @@ export const supabaseInviteGuestRepository = {
     return !error;
   },
 
-  async bulkSave(guests: InviteGuest[]): Promise<boolean> {
-    const supabase = await createClient();
-
+  async bulkSave(
+    supabase: SupabaseClientType,
+    guests: InviteGuest[],
+  ): Promise<boolean> {
     const dbGuests = guests.map((guest) => ({
       id: guest.id,
       project_id: guest.projectId,

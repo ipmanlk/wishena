@@ -1,9 +1,8 @@
-import { createAdminClient, createClient } from "../supabase/server";
+import type { SupabaseClientType } from "../supabase/client-types";
 import type { Wish } from "../types";
 
 export const supabaseWishRepository = {
-  async getAll(): Promise<Wish[]> {
-    const supabase = await createClient();
+  async getAll(supabase: SupabaseClientType): Promise<Wish[]> {
     const { data, error } = await supabase
       .from("wishes")
       .select("*")
@@ -21,9 +20,11 @@ export const supabaseWishRepository = {
     }));
   },
 
-  async getById(id: string): Promise<Wish | null> {
+  async getById(
+    supabase: SupabaseClientType,
+    id: string,
+  ): Promise<Wish | null> {
     // Use admin client so share links work and bypass any strict owner-only RLS policies
-    const supabase = createAdminClient();
     const { data, error } = await supabase
       .from("wishes")
       .select("*")
@@ -42,9 +43,11 @@ export const supabaseWishRepository = {
     };
   },
 
-  async save(wish: Wish, userId: string): Promise<boolean> {
-    const supabase = await createClient();
-
+  async save(
+    supabase: SupabaseClientType,
+    wish: Wish,
+    userId: string,
+  ): Promise<boolean> {
     // For authenticated users, calculate 365 days expiry if not forever
     let expiresAt = wish.expiresAt;
     if (!expiresAt) {
@@ -65,16 +68,17 @@ export const supabaseWishRepository = {
     return !error;
   },
 
-  async delete(id: string): Promise<boolean> {
-    const supabase = await createClient();
+  async delete(supabase: SupabaseClientType, id: string): Promise<boolean> {
     const { error } = await supabase.from("wishes").delete().eq("id", id);
 
     // Delete policy will restrict deleting based on user
     return !error;
   },
 
-  async getCount(userId: string): Promise<number> {
-    const supabase = createAdminClient();
+  async getCount(
+    supabase: SupabaseClientType,
+    userId: string,
+  ): Promise<number> {
     const { count, error } = await supabase
       .from("wishes")
       .select("*", { count: "exact", head: true })

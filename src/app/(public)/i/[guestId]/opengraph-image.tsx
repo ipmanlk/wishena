@@ -2,6 +2,7 @@ import { ImageResponse } from "next/og";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
+import { getAdminClient } from "@/lib/supabase/server";
 
 export const alt = "Invitation Card";
 export const size = {
@@ -14,12 +15,19 @@ export default async function Image(props: {
   params: Promise<{ guestId: string }>;
 }) {
   const params = await props.params;
+  const adminClient = getAdminClient();
 
   try {
-    const guest = await supabaseInviteGuestRepository.getById(params.guestId);
+    const guest = await supabaseInviteGuestRepository.getById(
+      adminClient,
+      params.guestId,
+    );
     if (!guest) throw new Error("Not found");
 
-    const project = await supabaseInviteRepository.getById(guest.projectId);
+    const project = await supabaseInviteRepository.getById(
+      adminClient,
+      guest.projectId,
+    );
     if (!project) throw new Error("Not found");
 
     const template = getInviteTemplateById(project.templateId);

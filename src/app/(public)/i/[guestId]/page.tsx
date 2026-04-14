@@ -5,6 +5,7 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
+import { getAdminClient } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
 interface InvitePageProps {
@@ -15,10 +16,17 @@ export async function generateMetadata(
   props: InvitePageProps,
 ): Promise<Metadata> {
   const params = await props.params;
-  const guest = await supabaseInviteGuestRepository.getById(params.guestId);
+  const adminClient = getAdminClient();
+  const guest = await supabaseInviteGuestRepository.getById(
+    adminClient,
+    params.guestId,
+  );
   if (!guest) return {};
 
-  const project = await supabaseInviteRepository.getById(guest.projectId);
+  const project = await supabaseInviteRepository.getById(
+    adminClient,
+    guest.projectId,
+  );
   if (!project) return {};
 
   let titleStr = "You're invited!";
@@ -36,11 +44,18 @@ export async function generateMetadata(
 
 export default async function InvitePage(props: InvitePageProps) {
   const params = await props.params;
+  const adminClient = getAdminClient();
 
-  const guest = await supabaseInviteGuestRepository.getById(params.guestId);
+  const guest = await supabaseInviteGuestRepository.getById(
+    adminClient,
+    params.guestId,
+  );
   if (!guest) notFound();
 
-  const project = await supabaseInviteRepository.getById(guest.projectId);
+  const project = await supabaseInviteRepository.getById(
+    adminClient,
+    guest.projectId,
+  );
   if (!project) notFound();
 
   const template = getInviteTemplateById(project.templateId);
@@ -48,7 +63,10 @@ export default async function InvitePage(props: InvitePageProps) {
 
   let currentRsvp: InviteRsvp | undefined;
   if (project.rsvpEnabled) {
-    const rsvpOpt = await supabaseRsvpRepository.getByGuestId(guest.id);
+    const rsvpOpt = await supabaseRsvpRepository.getByGuestId(
+      adminClient,
+      guest.id,
+    );
     if (rsvpOpt) {
       currentRsvp = rsvpOpt;
     }

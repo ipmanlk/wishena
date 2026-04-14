@@ -1,9 +1,11 @@
-import { createAdminClient, createClient } from "../supabase/server";
+import type { SupabaseClientType } from "../supabase/client-types";
 import type { InviteProject } from "../types";
 
 export const supabaseInviteRepository = {
-  async getCount(userId: string): Promise<number> {
-    const supabase = createAdminClient();
+  async getCount(
+    supabase: SupabaseClientType,
+    userId: string,
+  ): Promise<number> {
     const { count, error } = await supabase
       .from("invite_projects")
       .select("*", { count: "exact", head: true })
@@ -12,8 +14,7 @@ export const supabaseInviteRepository = {
     if (error) return 0;
     return count ?? 0;
   },
-  async getAll(): Promise<InviteProject[]> {
-    const supabase = await createClient();
+  async getAll(supabase: SupabaseClientType): Promise<InviteProject[]> {
     const { data, error } = await supabase
       .from("invite_projects")
       .select("*")
@@ -36,8 +37,10 @@ export const supabaseInviteRepository = {
     }));
   },
 
-  async getById(id: string): Promise<InviteProject | null> {
-    const supabase = createAdminClient();
+  async getById(
+    supabase: SupabaseClientType,
+    id: string,
+  ): Promise<InviteProject | null> {
     const { data, error } = await supabase
       .from("invite_projects")
       .select("*")
@@ -61,9 +64,10 @@ export const supabaseInviteRepository = {
     };
   },
 
-  async save(project: InviteProject): Promise<boolean> {
-    const supabase = await createClient();
-
+  async save(
+    supabase: SupabaseClientType,
+    project: InviteProject,
+  ): Promise<boolean> {
     const { error } = await supabase.from("invite_projects").insert({
       id: project.id,
       user_id: project.userId,
@@ -85,9 +89,11 @@ export const supabaseInviteRepository = {
     return !error;
   },
 
-  async update(id: string, updates: Partial<InviteProject>): Promise<boolean> {
-    const supabase = await createClient();
-
+  async update(
+    supabase: SupabaseClientType,
+    id: string,
+    updates: Partial<InviteProject>,
+  ): Promise<boolean> {
     // Map camcelCase to snake_case for Supabase
     const dbUpdates: Record<string, unknown> = {
       updated_at: new Date().toISOString(),
@@ -114,8 +120,7 @@ export const supabaseInviteRepository = {
     return !error;
   },
 
-  async delete(id: string): Promise<boolean> {
-    const supabase = await createClient();
+  async delete(supabase: SupabaseClientType, id: string): Promise<boolean> {
     const { error } = await supabase
       .from("invite_projects")
       .delete()

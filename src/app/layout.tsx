@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Caveat, Playfair_Display, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { UserProvider } from "@/components/auth/UserProvider";
-import { createClient } from "@/lib/supabase/server";
+import { getUser } from "@/lib/supabase/server";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -34,10 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   modal: React.ReactNode;
 }>) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user } = await getUser();
 
   return (
     <html

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
+import { getAdminClient } from "@/lib/supabase/server";
 import type { RsvpResponse } from "@/lib/types";
 
 export async function submitRsvpAction(
@@ -10,7 +11,9 @@ export async function submitRsvpAction(
   response: RsvpResponse,
 ) {
   try {
+    const adminClient = getAdminClient();
     const success = await supabaseRsvpRepository.upsertRsvp(
+      adminClient,
       guestId,
       projectId,
       response,

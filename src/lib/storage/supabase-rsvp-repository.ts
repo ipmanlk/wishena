@@ -1,10 +1,12 @@
 import { nanoid } from "nanoid";
-import { createAdminClient } from "../supabase/server";
+import type { SupabaseClientType } from "../supabase/client-types";
 import type { InviteRsvp, RsvpResponse } from "../types";
 
 export const supabaseRsvpRepository = {
-  async getByProjectId(projectId: string): Promise<InviteRsvp[]> {
-    const supabase = createAdminClient();
+  async getByProjectId(
+    supabase: SupabaseClientType,
+    projectId: string,
+  ): Promise<InviteRsvp[]> {
     const { data, error } = await supabase
       .from("invite_rsvps")
       .select("*")
@@ -23,10 +25,9 @@ export const supabaseRsvpRepository = {
   },
 
   async getCountsByProjectId(
+    supabase: SupabaseClientType,
     projectId: string,
   ): Promise<{ yes: number; no: number; unsure: number; total: number }> {
-    const supabase = createAdminClient();
-
     const { data, error } = await supabase
       .from("invite_rsvps")
       .select("response")
@@ -47,8 +48,10 @@ export const supabaseRsvpRepository = {
     return { yes, no, unsure, total: data.length };
   },
 
-  async getByGuestId(guestId: string): Promise<InviteRsvp | null> {
-    const supabase = createAdminClient();
+  async getByGuestId(
+    supabase: SupabaseClientType,
+    guestId: string,
+  ): Promise<InviteRsvp | null> {
     const { data, error } = await supabase
       .from("invite_rsvps")
       .select("*")
@@ -67,13 +70,11 @@ export const supabaseRsvpRepository = {
   },
 
   async upsertRsvp(
+    supabase: SupabaseClientType,
     guestId: string,
     projectId: string,
     response: RsvpResponse,
   ): Promise<boolean> {
-    // This action is public, use admin client to bypass project ownership
-    const supabase = createAdminClient();
-
     // Check if RSVP exists using direct query instead of this.getByGuestId
     // to avoid potential this binding issues
     const { data: existing, error: fetchError } = await supabase

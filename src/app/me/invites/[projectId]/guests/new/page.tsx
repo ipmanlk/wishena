@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { AddGuestForm } from "@/components/invites/AddGuestForm";
 import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
-import { createClient } from "@/lib/supabase/server";
+import { getAdminClient, getServerClient } from "@/lib/supabase/server";
 
 interface PageProps {
   params: Promise<{
@@ -13,12 +13,16 @@ interface PageProps {
 export default async function AddGuestPage({ params }: PageProps) {
   const { projectId } = await params;
 
-  const supabase = await createClient();
+  const supabase = await getServerClient();
+  const adminClient = getAdminClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const project = await supabaseInviteRepository.getById(projectId);
+  const project = await supabaseInviteRepository.getById(
+    adminClient,
+    projectId,
+  );
   if (!project || project.userId !== user?.id) {
     notFound();
   }

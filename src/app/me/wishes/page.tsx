@@ -3,18 +3,18 @@ import Link from "next/link";
 import { ResendButton } from "@/app/me/wishes/ResendButton";
 import { WishCard } from "@/app/me/wishes/WishCard";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
-import { createClient } from "@/lib/supabase/server";
+import { getServerClient } from "@/lib/supabase/server";
 import { getTemplateById } from "@/lib/templates";
 
 export const dynamic = "force-dynamic";
 
 export default async function MyWishesPage() {
-  const supabase = await createClient();
+  const supabase = await getServerClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const wishes = await supabaseWishRepository.getAll();
+  const wishes = await supabaseWishRepository.getAll(supabase);
   const isUnverified = !user?.email_confirmed_at;
 
   return (

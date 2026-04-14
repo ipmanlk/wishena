@@ -2,21 +2,19 @@ import { ArrowRight, CalendarHeart, Heart, Wand2 } from "lucide-react";
 import Link from "next/link";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseWishRepository } from "@/lib/storage/supabase-wish-repository";
-import { createClient } from "@/lib/supabase/server";
+import { getAdminClient, getUser } from "@/lib/supabase/server";
 
 export const dynamic = "force-dynamic";
 
 export default async function MePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { user } = await getUser();
+  const adminClient = getAdminClient();
 
   const wishCount = user?.id
-    ? await supabaseWishRepository.getCount(user.id)
+    ? await supabaseWishRepository.getCount(adminClient, user.id)
     : 0;
   const inviteCount = user?.id
-    ? await supabaseInviteRepository.getCount(user.id)
+    ? await supabaseInviteRepository.getCount(adminClient, user.id)
     : 0;
 
   return (

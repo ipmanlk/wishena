@@ -6,11 +6,11 @@ import { redirect } from "next/navigation";
 import { guestWishRepository } from "../guest/guest-wish-repository";
 import { signGuestSessionId, verifyGuestCookie } from "../guest/session";
 import { supabaseWishRepository } from "../storage/supabase-wish-repository";
-import { createClient } from "../supabase/server";
+import { getAdminClient, getServerClient, getUser } from "../supabase/server";
 import type { Wish } from "../types";
 
 export async function login(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = await getServerClient();
 
   const data = {
     email: formData.get("email") as string,
@@ -44,7 +44,7 @@ export async function login(formData: FormData) {
 }
 
 export async function signup(formData: FormData) {
-  const supabase = await createClient();
+  const supabase = await getServerClient();
   const data = {
     email: formData.get("email") as string,
     password: formData.get("password") as string,
@@ -77,7 +77,7 @@ export async function signup(formData: FormData) {
 }
 
 export async function signInWithGoogle() {
-  const supabase = await createClient();
+  const supabase = await getServerClient();
   const headersList = await headers();
   const origin =
     headersList.get("origin") ||
@@ -101,7 +101,7 @@ export async function signInWithGoogle() {
 }
 
 export async function logout() {
-  const supabase = await createClient();
+  const supabase = await getServerClient();
   const { error } = await supabase.auth.signOut();
   if (error) {
     return { error: error.message };
@@ -110,10 +110,7 @@ export async function logout() {
 }
 
 export async function resendVerificationEmail() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { supabase, user } = await getUser();
   if (!user || user.email_confirmed_at || !user.email)
     return { error: "Not eligible" };
 
@@ -139,10 +136,7 @@ export async function createWishAction(
   templateId: string,
   payload: Record<string, string>,
 ) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const { supabase, user } = await getUser();
 
   const wish: Partial<Wish> = {
     id: nanoid(10),
@@ -189,13 +183,18 @@ export async function createWishAction(
   // User flow
   const unverified = !user.email_confirmed_at;
   if (unverified) {
-    const count = await supabaseWishRepository.getCount(user.id);
+    const adminClient = getAdminClient();
+    const count = await supabaseWishRepository.getCount(adminClient, user.id);
     if (count >= 5) {
       return { error: "unverified_limit_reached" };
     }
   }
 
-  const saved = await supabaseWishRepository.save(wish as Wish, user.id);
+  const saved = await supabaseWishRepository.save(
+    supabase,
+    wish as Wish,
+    user.id,
+  );
   if (!saved) {
     return { error: "save_failed" };
   }

@@ -1,9 +1,9 @@
-import { createAdminClient } from "../supabase/server";
+import { getAdminClient } from "../supabase/server";
 import type { GuestSession, Wish } from "../types";
 
 export const guestWishRepository = {
   async getSession(sessionId: string): Promise<GuestSession | null> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
     const { data, error } = await supabase
       .from("guest_sessions")
       .select("id, wish_count")
@@ -18,7 +18,7 @@ export const guestWishRepository = {
   },
 
   async createSession(): Promise<GuestSession> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
     const { data, error } = await supabase
       .from("guest_sessions")
       .insert({})
@@ -39,7 +39,7 @@ export const guestWishRepository = {
   },
 
   async save(sessionId: string, wish: Omit<Wish, "userId">): Promise<boolean> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
 
     const { data, error } = await supabase
       .from("guest_sessions")
@@ -84,7 +84,7 @@ export const guestWishRepository = {
   },
 
   async getAll(sessionId: string): Promise<Wish[]> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
     const { data, error } = await supabase
       .from("guest_wishes")
       .select("*")
@@ -103,7 +103,7 @@ export const guestWishRepository = {
   },
 
   async getById(id: string): Promise<Wish | null> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
     const { data, error } = await supabase
       .from("guest_wishes")
       .select("*")
@@ -122,7 +122,7 @@ export const guestWishRepository = {
   },
 
   async claimWishes(sessionId: string, userId: string): Promise<void> {
-    const supabase = createAdminClient();
+    const supabase = getAdminClient();
 
     const wishes = await this.getAll(sessionId);
     if (wishes.length === 0) return;
