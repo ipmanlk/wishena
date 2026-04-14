@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 import { revalidatePath } from "next/cache";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
-import { getUser } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/supabase/server";
 import type { GuestCustomField, GuestFieldDefinition } from "@/lib/types";
 
 export async function createInviteProjectAction(
@@ -15,8 +15,7 @@ export async function createInviteProjectAction(
   rsvpEnabled: boolean,
   guestFieldDefinitions: GuestFieldDefinition[],
 ) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const id = nanoid();
   const success = await supabaseInviteRepository.save(supabase, {
@@ -47,8 +46,7 @@ export async function updateInviteProjectAction(
   rsvpEnabled: boolean,
   guestFieldDefinitions: GuestFieldDefinition[],
 ) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {
@@ -71,8 +69,7 @@ export async function updateInviteProjectAction(
 }
 
 export async function deleteInviteProjectAction(projectId: string) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {
@@ -97,8 +94,7 @@ export async function addGuestAction(
   contactNumber: string | null,
   customFields: Record<string, GuestCustomField>,
 ) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {
@@ -135,8 +131,7 @@ export async function updateGuestAction(
   contactNumber: string | null,
   customFields: Record<string, GuestCustomField>,
 ) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {
@@ -165,8 +160,7 @@ export async function updateGuestAction(
 }
 
 export async function deleteGuestAction(guestId: string, projectId: string) {
-  const { supabase, user } = await getUser();
-  if (!user) throw new Error("Unauthorized");
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {

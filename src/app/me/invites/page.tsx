@@ -5,17 +5,10 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { getServerClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/supabase/server";
 
 export default async function InvitesPage() {
-  const supabase = await getServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    return null;
-  }
+  const { supabase, user } = await requireUser();
 
   const userProjects = (await supabaseInviteRepository.getAll(supabase)).filter(
     (project) => project.userId === user.id,

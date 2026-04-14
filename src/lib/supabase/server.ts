@@ -84,3 +84,12 @@ export async function getUser() {
 
   return { supabase, user, error: null };
 }
+
+export async function requireUser() {
+  const { supabase, user, error } = await getUser();
+  if (!user || error) {
+    throw new Error("Unauthorized");
+  }
+
+  return { supabase, user };
+}

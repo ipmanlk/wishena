@@ -6,7 +6,7 @@ import { getInviteTemplateById } from "@/lib/invite-templates";
 import { supabaseInviteGuestRepository } from "@/lib/storage/supabase-invite-guest-repository";
 import { supabaseInviteRepository } from "@/lib/storage/supabase-invite-repository";
 import { supabaseRsvpRepository } from "@/lib/storage/supabase-rsvp-repository";
-import { getServerClient } from "@/lib/supabase/server";
+import { requireUser } from "@/lib/supabase/server";
 import type { InviteRsvp } from "@/lib/types";
 
 const PAGE_SIZE = 20;
@@ -36,14 +36,7 @@ export default async function InviteProjectDashboard({
       ? query.status
       : "all";
 
-  const supabase = await getServerClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    notFound();
-  }
+  const { supabase, user } = await requireUser();
 
   const project = await supabaseInviteRepository.getById(supabase, projectId);
   if (!project || project.userId !== user.id) {
