@@ -125,15 +125,15 @@ export function ProjectDetailsForm({
 
   return (
     <form onSubmit={handleSubmit} className="space-y-8 max-w-2xl">
-      <div className="bg-white p-6 rounded-2xl border space-y-4 shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-zinc-900">
+      <div className="bg-white p-6 rounded-2xl border border-warm-gray/20 space-y-4 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-ink">
           Project Settings
         </h2>
 
         <div>
           <label
             htmlFor="project-title"
-            className="block text-sm font-medium text-zinc-700 mb-1"
+            className="block text-sm font-medium text-ink mb-1"
           >
             Project Internal Title <span className="text-rose-500">*</span>
           </label>
@@ -144,26 +144,26 @@ export function ProjectDetailsForm({
             placeholder="e.g. Sarah & James Wedding"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
+            className="w-full px-4 py-2 bg-off-white border border-warm-gray/30 rounded-xl outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink"
           />
-          <p className="text-xs text-zinc-500 mt-1">
+          <p className="text-xs text-warm-gray-text mt-1">
             This is for your dashboard only. Guests won't see this.
           </p>
         </div>
 
         <div className="pt-2">
-          <label className="flex items-center space-x-3 bg-zinc-50 p-4 rounded-xl border border-zinc-200 cursor-pointer hover:bg-zinc-100 transition-colors">
+          <label className="flex items-center space-x-3 bg-off-white p-4 rounded-xl border border-warm-gray/30 cursor-pointer hover:bg-warm-gray/10 transition-colors">
             <input
               type="checkbox"
               checked={rsvpEnabled}
               onChange={(e) => setRsvpEnabled(e.target.checked)}
-              className="w-5 h-5 rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900 outline-none"
+              className="w-5 h-5 rounded border-warm-gray/40 text-terracotta focus:ring-terracotta outline-none"
             />
             <div className="flex flex-col">
-              <span className="text-sm font-medium text-zinc-900">
+              <span className="text-sm font-medium text-ink">
                 Enable RSVP System
               </span>
-              <span className="text-xs text-zinc-500 mt-0.5">
+              <span className="text-xs text-warm-gray-text mt-0.5">
                 Guests will see Joyfully Accept / Regretfully Decline buttons on
                 their card.
               </span>
@@ -172,13 +172,13 @@ export function ProjectDetailsForm({
         </div>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border space-y-6 shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-zinc-900 flex items-center gap-2">
-          <Settings2 className="w-5 h-5 text-zinc-400" />
+      <div className="bg-white p-6 rounded-2xl border border-warm-gray/20 space-y-6 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-ink flex items-center gap-2">
+          <Settings2 className="w-5 h-5 text-warm-gray-text" />
           Configure Guest Information
         </h2>
 
-        <p className="text-sm text-zinc-600 mb-4">
+        <p className="text-sm text-warm-gray-text mb-4">
           Define what information you want to collect for each guest. You can
           choose whether this information is shown publicly on their invite card
           or kept private. For example: Dietary Requirements, Plus One Names,
@@ -189,7 +189,7 @@ export function ProjectDetailsForm({
           {guestFields.map((field, index) => (
             <div
               key={field.key}
-              className="flex flex-col gap-3 p-4 border border-zinc-200 rounded-xl bg-zinc-50/50"
+              className="flex flex-col gap-3 p-4 border border-warm-gray/20 rounded-xl bg-off-white"
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
@@ -200,7 +200,7 @@ export function ProjectDetailsForm({
                 <button
                   type="button"
                   onClick={() => handleRemoveField(index)}
-                  className="text-zinc-400 hover:text-rose-500 transition-colors"
+                  className="text-warm-gray-text hover:text-rose-500 transition-colors"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -210,7 +210,7 @@ export function ProjectDetailsForm({
                 <div>
                   <label
                     htmlFor={`field-${field.key}-label`}
-                    className="block text-xs font-medium text-zinc-500 mb-1"
+                    className="block text-xs font-medium text-warm-gray-text mb-1"
                   >
                     Label
                   </label>
@@ -223,13 +223,13 @@ export function ProjectDetailsForm({
                       handleUpdateField(index, { label: e.target.value })
                     }
                     placeholder="e.g. Dietary Requirements"
-                    className="w-full px-3 py-1.5 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:border-zinc-400 text-zinc-900"
+                    className="w-full px-3 py-1.5 text-sm bg-white border border-warm-gray/30 rounded-lg outline-none focus:border-terracotta text-ink"
                   />
                 </div>
                 <div>
                   <label
                     htmlFor={`field-${field.key}-type`}
-                    className="block text-xs font-medium text-zinc-500 mb-1"
+                    className="block text-xs font-medium text-warm-gray-text mb-1"
                   >
                     Type
                   </label>
@@ -241,13 +241,13 @@ export function ProjectDetailsForm({
                         type: e.target.value as "text" | "textarea",
                       })
                     }
-                    className="w-full px-3 py-1.5 text-sm bg-white border border-zinc-200 rounded-lg outline-none focus:border-zinc-400 text-zinc-900"
+                    className="w-full px-3 py-1.5 text-sm bg-white border border-warm-gray/30 rounded-lg outline-none focus:border-terracotta text-ink"
                   >
                     <option value="text">Short Text</option>
                     <option value="textarea">Long Text</option>
                   </select>
                 </div>
-                <div className="sm:col-span-2 flex items-center justify-between mt-1 pt-3 border-t border-zinc-200/60">
+                <div className="sm:col-span-2 flex items-center justify-between mt-1 pt-3 border-t border-warm-gray/20">
                   <label className="flex items-center gap-2 cursor-pointer">
                     <input
                       type="checkbox"
@@ -255,21 +255,21 @@ export function ProjectDetailsForm({
                       onChange={(e) =>
                         handleUpdateField(index, { required: e.target.checked })
                       }
-                      className="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                      className="rounded border-warm-gray/40 text-terracotta focus:ring-terracotta"
                     />
-                    <span className="text-sm text-zinc-700">Required</span>
+                    <span className="text-sm text-ink">Required</span>
                   </label>
 
-                  <label className="flex items-center gap-2 cursor-pointer bg-white px-3 py-1.5 rounded-lg border border-zinc-200 shadow-sm">
+                  <label className="flex items-center gap-2 cursor-pointer bg-white px-3 py-1.5 rounded-lg border border-warm-gray/30 shadow-sm">
                     <input
                       type="checkbox"
                       checked={field.isPublic}
                       onChange={(e) =>
                         handleUpdateField(index, { isPublic: e.target.checked })
                       }
-                      className="rounded border-zinc-300 text-zinc-900 focus:ring-zinc-900"
+                      className="rounded border-warm-gray/40 text-terracotta focus:ring-terracotta"
                     />
-                    <span className="text-sm font-medium text-zinc-800">
+                    <span className="text-sm font-medium text-ink">
                       👁 Shown on Invite (Public)
                     </span>
                   </label>
@@ -282,15 +282,15 @@ export function ProjectDetailsForm({
         <button
           type="button"
           onClick={handleAddField}
-          className="flex items-center gap-2 text-sm font-medium text-zinc-600 hover:text-zinc-900 transition-colors py-2"
+          className="flex items-center gap-2 text-sm font-medium text-warm-gray-text hover:text-ink transition-colors py-2"
         >
           <Plus className="w-4 h-4" />
           Add Custom Field
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-2xl border space-y-6 shadow-sm">
-        <h2 className="text-xl font-semibold mb-4 text-zinc-900">
+      <div className="bg-white p-6 rounded-2xl border border-warm-gray/20 space-y-6 shadow-sm">
+        <h2 className="text-xl font-semibold mb-4 text-ink">
           Template Design Inputs
         </h2>
 
@@ -298,7 +298,7 @@ export function ProjectDetailsForm({
           <div key={input.key}>
             <label
               htmlFor={`input-${input.key}`}
-              className="block text-sm font-medium text-zinc-700 mb-1"
+              className="block text-sm font-medium text-ink mb-1"
             >
               {input.label}{" "}
               {input.required && <span className="text-rose-500">*</span>}
@@ -313,7 +313,7 @@ export function ProjectDetailsForm({
                 value={payload[input.key] || ""}
                 onChange={(e) => handleChange(input.key, e.target.value)}
                 rows={3}
-                className="w-full px-4 py-3 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900 resize-none"
+                className="w-full px-4 py-3 bg-off-white border border-warm-gray/30 rounded-xl outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink resize-none"
               />
             ) : (
               <input
@@ -324,11 +324,13 @@ export function ProjectDetailsForm({
                 maxLength={input.maxLength}
                 value={payload[input.key] || ""}
                 onChange={(e) => handleChange(input.key, e.target.value)}
-                className="w-full px-4 py-2 bg-zinc-50 border border-zinc-200 rounded-xl outline-none focus:border-zinc-400 focus:ring-1 focus:ring-zinc-400 transition-all text-zinc-900"
+                className="w-full px-4 py-2 bg-off-white border border-warm-gray/30 rounded-xl outline-none focus:border-terracotta focus:ring-1 focus:ring-terracotta transition-all text-ink"
               />
             )}
             {input.description && (
-              <p className="text-xs text-zinc-500 mt-1">{input.description}</p>
+              <p className="text-xs text-warm-gray-text mt-1">
+                {input.description}
+              </p>
             )}
           </div>
         ))}
@@ -338,7 +340,7 @@ export function ProjectDetailsForm({
         <button
           type="submit"
           disabled={loading}
-          className="bg-zinc-900 text-white px-8 py-3 rounded-xl font-medium hover:bg-zinc-800 transition-colors flex items-center justify-center min-w-[140px]"
+          className="bg-terracotta text-white px-8 py-3 rounded-xl font-medium hover:bg-terracotta/90 transition-colors flex items-center justify-center min-w-[140px]"
         >
           {loading ? (
             <Loader2 className="w-5 h-5 animate-spin" />

@@ -48,36 +48,38 @@ export default function NewInviteKindPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      <div className="mb-10 text-center">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 mb-2">
-          What are you celebrating?
-        </h1>
-        <p className="text-zinc-500">
-          Choose the type of event to see corresponding designs.
-        </p>
-      </div>
+    <div className="min-h-screen bg-cream">
+      <div className="max-w-4xl mx-auto px-6 py-12">
+        <div className="mb-10 text-center">
+          <h1 className="text-3xl font-bold tracking-tight text-ink mb-2">
+            What are you celebrating?
+          </h1>
+          <p className="text-warm-gray-text">
+            Choose the type of event to see corresponding designs.
+          </p>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
-        {kinds.map((kind) => {
-          const details = getKindDetails(kind);
-          return (
-            <Link
-              key={kind}
-              href={`/me/invites/new/${kind}`}
-              className="bg-white border rounded-2xl p-6 flex items-center gap-4 hover:border-zinc-300 hover:shadow-sm transition-all group"
-            >
-              <div className="w-12 h-12 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-600 group-hover:scale-105 transition-transform group-hover:text-zinc-900 group-hover:bg-zinc-200">
-                {details.icon}
-              </div>
-              <div className="flex-grow">
-                <h3 className="font-semibold text-zinc-900">{details.label}</h3>
-                <p className="text-sm text-zinc-500">{details.desc}</p>
-              </div>
-              <ChevronRight className="w-5 h-5 text-zinc-300 group-hover:text-zinc-500" />
-            </Link>
-          );
-        })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+          {kinds.map((kind) => {
+            const details = getKindDetails(kind);
+            return (
+              <Link
+                key={kind}
+                href={`/me/invites/new/${kind}`}
+                className="bg-white border border-warm-gray/20 rounded-2xl p-6 flex items-center gap-4 shadow-sm hover:border-warm-gray/40 hover:shadow-md transition-all group"
+              >
+                <div className="w-12 h-12 rounded-full bg-warm-gray/10 flex items-center justify-center text-warm-gray-text group-hover:scale-105 transition-transform group-hover:text-ink group-hover:bg-warm-gray/20">
+                  {details.icon}
+                </div>
+                <div className="flex-grow">
+                  <h3 className="font-semibold text-ink">{details.label}</h3>
+                  <p className="text-sm text-warm-gray-text">{details.desc}</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-warm-gray/40 group-hover:text-warm-gray-text" />
+              </Link>
+            );
+          })}
+        </div>
       </div>
     </div>
   );
