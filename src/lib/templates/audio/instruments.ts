@@ -1,10 +1,12 @@
 import * as Tone from "tone";
-import {
-  type EffectType,
-  effectTypes,
-  type SynthType,
-  synthTypes,
-} from "@/lib/types";
+import type { EffectType, SynthType } from "@/lib/types";
+import { brightFM } from "./presets/bright-fm";
+import { gentleBells } from "./presets/gentle-bells";
+import { glassMarimba } from "./presets/glass-marimba";
+import { mellowEP } from "./presets/mellow-ep";
+import { simplePluck } from "./presets/simple-pluck";
+import { softPad } from "./presets/soft-pad";
+import { warmPluck } from "./presets/warm-pluck";
 
 export interface EffectChain {
   input: Tone.ToneAudioNode;
@@ -207,215 +209,41 @@ export const instrumentPresets = {
    * Gentle bells with reverb for warm, contemplative templates
    * Perfect for: gentle-celebration, thank you, anniversary
    */
-  gentleBells: {
-    type: synthTypes.AMSynth,
-    settings: {
-      harmonicity: 2.5,
-      oscillator: {
-        type: "triangle",
-      },
-      envelope: {
-        attack: 0.05,
-        decay: 0.3,
-        sustain: 0.4,
-        release: 2.5,
-      },
-      modulation: {
-        type: "sine",
-      },
-      modulationEnvelope: {
-        attack: 0.3,
-        decay: 0.1,
-        sustain: 0.8,
-        release: 1,
-      },
-    },
-    effects: [effectTypes.reverb, effectTypes.chorus],
-  },
+  gentleBells,
 
   /**
    * Bright FM synth for modern, energetic templates
    * Perfect for: neon-birthday, party, celebration
    */
-  brightFM: {
-    type: synthTypes.FMSynth,
-    settings: {
-      harmonicity: 3,
-      modulationIndex: 8,
-      detune: 0,
-      oscillator: {
-        type: "sine",
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.2,
-        sustain: 0.5,
-        release: 0.8,
-      },
-      modulation: {
-        type: "square",
-      },
-      modulationEnvelope: {
-        attack: 0.1,
-        decay: 0.2,
-        sustain: 0.3,
-        release: 0.4,
-      },
-    },
-    effects: [effectTypes.delay, effectTypes.filter],
-  },
+  brightFM,
 
   /**
    * Soft pad for romantic, dreamy templates
    * Perfect for: love, romantic, wedding
    */
-  softPad: {
-    type: synthTypes.DuoSynth,
-    settings: {
-      vibratoAmount: 0.3,
-      vibratoRate: 4,
-      harmonicity: 1.2,
-      voice0: {
-        volume: -12,
-        portamento: 0.1,
-        oscillator: {
-          type: "sine",
-        },
-        filterEnvelope: {
-          attack: 0.5,
-          decay: 0.3,
-          sustain: 0.8,
-          release: 1.5,
-        },
-        envelope: {
-          attack: 0.5,
-          decay: 0.3,
-          sustain: 0.8,
-          release: 1.5,
-        },
-      },
-      voice1: {
-        volume: -12,
-        portamento: 0.1,
-        oscillator: {
-          type: "triangle",
-        },
-        filterEnvelope: {
-          attack: 0.5,
-          decay: 0.3,
-          sustain: 0.8,
-          release: 1.5,
-        },
-        envelope: {
-          attack: 0.5,
-          decay: 0.3,
-          sustain: 0.8,
-          release: 1.5,
-        },
-      },
-    },
-    effects: [effectTypes.reverb],
-  },
+  softPad,
 
   /**
    * Simple pluck for minimalist, clean templates
    * Perfect for: modern, simple, professional
    */
-  simplePluck: {
-    type: synthTypes.Synth,
-    settings: {
-      oscillator: {
-        type: "triangle",
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.3,
-        sustain: 0.1,
-        release: 0.6,
-      },
-    },
-    effects: [effectTypes.reverb],
-  },
+  simplePluck,
 
   /**
    * Warm nylon guitar-like pluck for cozy, friendly templates
    * Perfect for: morning coffee, casual appreciation, friendship
    */
-  warmPluck: {
-    type: synthTypes.Synth,
-    settings: {
-      oscillator: {
-        type: "triangle",
-      },
-      envelope: {
-        attack: 0.015,
-        decay: 0.4,
-        sustain: 0.15,
-        release: 0.9,
-      },
-    },
-    effects: [effectTypes.reverb, effectTypes.chorus],
-  },
+  warmPluck,
 
   /**
    * Soft glass marimba for serene, mindful templates
    * Perfect for: lavender fields, wellness, get-well wishes
    */
-  glassMarimba: {
-    type: synthTypes.AMSynth,
-    settings: {
-      harmonicity: 3,
-      oscillator: {
-        type: "sine",
-      },
-      envelope: {
-        attack: 0.01,
-        decay: 0.5,
-        sustain: 0.05,
-        release: 1.2,
-      },
-      modulation: {
-        type: "sine",
-      },
-      modulationEnvelope: {
-        attack: 0.2,
-        decay: 0.1,
-        sustain: 0.5,
-        release: 0.8,
-      },
-    },
-    effects: [effectTypes.reverb],
-  },
+  glassMarimba,
 
   /**
    * Mellow electric piano for sophisticated, jazzy templates
    * Perfect for: city lights, congratulations, promotions
    */
-  mellowEP: {
-    type: synthTypes.FMSynth,
-    settings: {
-      harmonicity: 1.5,
-      modulationIndex: 4,
-      detune: 0,
-      oscillator: {
-        type: "sine",
-      },
-      envelope: {
-        attack: 0.02,
-        decay: 0.3,
-        sustain: 0.4,
-        release: 1.2,
-      },
-      modulation: {
-        type: "triangle",
-      },
-      modulationEnvelope: {
-        attack: 0.1,
-        decay: 0.2,
-        sustain: 0.3,
-        release: 0.6,
-      },
-    },
-    effects: [effectTypes.reverb, effectTypes.delay],
-  },
+  mellowEP,
 };

@@ -8,10 +8,10 @@ This document outlines how to create new wish templates for the project. Templat
 
 A template consists of:
 
-1. **Template definition** (`src/lib/templates/<template-id>.ts`) — metadata, preview, blueprint (modules, inputs, visuals, audio)
-2. **Melody & harmony** (`src/lib/audio/melodies.ts`) — the musical composition
-3. **Instrument preset** (`src/lib/audio/instruments.ts`) — the synth sound used to play the music
-4. **Registry entry** (`src/lib/templates/index.ts`) — export and register the template
+1. **Template definition** (`src/lib/templates/wishes/<template-id>.ts`) — metadata, preview, blueprint (modules, inputs, visuals, audio)
+2. **Melody & harmony** (`src/lib/templates/audio/melodies/collections/*.ts`) — the musical composition
+3. **Instrument preset** (`src/lib/templates/audio/instruments.ts`) — the synth sound used to play the music
+4. **Registry entry** (`src/lib/templates/wishes/index.ts`) — export and register the template
 
 ---
 
@@ -28,7 +28,7 @@ Before writing code, decide:
 
 ### 2. Create the Audio
 
-#### 2a. Compose the melody and harmony in `src/lib/audio/melodies.ts`
+#### 2a. Compose the melody and harmony in `src/lib/templates/audio/melodies/collections/*.ts`
 
 - Use the `Note` type from `../types`
 - Keep melodies **loop-friendly** (resolve back to the tonic or a smooth transition)
@@ -36,7 +36,8 @@ Before writing code, decide:
 - Use pleasant, consonant intervals. Avoid dissonance or jarring leaps.
 - Recommended velocity range: `0.5` – `0.8` for melody, `0.25` – `0.35` for harmony
 - Export both `melody` and `harmony` arrays
-- Add the pair to `melodiesByTemplate` at the bottom of the file
+- Export the pair from `src/lib/templates/audio/melodies/index.ts`
+- Add the pair to `melodiesByTemplate` in `src/lib/templates/audio/melodies/index.ts`
 
 **Timing format** (Tone.js transport time):
 - `"0:0"` = bar 0, beat 0
@@ -50,7 +51,7 @@ Before writing code, decide:
 - Harmony should support, not compete with, the melody
 - Always listen mentally for whether it would feel robotic or mechanical
 
-#### 2b. Choose or create an instrument preset in `src/lib/audio/instruments.ts`
+#### 2b. Choose or create an instrument preset in `src/lib/templates/audio/instruments.ts`
 
 Existing presets:
 
@@ -64,7 +65,7 @@ Existing presets:
 | `glassMarimba` | AMSynth | Light, serene, floating | Wellness, mindful |
 | `mellowEP` | FMSynth | Smooth, jazzy, sophisticated | Congratulations, urban |
 
-If none fit, create a new preset in `instrumentPresets`. Follow these rules:
+If none fit, create a new preset under `src/lib/templates/audio/presets/` and export it through `src/lib/templates/audio/instruments.ts`. Follow these rules:
 - Pick the synth type that matches the desired timbre
 - Use gentle envelope settings (avoid `attack: 0` or extremely short releases for pleasant sounds)
 - Add effects sparingly — `reverb` is almost always good; `delay`, `chorus`, `filter` should match the aesthetic
@@ -72,7 +73,7 @@ If none fit, create a new preset in `instrumentPresets`. Follow these rules:
 
 ### 3. Write the Template File
 
-Create `src/lib/templates/<template-id>.ts`. Follow this structure:
+Create `src/lib/templates/wishes/<template-id>.ts`. Follow this structure:
 
 ```typescript
 import { instrumentPresets } from "../audio";
