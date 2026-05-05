@@ -4,7 +4,10 @@
 This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
 <!-- END:nextjs-agent-rules -->
 
-@CODEBASE.md
+## Project References
+
+- **@CODEBASE.md** — Comprehensive codebase reference: architecture, file structure, data flow, design philosophy, key implementation details, and common patterns. Read this when you need to understand how the project is organized or how a feature works.
+- **@TEMPLATES.md** — Guidelines for creating new wish templates: audio composition, module types, visual design rules, and the step-by-step process. Read this only when creating or modifying wish templates.
 
 # TypeScript Guidelines
 
