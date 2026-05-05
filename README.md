@@ -1,3 +1,6 @@
+> [!IMPORTANT]
+> **AI-Assisted Development:** This project was primarily coded using [OpenCode](https://opencode.ai) with the following AI models: **Kimi K2.5**, **Gemini Pro**, **MiniMax M2.5**, and **GPT-5.2 Codex**.
+
 # Wishena
 
 Wishena is a platform for creating and sharing personalised digital wishes and event invitations. Send a beautifully animated birthday wish, celebrate a milestone, or manage your entire guest list for a wedding or party — all from a shareable link.
