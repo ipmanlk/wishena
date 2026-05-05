@@ -119,3 +119,14 @@ src/
     ├── component-map.ts    # Maps module type strings → React components
     └── types.ts            # Shared TypeScript interfaces
 ```
+
+## Screenshots
+
+<img src="docs/assets/homepage-public.png" alt="Wishena homepage" />
+
+Useful links:
+
+- [Homepage, public view](docs/assets/homepage-public.png)
+- [Homepage, private view](docs/assets/homepage-private.png)
+- [Wishes](docs/assets/wishes.png)
+- [Invitations](docs/assets/invites.png)
